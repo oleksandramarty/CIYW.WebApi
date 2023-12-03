@@ -1,0 +1,16 @@
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\bin\Debug\net8.0\CIYW.Domain.deps.json
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\bin\Debug\net8.0\CIYW.Domain.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\bin\Debug\net8.0\CIYW.Domain.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.csproj.AssemblyReference.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.GeneratedMSBuildEditorConfig.editorconfig
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.AssemblyInfoInputs.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.AssemblyInfo.cs
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.csproj.CoreCompileInputs.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.sourcelink.json
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\refint\CIYW.Domain.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\ref\CIYW.Domain.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\bin\Debug\net8.0\CIYW.Const.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\bin\Debug\net8.0\CIYW.Const.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Domain\obj\Debug\net8.0\CIYW.Domain.csproj.CopyComplete

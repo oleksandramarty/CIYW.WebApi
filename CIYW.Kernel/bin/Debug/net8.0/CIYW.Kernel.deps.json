@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "CIYW.Kernel/1.0.0": {
+        "dependencies": {
+          "CIYW.Const": "1.0.0"
+        },
+        "runtime": {
+          "CIYW.Kernel.dll": {}
+        }
+      },
+      "CIYW.Const/1.0.0": {
+        "runtime": {
+          "CIYW.Const.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CIYW.Kernel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CIYW.Const/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

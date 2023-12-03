@@ -1,0 +1,12 @@
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\bin\Debug\net8.0\CIYW.Const.deps.json
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\bin\Debug\net8.0\CIYW.Const.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\bin\Debug\net8.0\CIYW.Const.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\CIYW.Const.GeneratedMSBuildEditorConfig.editorconfig
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\CIYW.Const.AssemblyInfoInputs.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\CIYW.Const.AssemblyInfo.cs
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\CIYW.Const.csproj.CoreCompileInputs.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\CIYW.Const.sourcelink.json
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\CIYW.Const.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\refint\CIYW.Const.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\CIYW.Const.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Const\obj\Debug\net8.0\ref\CIYW.Const.dll
