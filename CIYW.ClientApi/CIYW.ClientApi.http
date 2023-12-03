@@ -1,0 +1,6 @@
+@CIYW.ClientApi_HostAddress = http://localhost:5016
+
+GET {{CIYW.ClientApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

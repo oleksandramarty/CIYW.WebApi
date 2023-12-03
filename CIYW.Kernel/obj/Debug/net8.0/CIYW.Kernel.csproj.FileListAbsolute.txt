@@ -1,0 +1,16 @@
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Kernel.deps.json
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Kernel.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Kernel.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.GeneratedMSBuildEditorConfig.editorconfig
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.AssemblyInfoInputs.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.AssemblyInfo.cs
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.csproj.CoreCompileInputs.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.sourcelink.json
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\refint\CIYW.Kernel.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\ref\CIYW.Kernel.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Const.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Const.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.csproj.AssemblyReference.cache
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.csproj.CopyComplete

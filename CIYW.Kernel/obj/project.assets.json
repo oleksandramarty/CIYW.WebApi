@@ -1,0 +1,91 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "CIYW.Const/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CIYW.Const.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CIYW.Const.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CIYW.Const/1.0.0": {
+      "type": "project",
+      "path": "../CIYW.Const/CIYW.Const.csproj",
+      "msbuildProject": "../CIYW.Const/CIYW.Const.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "CIYW.Const >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Interstellar\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj",
+      "projectName": "CIYW.Kernel",
+      "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj",
+      "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+      "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
+              "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

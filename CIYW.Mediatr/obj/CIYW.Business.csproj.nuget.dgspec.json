@@ -1,0 +1,378 @@
+{
+  "format": 1,
+  "restore": {
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Business\\CIYW.Business.csproj": {}
+  },
+  "projects": {
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Business\\CIYW.Business.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Business\\CIYW.Business.csproj",
+        "projectName": "CIYW.Business",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Business\\CIYW.Business.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Business\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.2.0, )"
+            },
+            "MediatR.Contracts": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj",
+        "projectName": "CIYW.Const",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj",
+        "projectName": "CIYW.Domain",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj",
+        "projectName": "CIYW.Interfaces",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj",
+        "projectName": "CIYW.Kernel",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj",
+        "projectName": "CIYW.Models",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

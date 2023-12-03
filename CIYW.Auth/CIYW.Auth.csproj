@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CIYW.Const\CIYW.Const.csproj" />
+      <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />
+      <ProjectReference Include="..\CIYW.Interfaces\CIYW.Interfaces.csproj" />
+      <ProjectReference Include="..\CIYW.Kernel\CIYW.Kernel.csproj" />
+      <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
+    </ItemGroup>
+
+</Project>
