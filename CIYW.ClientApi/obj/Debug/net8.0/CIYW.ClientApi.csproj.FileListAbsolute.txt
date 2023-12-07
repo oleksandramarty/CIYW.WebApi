@@ -139,3 +139,8 @@ L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\zh-Hant\Microsoft.C
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Autofac.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Autofac.Extensions.DependencyInjection.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Namotion.Reflection.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Newtonsoft.Json.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NJsonSchema.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\ZymLabs.NSwag.FluentValidation.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\ZymLabs.NSwag.FluentValidation.AspNetCore.dll

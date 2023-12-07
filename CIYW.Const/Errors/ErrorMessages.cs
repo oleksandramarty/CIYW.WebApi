@@ -8,4 +8,6 @@ public class ErrorMessages
     public const string WrongAuth = "Wrong Login or Password";
     public const string UserWithParamExist = "User with this {0} exists";
     public const string HashGenerationError = "Hash generation error";
+    public const string InternalServerError = "Internal server error";
+    public const string ValidationFailed = "Validation failed";
 }

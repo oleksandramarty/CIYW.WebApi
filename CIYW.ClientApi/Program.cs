@@ -14,7 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Models.Mapping;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +55,10 @@ builder.Services.AddAuthentication(options =>
     })
     .AddScheme<JwtCIYWOptions, JwtCIYWHandler>(JwtCIYWDefaults.AuthenticationScheme,
         options => { options.Realm = "Protect JwtCIYW"; });
+
+builder.Services.AddHealthChecks();
+builder.Services.AddResponseCompression();
+builder.Services.AddResponseCaching();
 
 builder.Services.AddAutoMapper(config => config.AddProfile(new MappingProfile()));
 
@@ -109,9 +115,35 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new MediatrModule());
 });
 
-builder.Services.AddMvc();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddMvc(mvcOptions =>
+    {
+        mvcOptions.CacheProfiles.Add("OneHour",
+            new CacheProfile {
+                Duration = 3600,
+                Location = ResponseCacheLocation.Any
+            });
+        mvcOptions.CacheProfiles.Add("FiveMinutes",
+            new CacheProfile {
+                Duration = 300,
+                Location = ResponseCacheLocation.Any
+            });
+        mvcOptions.CacheProfiles.Add("Week",
+            new CacheProfile {
+                Duration = 604800,
+                Location = ResponseCacheLocation.Any
+            });
+        mvcOptions.CacheProfiles.Add("Month",
+            new CacheProfile {
+                Duration = 2419200,
+                Location = ResponseCacheLocation.Any
+            });
+        mvcOptions.Filters.Add(typeof(ValidateModelStateAttribute));
+        mvcOptions.Filters.Add(new HttpResponseExceptionFilter());
+        mvcOptions.AllowEmptyInputInBodyModelBinding = false;
+    }).AddXmlSerializerFormatters()
+    .AddXmlDataContractSerializerFormatters();
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Host.ConfigureContainer<ContainerBuilder>(
     builder => builder.RegisterModule(new MediatrModule()));
 
@@ -123,6 +155,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger(options => options.SerializeAsV2 = true);
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CIYW.WebApi v1"));
 }
+else
+{
+    app.UseHsts();
+}
 
 var cts = new CancellationTokenSource();
 var cancellationToken = cts.Token;
@@ -130,8 +166,14 @@ app.UpdateDatabaseAsync().Wait(cancellationToken);
 app.InitDatabase(app.Environment.IsProduction());
 
 app.UseHttpsRedirection();
+app.UseResponseCompression();
+app.UseResponseCaching();
 
 app.UseRouting();
+
+app.ConfigureApplicationLocalization();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();

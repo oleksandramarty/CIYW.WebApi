@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
-using System.Text.Json;
+using CIYW.Const.Errors;
+using CIYW.Kernel.Errors;
 using CIYW.Kernel.Exceptions;
+using FluentValidation;
+using System.Text.Json;
 
 namespace CIYW.Kernel.Extensions;
 
@@ -94,5 +97,16 @@ public static class ExceptionExtension
             }
 
             return code;
+        }
+        
+        public static ErrorMessage ToErrorMessage(this ValidationException validationException)
+        {
+            var invalidFields = validationException
+                .Errors
+                .Select(x => new InvalidFieldInfo(x.PropertyName, x.ErrorMessage))
+                .ToList()
+                .AsReadOnly();
+
+            return new ErrorMessage(ErrorMessages.ValidationFailed, 400, invalidFields);
         }
 }
