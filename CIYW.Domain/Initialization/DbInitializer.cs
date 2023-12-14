@@ -1,4 +1,5 @@
-﻿using CIYW.Domain.Models.Tariff;
+﻿using CIYW.Domain.Models.Category;
+using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
 
 namespace CIYW.Domain.Initialization;
@@ -11,6 +12,7 @@ namespace CIYW.Domain.Initialization;
       {
         AddEntitiesWithExisting<Role, Guid>(context, InitializationProvider.GetRoles(), c => c.Roles);
         AddEntitiesWithExisting<Tariff, Guid>(context, InitializationProvider.GetTariffs(), c => c.Tariffs);
+        AddEntitiesWithExisting<Category, Guid>(context, InitializationProvider.GetCategories(), c => c.Categories);
       }
       
       static void AddEntitiesWithExisting<T, TId>(DataContext context, IList<T> entities, Func<DataContext, IQueryable<T>> getExistingEntities) where T : class

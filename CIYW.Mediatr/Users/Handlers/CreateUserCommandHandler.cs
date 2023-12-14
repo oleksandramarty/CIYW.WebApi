@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Mediatr.Auth.Handlers;
 
-public class SignInCommandHandler: IRequestHandler<SignInCommand>
+public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand>
 {
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
@@ -23,7 +23,7 @@ public class SignInCommandHandler: IRequestHandler<SignInCommand>
     private readonly IAuthRepository _authRepository;
     private readonly UserManager<User> _userManager;
 
-    public SignInCommandHandler(
+    public CreateUserCommandHandler(
         IMapper mapper, 
         IMediator mediator, 
         IGenericRepository<User> userRepository, 
@@ -39,7 +39,7 @@ public class SignInCommandHandler: IRequestHandler<SignInCommand>
         _userManager = userManager;
     }
 
-    public async Task Handle(SignInCommand command, CancellationToken cancellationToken)
+    public async Task Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
         {
@@ -60,7 +60,7 @@ public class SignInCommandHandler: IRequestHandler<SignInCommand>
         await _entityValidator.ValidateExistParamAsync<User>(u => u.PhoneNumber == command.Phone, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone), cancellationToken);
         await _entityValidator.ValidateExistParamAsync<User>(u => u.Login == command.Login, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login), cancellationToken);
         
-        User user = this._mapper.Map<SignInCommand, User>(command);
+        User user = this._mapper.Map<CreateUserCommand, User>(command);
       
         var res = await _userManager.CreateAsync(user, command.Password);
 

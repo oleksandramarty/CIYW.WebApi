@@ -2,9 +2,9 @@
 
 namespace CIYW.Mediatr.Auth.Queries;
 
-public class SignInCommand: IRequest
+public class CreateUserCommand: IRequest
 {
-    public SignInCommand(string lastName, string firstName, string patronymic, string login, string email, string phone, string confirmEmail, bool isAgree, string password,
+    public CreateUserCommand(string lastName, string firstName, string patronymic, string login, string email, string phone, string confirmEmail, bool isAgree, string password,
         string confirmPassword, bool isAgreeDigest)
     {
         Login = login ?? throw new ArgumentNullException(nameof(login));

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CIYW.Models")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a74e51038919ad21914d05cee288a8897125e1b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0d96070807c51cc354e85bea6a3877c144ec356")]
 [assembly: System.Reflection.AssemblyProductAttribute("CIYW.Models")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CIYW.Models")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

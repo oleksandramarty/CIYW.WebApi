@@ -22,6 +22,133 @@ namespace CIYW.Domain.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CIYW.Domain.Models.Category.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Ico")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", "CIYW.Category");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Currency", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("IsoCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currencies", "CIYW.Dictionary");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Invoice.Invoice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CurrencyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("NoteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Invoices", "CIYW.Invoice");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Note", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("InvoiceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId")
+                        .IsUnique();
+
+                    b.ToTable("Notes", "CIYW.Note");
+                });
+
             modelBuilder.Entity("CIYW.Domain.Models.Tariff.Tariff", b =>
                 {
                     b.Property<Guid>("Id")
@@ -89,6 +216,9 @@ namespace CIYW.Domain.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("CurrencyId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -171,6 +301,8 @@ namespace CIYW.Domain.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CurrencyId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -181,6 +313,21 @@ namespace CIYW.Domain.Migrations
                     b.HasIndex("TariffId");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.User.UserCategory", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("UserCategories", "CIYW.User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -286,15 +433,79 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CIYW.Domain.Models.Invoice.Invoice", b =>
+                {
+                    b.HasOne("CIYW.Domain.Models.Category.Category", "Category")
+                        .WithMany("Invoices")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIYW.Domain.Models.Currency", "Currency")
+                        .WithMany("Invoices")
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIYW.Domain.Models.User.User", "User")
+                        .WithMany("Invoices")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Note", b =>
+                {
+                    b.HasOne("CIYW.Domain.Models.Invoice.Invoice", "Invoice")
+                        .WithOne("Note")
+                        .HasForeignKey("CIYW.Domain.Models.Note", "InvoiceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Invoice");
+                });
+
             modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
                 {
+                    b.HasOne("CIYW.Domain.Models.Currency", "Currency")
+                        .WithMany("Users")
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CIYW.Domain.Models.Tariff.Tariff", "Tariff")
                         .WithMany("Users")
                         .HasForeignKey("TariffId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Currency");
+
                     b.Navigation("Tariff");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.User.UserCategory", b =>
+                {
+                    b.HasOne("CIYW.Domain.Models.Category.Category", "Category")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIYW.Domain.Models.User.User", "User")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -348,9 +559,36 @@ namespace CIYW.Domain.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CIYW.Domain.Models.Category.Category", b =>
+                {
+                    b.Navigation("Invoices");
+
+                    b.Navigation("UserCategories");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Currency", b =>
+                {
+                    b.Navigation("Invoices");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Invoice.Invoice", b =>
+                {
+                    b.Navigation("Note")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CIYW.Domain.Models.Tariff.Tariff", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
+                {
+                    b.Navigation("Invoices");
+
+                    b.Navigation("UserCategories");
                 });
 #pragma warning restore 612, 618
         }

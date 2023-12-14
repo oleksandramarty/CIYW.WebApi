@@ -24,7 +24,7 @@ public class AuthController: BaseController
     
     [HttpPost("SignIn")]
     [ProducesResponseType(typeof(void), 200)]
-    public async Task<IActionResult> SignInAsync([FromBody]SignInCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> SignInAsync([FromBody]CreateUserCommand command, CancellationToken cancellationToken)
     {
         await this._mediatr.Send(command, cancellationToken);
         return Ok();

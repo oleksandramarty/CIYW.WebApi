@@ -17,7 +17,7 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Name));
 
 
-        this.CreateMap<SignInCommand, User>()
+        this.CreateMap<CreateUserCommand, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Phone))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow))

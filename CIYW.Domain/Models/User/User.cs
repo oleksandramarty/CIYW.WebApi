@@ -25,6 +25,12 @@ public class User:IdentityUser<Guid>
     public DateTime? Updated { get; set; }
     public DateTime? LastForgot { get; set; }
     
-    public Tariff.Tariff Tariff { get; set; }
     public Guid TariffId { get; set; }
+    public Tariff.Tariff Tariff { get; set; }
+    
+    public Guid CurrencyId { get; set; }
+    public Currency Currency { get; set; }
+    
+    public HashSet<UserCategory> UserCategories { get; set; }
+    public HashSet<Invoice.Invoice> Invoices { get; set; }
 }
