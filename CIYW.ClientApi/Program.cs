@@ -171,7 +171,7 @@ app.UseResponseCaching();
 
 app.UseRouting();
 
-app.ConfigureApplicationLocalization();
+//app.ConfigureApplicationLocalization();
 
 app.UseCors("CorsPolicy");
 

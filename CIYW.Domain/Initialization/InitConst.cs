@@ -11,4 +11,9 @@ public class InitConst
     {
         get => new Guid("851A3339-BEDA-4313-A5FA-A03266B85253");
     }
+    
+    public static Guid FreeTariffId
+    {
+        get => new Guid("F76B2192-D512-4E7D-9013-70EEB0BE5518");
+    }
 }

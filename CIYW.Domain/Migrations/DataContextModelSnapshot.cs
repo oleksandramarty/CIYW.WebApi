@@ -22,6 +22,56 @@ namespace CIYW.Domain.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CIYW.Domain.Models.Tariff.Tariff", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tariffs");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Tariff.TariffClaim", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Claim")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("TariffId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TariffId");
+
+                    b.ToTable("TariffClaims");
+                });
+
             modelBuilder.Entity("CIYW.Domain.Models.User.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -256,6 +306,17 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CIYW.Domain.Models.Tariff.TariffClaim", b =>
+                {
+                    b.HasOne("CIYW.Domain.Models.Tariff.Tariff", "Tariff")
+                        .WithMany("Claims")
+                        .HasForeignKey("TariffId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tariff");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("CIYW.Domain.Models.User.Role", null)
@@ -305,6 +366,11 @@ namespace CIYW.Domain.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Tariff.Tariff", b =>
+                {
+                    b.Navigation("Claims");
                 });
 #pragma warning restore 612, 618
         }

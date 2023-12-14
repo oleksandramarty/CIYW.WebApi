@@ -1,4 +1,5 @@
-﻿using CIYW.Domain.Models.User;
+﻿using CIYW.Domain.Models.Tariff;
+using CIYW.Domain.Models.User;
 
 namespace CIYW.Domain.Initialization;
 
@@ -8,29 +9,32 @@ namespace CIYW.Domain.Initialization;
           DataContext context,
           bool isProd)
       {
-        AddRoles(context);
+        AddEntitiesWithExisting<Role, Guid>(context, InitializationProvider.GetRoles(), c => c.Roles);
+        AddEntitiesWithExisting<Tariff, Guid>(context, InitializationProvider.GetTariffs(), c => c.Tariffs);
+        AddEntitiesWithExisting<TariffClaim, Guid>(context, InitializationProvider.GetTariffClaims(), c => c.TariffClaims);
       }
-
-      static void AddRoles(DataContext context)
+      
+      static void AddEntitiesWithExisting<T, TId>(DataContext context, IList<T> entities, Func<DataContext, IQueryable<T>> getExistingEntities) where T : class
       {
-        IList<Role> roleAll = InitializationProvider.GetRoles();
-        if (!context.Roles.Any())
+        if (!getExistingEntities(context).Any())
         {
-          context.Roles.AddRange(roleAll);
+          context.Set<T>().AddRange(entities);
           context.SaveChanges();
         }
         else
         {
-          var rolesExist = context.Roles.ToList();
-          var existIds = rolesExist.Select(x => x.Id).ToList();
-          var roleAllIds = roleAll.Select(x => x.Id).ToList();
-          var rolesToAddIds = roleAllIds.Except(existIds).ToList();
-          var rolesToAdd = roleAll.Where(_ => rolesToAddIds.Contains(_.Id)).ToList();
-          if (rolesToAdd.Any())
+          var existingEntities = getExistingEntities(context).ToList();
+          var existIds = existingEntities.Select(x => (TId)x.GetType().GetProperty("Id").GetValue(x)).ToList();
+          var entityIds = entities.Select(x => (TId)x.GetType().GetProperty("Id").GetValue(x)).ToList();
+          var entitiesToAddIds = entityIds.Except(existIds).ToList();
+          var entitiesToAdd = entities.Where(_ => entitiesToAddIds.Contains((TId)_.GetType().GetProperty("Id").GetValue(_))).ToList();
+
+          if (entitiesToAdd.Any())
           {
-            context.Roles.AddRange(rolesToAdd);
+            context.Set<T>().AddRange(entitiesToAdd);
             context.SaveChanges();
           }
         }
       }
     }
+    
