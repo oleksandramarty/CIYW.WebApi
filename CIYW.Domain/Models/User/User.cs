@@ -24,4 +24,7 @@ public class User:IdentityUser<Guid>
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
     public DateTime? LastForgot { get; set; }
+    
+    public Tariff.Tariff Tariff { get; set; }
+    public Guid TariffId { get; set; }
 }

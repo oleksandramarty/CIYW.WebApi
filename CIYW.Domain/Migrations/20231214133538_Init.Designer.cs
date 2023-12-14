@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CIYW.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231214125627_InitTariff")]
-    partial class InitTariff
+    [Migration("20231214133538_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,32 +47,7 @@ namespace CIYW.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tariffs");
-                });
-
-            modelBuilder.Entity("CIYW.Domain.Models.Tariff.TariffClaim", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Claim")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("TariffId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TariffId");
-
-                    b.ToTable("TariffClaims");
+                    b.ToTable("Tariffs", "CIYW.Tariff");
                 });
 
             modelBuilder.Entity("CIYW.Domain.Models.User.Role", b =>
@@ -184,6 +159,9 @@ namespace CIYW.Domain.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("TariffId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
@@ -202,6 +180,8 @@ namespace CIYW.Domain.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("TariffId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -309,10 +289,10 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.Tariff.TariffClaim", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
                 {
                     b.HasOne("CIYW.Domain.Models.Tariff.Tariff", "Tariff")
-                        .WithMany("Claims")
+                        .WithMany("Users")
                         .HasForeignKey("TariffId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -373,7 +353,7 @@ namespace CIYW.Domain.Migrations
 
             modelBuilder.Entity("CIYW.Domain.Models.Tariff.Tariff", b =>
                 {
-                    b.Navigation("Claims");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

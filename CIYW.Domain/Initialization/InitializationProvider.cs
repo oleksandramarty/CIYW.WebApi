@@ -23,18 +23,4 @@ public class InitializationProvider
             new Tariff() { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow},
         };
     }
-
-    public static List<TariffClaim> GetTariffClaims()
-    {
-        return new List<TariffClaim>
-        {
-            new TariffClaim
-            {
-                Id = Guid.NewGuid(),
-                Created = DateTime.UtcNow,
-                Claim = TariffClaimEnum.Free,
-                TariffId = InitConst.FreeTariffId
-            }
-        };
-    }
 }

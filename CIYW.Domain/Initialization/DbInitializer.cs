@@ -11,7 +11,6 @@ namespace CIYW.Domain.Initialization;
       {
         AddEntitiesWithExisting<Role, Guid>(context, InitializationProvider.GetRoles(), c => c.Roles);
         AddEntitiesWithExisting<Tariff, Guid>(context, InitializationProvider.GetTariffs(), c => c.Tariffs);
-        AddEntitiesWithExisting<TariffClaim, Guid>(context, InitializationProvider.GetTariffClaims(), c => c.TariffClaims);
       }
       
       static void AddEntitiesWithExisting<T, TId>(DataContext context, IList<T> entities, Func<DataContext, IQueryable<T>> getExistingEntities) where T : class

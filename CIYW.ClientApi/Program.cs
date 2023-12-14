@@ -160,8 +160,15 @@ else
     app.UseHsts();
 }
 
+
 var cts = new CancellationTokenSource();
 var cancellationToken = cts.Token;
+
+// if (app.Environment.IsDevelopment())
+// {
+//     app.RemoveDatabaseAsync().Wait(cancellationToken);
+// }
+
 app.UpdateDatabaseAsync().Wait(cancellationToken);
 app.InitDatabase(app.Environment.IsProduction());
 
