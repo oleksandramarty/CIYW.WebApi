@@ -216,6 +216,9 @@ namespace CIYW.Kernel.Extensions;
 
         public static void AddDependencyInjection(this WebApplicationBuilder builder)
         {
+            builder.Services.AddHttpContextAccessor();
+            
+            builder.Services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped(typeof(IReadGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

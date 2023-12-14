@@ -11,14 +11,10 @@ namespace CIYW.Kernel.Extensions.Controllers;
 [Authorize]
 public class UsersController: BaseController
 {
-    private IConfiguration _configuration;
     private readonly IMediator _mediatr;
     
-    public UsersController(
-        IConfiguration configuration, 
-        IMediator mediatr) : base(configuration, mediatr)
+    public UsersController(IMediator mediatr) : base(mediatr)
     {
-        _configuration = configuration;
         _mediatr = mediatr;
     }
     
@@ -26,8 +22,7 @@ public class UsersController: BaseController
     [ProducesResponseType(typeof(CurrentUserResponse), 200)]
     public async Task<IActionResult> CurrentUserAsync(CancellationToken cancellationToken)
     {
-        Guid userId = await this.GetUserIdAsync(cancellationToken);
-        CurrentUserResponse result = await this._mediatr.Send(new CurrentUserQuery(userId), cancellationToken);
+        CurrentUserResponse result = await this._mediatr.Send(new CurrentUserQuery(), cancellationToken);
         return Ok(result);
     }
 }

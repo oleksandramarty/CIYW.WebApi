@@ -92,6 +92,9 @@ namespace CIYW.Domain.Migrations
                     b.Property<Guid>("CurrencyId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -141,10 +144,15 @@ namespace CIYW.Domain.Migrations
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notes", "CIYW.Note");
                 });
@@ -467,7 +475,15 @@ namespace CIYW.Domain.Migrations
                         .HasForeignKey("CIYW.Domain.Models.Note", "InvoiceId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("CIYW.Domain.Models.User.User", "User")
+                        .WithMany("Notes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Invoice");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
@@ -587,6 +603,8 @@ namespace CIYW.Domain.Migrations
             modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
                 {
                     b.Navigation("Invoices");
+
+                    b.Navigation("Notes");
 
                     b.Navigation("UserCategories");
                 });

@@ -11,14 +11,10 @@ namespace CIYW.Kernel.Extensions.Controllers;
 [AllowAnonymous]
 public class AuthController: BaseController
 {
-    private IConfiguration _configuration;
     private readonly IMediator _mediatr;
     
-    public AuthController(
-        IConfiguration configuration, 
-        IMediator mediatr) : base(configuration, mediatr)
+    public AuthController(IMediator mediatr) : base(mediatr)
     {
-        _configuration = configuration;
         _mediatr = mediatr;
     }
     
@@ -43,8 +39,7 @@ public class AuthController: BaseController
     [Authorize]
     public async Task<IActionResult> LogoutAsync(CancellationToken cancellationToken)
     {
-        Guid userId = await this.GetUserIdAsync(cancellationToken);
-        await this._mediatr.Send(new AuthLogoutQuery(userId), cancellationToken);
+        await this._mediatr.Send(new AuthLogoutQuery(), cancellationToken);
         return Ok(true);
     }
 

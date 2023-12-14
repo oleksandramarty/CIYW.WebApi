@@ -16,21 +16,16 @@ namespace CIYW.Kernel.Extensions.Controllers;
 [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status500InternalServerError)]
 public class BaseController: ControllerBase
 {
-    private IConfiguration _configuration;
     private readonly IMediator _mediatr;
 
-    public BaseController(
-        IConfiguration configuration,
-        IMediator mediator
-    )
+    public BaseController(IMediator mediator)
     {
-        _configuration = configuration;
         _mediatr = mediator;
     }
     
     protected async Task<Guid> GetUserIdAsync(CancellationToken cancellationToken)
     {
-        return await this._mediatr.Send(new GetUserIdQuery(User), cancellationToken);
+        return await this._mediatr.Send(new GetUserIdQuery(), cancellationToken);
     }
 
 }

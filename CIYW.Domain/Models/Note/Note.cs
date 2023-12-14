@@ -13,4 +13,7 @@ public class Note: BaseWithDateEntity
     
     public Guid? InvoiceId { get; set; }
     public Invoice.Invoice Invoice { get; set; }
+    
+    public Guid UserId { get; set; }
+    public User.User User { get; set; }
 }

@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
+using CIYW.Domain.Models;
+using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
 using CIYW.Mediatr.Auth.Queries;
+using CIYW.Mediatr.Invoice.Requests;
+using CIYW.Mediatr.Note.Request;
 using CIYW.Mediatr.Users.Requests;
 using CIYW.Models.Responses.Users;
 using Microsoft.AspNetCore.Identity;
@@ -23,5 +27,13 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow))
             .ForMember(dest => dest.IsBlocked, opt => opt.MapFrom(src => false))
             .ForMember(dest => dest.IsTemporaryPassword, opt => opt.MapFrom(src => true));
+
+        this.CreateMap<CreateNoteCommand, Note>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
+            .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow));
+        
+        this.CreateMap<CreateInvoiceCommand, Invoice>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
+            .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow));
     }
 }

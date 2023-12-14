@@ -82,18 +82,6 @@ public class AuthRepository: IAuthRepository
         }
     }
     
-    public async Task<Guid> GetUserIdAsync(ClaimsPrincipal principal, CancellationToken cancellationToken)
-    {
-        User user = await this._userManager.GetUserAsync(principal);
-
-        if (user == null)
-        {
-            throw new LoggerException(ErrorMessages.UserNotFound, 404, null, EntityTypeEnum.User.ToString());
-        }
-        
-        return user.Id;
-    }
-    
     public async Task<User> FindUserByLoginAsync(string loginProvider, string providerKey)
     {
         User user = await _userManager.FindByLoginAsync(loginProvider, providerKey);

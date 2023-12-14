@@ -18,23 +18,27 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
     private readonly IReadGenericRepository<User> _userRepository;
     private readonly IReadGenericRepository<IdentityUserRole<Guid>> _userRoleRepository;
     private readonly IReadGenericRepository<Role> _roleRepository;
+    private readonly ICurrentUserProvider _currentUserProvider;
 
 
     public CurrentUserQueryHandler(
         IMapper mapper, 
         IReadGenericRepository<User> userRepository, 
         IReadGenericRepository<IdentityUserRole<Guid>> userRoleRepository, 
-        IReadGenericRepository<Role> roleRepository)
+        IReadGenericRepository<Role> roleRepository, 
+        ICurrentUserProvider currentUserProvider)
     {
         _mapper = mapper;
         _userRepository = userRepository;
         _userRoleRepository = userRoleRepository;
         _roleRepository = roleRepository;
+        _currentUserProvider = currentUserProvider;
     }
 
     public async Task<CurrentUserResponse> Handle(CurrentUserQuery query, CancellationToken cancellationToken)
     {
-        User user = await _userRepository.GetByIdAsync(query.UserId, cancellationToken);
+        Guid userId = await this._currentUserProvider.GetUserIdAsync(cancellationToken);
+        User user = await _userRepository.GetByIdAsync(userId, cancellationToken);
         if (user == null)
         {
             throw new LoggerException(ErrorMessages.UserNotFound, 404, null, EntityTypeEnum.User.ToString());

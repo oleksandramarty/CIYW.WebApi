@@ -33,4 +33,5 @@ public class User:IdentityUser<Guid>
     
     public HashSet<UserCategory> UserCategories { get; set; }
     public HashSet<Invoice.Invoice> Invoices { get; set; }
+    public HashSet<Note> Notes { get; set; }
 }

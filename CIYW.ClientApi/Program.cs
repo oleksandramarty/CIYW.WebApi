@@ -104,9 +104,7 @@ builder.Services.AddSwaggerGen(c =>
     // c.IncludeXmlComments(xmlPath);
 });
 
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped(typeof(IReadGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.AddDependencyInjection();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
 

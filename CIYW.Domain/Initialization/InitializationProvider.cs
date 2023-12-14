@@ -1,5 +1,6 @@
 ﻿using CIYW.Const.Enum;
 using CIYW.Const.Providers;
+using CIYW.Domain.Models;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
@@ -30,6 +31,14 @@ public class InitializationProvider
         return new List<Category>
         {
             new Category() { Id = InitConst.CategoryOtherId, Name = "Other", Description = "Other", Ico = "Other", Created = DateTime.UtcNow},
+        };
+    }
+    
+    public static List<Currency> GetCurrencies()
+    {
+        return new List<Currency>
+        {
+            new Currency() { Id = InitConst.CurrencyUsdId, Name = "US Dollar", Symbol = "$", IsoCode = "USD"},
         };
     }
 }

@@ -72,8 +72,6 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand>
         List<IdentityUserLogin<Guid>> logins = this.CreateUserLogins(user);
 
         await this._authRepository.UpdateUserLoginsAsync(user.Id, logins, cancellationToken);
-
-        await this._mediator.Send(new AuthLogoutQuery(user.Id), cancellationToken);
     }
     
     private List<IdentityUserLogin<Guid>> CreateUserLogins(User user)
