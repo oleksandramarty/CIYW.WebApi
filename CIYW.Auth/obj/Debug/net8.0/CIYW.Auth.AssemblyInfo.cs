@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CIYW.Auth")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c890e146022aeaff9fdaf0250ecf838768994fc7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a74e51038919ad21914d05cee288a8897125e1b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CIYW.Auth")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CIYW.Auth")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

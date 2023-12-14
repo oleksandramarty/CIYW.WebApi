@@ -17,7 +17,8 @@
           "CIYW.Kernel": "1.0.0",
           "CIYW.Mediatr": "1.0.0",
           "CIYW.Models": "1.0.0",
-          "CIYW.Services": "1.0.0",
+          "CIYW.Repositories": "1.0.0",
+          "CYIW.Mapper": "1.0.0",
           "FluentValidation.AspNetCore": "11.3.0",
           "MediatR": "12.2.0",
           "MediatR.Contracts": "2.0.1",
@@ -1450,7 +1451,7 @@
           "CIYW.Models.dll": {}
         }
       },
-      "CIYW.Services/1.0.0": {
+      "CIYW.Repositories/1.0.0": {
         "dependencies": {
           "CIYW.Const": "1.0.0",
           "CIYW.Interfaces": "1.0.0",
@@ -1458,7 +1459,18 @@
           "Microsoft.Extensions.Options": "8.0.0"
         },
         "runtime": {
-          "CIYW.Services.dll": {}
+          "CIYW.Repositories.dll": {}
+        }
+      },
+      "CYIW.Mapper/1.0.0": {
+        "dependencies": {
+          "AutoMapper": "12.0.1",
+          "CIYW.Domain": "1.0.0",
+          "CIYW.Mediatr": "1.0.0",
+          "CIYW.Models": "1.0.0"
+        },
+        "runtime": {
+          "CYIW.Mapper.dll": {}
         }
       }
     }
@@ -2512,7 +2524,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "CIYW.Services/1.0.0": {
+    "CIYW.Repositories/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CYIW.Mapper/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

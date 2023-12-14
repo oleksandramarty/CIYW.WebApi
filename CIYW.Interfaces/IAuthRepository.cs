@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Interfaces;
 
-public interface IAuthService
+public interface IAuthRepository
 {
     Task<string> GetAuthenticationTokenAsync(User user, string loginProvider, string tokenName);
     Task<User> FindUserByIdAsync(string userId);

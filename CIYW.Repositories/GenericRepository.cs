@@ -3,14 +3,14 @@ using CIYW.Domain;
 using CIYW.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace CIYW.Services;
+namespace CIYW.Repositories;
 
-public class GenericService<T> : IGenericService<T> where T : class
+public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private readonly DataContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public GenericService(DataContext context)
+    public GenericRepository(DataContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
         _dbSet = _context.Set<T>();

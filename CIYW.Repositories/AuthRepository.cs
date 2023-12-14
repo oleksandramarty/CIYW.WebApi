@@ -9,14 +9,14 @@ using CIYW.Kernel.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace CIYW.Services;
+namespace CIYW.Repositories;
 
-public class AuthService: IAuthService
+public class AuthRepository: IAuthRepository
 {
     private readonly UserManager<User> _userManager;
     private readonly DataContext _context;
 
-    public AuthService(UserManager<User> userManager, DataContext context)
+    public AuthRepository(UserManager<User> userManager, DataContext context)
     {
         _userManager = userManager;
         _context = context;

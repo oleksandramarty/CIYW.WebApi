@@ -122,4 +122,20 @@ namespace CIYW.Kernel.Extensions;
                 return content;
             }
         }
+        
+        public static string GenerateRandomPassword(int minLength, int maxLength)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+
+            int passwordLength = random.Next(minLength, maxLength + 1);
+            char[] passwordArray = new char[passwordLength];
+
+            for (int i = 0; i < passwordLength; i++)
+            {
+                passwordArray[i] = chars[random.Next(chars.Length)];
+            }
+
+            return new string(passwordArray);
+        }
     }

@@ -13,7 +13,7 @@ using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Kernel.Utils;
-using CIYW.Services;
+using CIYW.Repositories;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -216,9 +216,9 @@ namespace CIYW.Kernel.Extensions;
 
         public static void AddDependencyInjection(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped(typeof(IReadGenericService<>), typeof(GenericService<>));
-            builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+            builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+            builder.Services.AddScoped(typeof(IReadGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         }
 
         public static void AddMvcSupport(this WebApplicationBuilder builder)

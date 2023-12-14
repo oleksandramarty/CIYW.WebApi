@@ -5,7 +5,7 @@ namespace CIYW.Mediatr.Auth.Queries;
 public class SignInCommand: IRequest
 {
     public SignInCommand(string lastName, string firstName, string patronymic, string login, string email, string phone, string confirmEmail, bool isAgree, string password,
-        string confirmPassword, bool isAgreeDigest, string role)
+        string confirmPassword, bool isAgreeDigest)
     {
         Login = login ?? throw new ArgumentNullException(nameof(login));
         Email = email ?? throw new ArgumentNullException(nameof(email));
@@ -15,7 +15,6 @@ public class SignInCommand: IRequest
         Password = password ?? throw new ArgumentNullException(nameof(password));
         ConfirmPassword = confirmPassword ?? throw new ArgumentNullException(nameof(confirmPassword));
         IsAgreeDigest = isAgreeDigest;
-        Role = role;
         LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
         FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
         Patronymic = patronymic;
@@ -32,5 +31,4 @@ public class SignInCommand: IRequest
     public string Password { get; set; }
     public string ConfirmPassword { get; set; }
     public bool IsAgreeDigest { get; set; }
-    public string Role { get; set; }
 }

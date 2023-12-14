@@ -39,7 +39,8 @@
       <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />
       <ProjectReference Include="..\CIYW.Kernel\CIYW.Kernel.csproj" />
       <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
-      <ProjectReference Include="..\CIYW.Services\CIYW.Services.csproj" />
+      <ProjectReference Include="..\CIYW.Repositories\CIYW.Repositories.csproj" />
+      <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
     </ItemGroup>
 
 </Project>

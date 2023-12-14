@@ -6,16 +6,16 @@ namespace CIYW.Mediatr.Auth.Handlers;
 
 public class AuthLogoutQueryHandler: IRequestHandler<AuthLogoutQuery>
 {
-    private readonly IAuthService _authService;
+    private readonly IAuthRepository _authRepository;
 
-    public AuthLogoutQueryHandler(IAuthService authService)
+    public AuthLogoutQueryHandler(IAuthRepository authRepository)
     {
-        _authService = authService;
+        _authRepository = authRepository;
     }
 
     public async Task Handle(AuthLogoutQuery query, CancellationToken cancellationToken)
     {
         // query.UserId = Get User Id
-        await this._authService.LogOutUserAsync(query.UserId, cancellationToken);
+        await this._authRepository.LogOutUserAsync(query.UserId, cancellationToken);
     }
 }

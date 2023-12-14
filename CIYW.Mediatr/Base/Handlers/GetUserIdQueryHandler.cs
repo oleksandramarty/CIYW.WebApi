@@ -6,15 +6,15 @@ namespace CIYW.Mediatr.Base.Handlers;
 
 public class GetUserIdQueryHandler: IRequestHandler<GetUserIdQuery, Guid>
 {
-    private readonly IAuthService _authService;
+    private readonly IAuthRepository _authRepository;
 
-    public GetUserIdQueryHandler(IAuthService authService)
+    public GetUserIdQueryHandler(IAuthRepository authRepository)
     {
-        _authService = authService;
+        _authRepository = authRepository;
     }
 
     public async Task<Guid> Handle(GetUserIdQuery query, CancellationToken cancellationToken)
     {
-        return await this._authService.GetUserIdAsync(query.User, cancellationToken);
+        return await this._authRepository.GetUserIdAsync(query.User, cancellationToken);
     }
 }

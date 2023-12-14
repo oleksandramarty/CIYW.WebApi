@@ -3,6 +3,7 @@ using Autofac;
 using CIYW.Mediatr.Auth.Handlers;
 using CIYW.Mediatr.Base.Handlers;
 using CIYW.Mediatr.Users.Handlers;
+using CIYW.Mediatr.Users.Requests;
 using MediatR;
 
 namespace CIYW.Mediatr;
@@ -22,7 +23,9 @@ public class MediatrModule : Autofac.Module
         builder.RegisterAssemblyTypes(typeof(ResetPasswordCheckAccessQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<>));
         builder.RegisterAssemblyTypes(typeof(RestorePasswordCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<>));
         builder.RegisterAssemblyTypes(typeof(SignInCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<>));
+        
         builder.RegisterAssemblyTypes(typeof(GetUserIdQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        
         builder.RegisterAssemblyTypes(typeof(CurrentUserQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
     }
 }

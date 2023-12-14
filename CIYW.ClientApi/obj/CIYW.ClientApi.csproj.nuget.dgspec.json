@@ -128,8 +128,11 @@
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\CIYW.Services.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\CIYW.Services.csproj"
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj"
               }
             }
           }
@@ -679,14 +682,14 @@
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\CIYW.Services.csproj": {
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\CIYW.Services.csproj",
-        "projectName": "CIYW.Services",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\CIYW.Services.csproj",
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj",
+        "projectName": "CIYW.Repositories",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj",
         "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\obj\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -728,6 +731,77 @@
             "Microsoft.Extensions.Options": {
               "target": "Package",
               "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj",
+        "projectName": "CYIW.Mapper",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
             }
           },
           "imports": [

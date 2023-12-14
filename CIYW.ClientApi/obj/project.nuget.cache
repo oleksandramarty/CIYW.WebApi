@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TcoQ89Buc5NaLitVsKXfiwATed1SM1ekEPpQOG4OJ5dQP6DiXWTskjTSPTE7I7O45LToeuY/A61n3dDgQAHEiA==",
+  "dgSpecHash": "PhWMTF/cbl6VgswpRYCeETK/gLmEqKH1D7MON7PDm2xYdlAgbjPIERD9BU8hcY6CCe0Ii+V4CR1YJXQZbAp1mA==",
   "success": true,
   "projectFilePath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.ClientApi\\CIYW.ClientApi.csproj",
   "expectedPackageFiles": [
@@ -154,7 +154,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.2.0 was resolved.",
+      "message": "Версия обнаруженного пакета нарушает ограничение зависимости: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 требуется MediatR (>= 11.0.0 && < 12.0.0), но в результате разрешения получена версия MediatR 12.2.0.",
       "libraryId": "MediatR",
       "targetGraphs": [
         "net8.0"

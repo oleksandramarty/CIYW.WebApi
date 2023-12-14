@@ -2,7 +2,7 @@
 
 namespace CIYW.Interfaces;
 
-public interface IReadGenericService<T> where T : class
+public interface IReadGenericRepository<T> where T : class
 {
     Task<IList<T>> GetAllAsync(CancellationToken cancellationToken);
     Task<IList<T>> GetWithPaginationAsync(int page, int take, CancellationToken cancellationToken);

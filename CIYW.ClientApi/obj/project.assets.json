@@ -2729,7 +2729,7 @@
           "bin/placeholder/CIYW.Models.dll": {}
         }
       },
-      "CIYW.Services/1.0.0": {
+      "CIYW.Repositories/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
@@ -2739,10 +2739,26 @@
           "Microsoft.Extensions.Options": "8.0.0"
         },
         "compile": {
-          "bin/placeholder/CIYW.Services.dll": {}
+          "bin/placeholder/CIYW.Repositories.dll": {}
         },
         "runtime": {
-          "bin/placeholder/CIYW.Services.dll": {}
+          "bin/placeholder/CIYW.Repositories.dll": {}
+        }
+      },
+      "CYIW.Mapper/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "AutoMapper": "12.0.1",
+          "CIYW.Domain": "1.0.0",
+          "CIYW.Mediatr": "1.0.0",
+          "CIYW.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CYIW.Mapper.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CYIW.Mapper.dll": {}
         }
       }
     }
@@ -7884,10 +7900,15 @@
       "path": "../CIYW.Models/CIYW.Models.csproj",
       "msbuildProject": "../CIYW.Models/CIYW.Models.csproj"
     },
-    "CIYW.Services/1.0.0": {
+    "CIYW.Repositories/1.0.0": {
       "type": "project",
-      "path": "../CIYW.Services/CIYW.Services.csproj",
-      "msbuildProject": "../CIYW.Services/CIYW.Services.csproj"
+      "path": "../CIYW.Repositories/CIYW.Repositories.csproj",
+      "msbuildProject": "../CIYW.Repositories/CIYW.Repositories.csproj"
+    },
+    "CYIW.Mapper/1.0.0": {
+      "type": "project",
+      "path": "../CYIW.Mapper/CYIW.Mapper.csproj",
+      "msbuildProject": "../CYIW.Mapper/CYIW.Mapper.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7901,7 +7922,8 @@
       "CIYW.Kernel >= 1.0.0",
       "CIYW.Mediatr >= 1.0.0",
       "CIYW.Models >= 1.0.0",
-      "CIYW.Services >= 1.0.0",
+      "CIYW.Repositories >= 1.0.0",
+      "CYIW.Mapper >= 1.0.0",
       "FluentValidation.AspNetCore >= 11.3.0",
       "MediatR >= 12.2.0",
       "MediatR.Contracts >= 2.0.1",
@@ -7962,8 +7984,11 @@
             "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
               "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
             },
-            "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\CIYW.Services.csproj": {
-              "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Services\\CIYW.Services.csproj"
+            "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj": {
+              "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj"
+            },
+            "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj": {
+              "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj"
             }
           }
         }
@@ -8089,7 +8114,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Detected package version outside of dependency constraint: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR (>= 11.0.0 && < 12.0.0) but version MediatR 12.2.0 was resolved.",
+      "message": "Версия обнаруженного пакета нарушает ограничение зависимости: MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 требуется MediatR (>= 11.0.0 && < 12.0.0), но в результате разрешения получена версия MediatR 12.2.0.",
       "libraryId": "MediatR",
       "targetGraphs": [
         "net8.0"

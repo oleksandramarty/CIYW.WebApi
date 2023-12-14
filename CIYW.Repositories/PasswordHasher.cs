@@ -4,7 +4,7 @@ using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using Microsoft.Extensions.Options;
 
-namespace CIYW.Services;
+namespace CIYW.Repositories;
 
 public sealed class PasswordHasher : IPasswordHasher
 {

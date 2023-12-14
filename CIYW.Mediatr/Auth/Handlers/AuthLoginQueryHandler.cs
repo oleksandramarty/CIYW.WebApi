@@ -21,12 +21,12 @@ namespace CIYW.Mediatr.Auth.Handlers;
 public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenResponse>
 {
   private readonly TokenGenerator _tokenGenerator;
-  private readonly IAuthService _authService;
+  private readonly IAuthRepository _authRepository;
   private readonly IHttpContextAccessor _httpContextAccessor;
 
-  public AuthLoginQueryHandler(IAuthService authService, TokenGenerator tokenGenerator, IHttpContextAccessor httpContextAccessor)
+  public AuthLoginQueryHandler(IAuthRepository authRepository, TokenGenerator tokenGenerator, IHttpContextAccessor httpContextAccessor)
   {
-    _authService = authService;
+    _authRepository = authRepository;
     _tokenGenerator = tokenGenerator;
     _httpContextAccessor = httpContextAccessor;
   }
@@ -55,15 +55,15 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
         return tokenResponse;
       }
 
-      var role = await this._authService.GetRolesAsync(user);
-      var passwordCorrect = await _authService.CheckPasswordAsync(user, query.Password);
+      var role = await this._authRepository.GetRolesAsync(user);
+      var passwordCorrect = await _authRepository.CheckPasswordAsync(user, query.Password);
 
       if (passwordCorrect)
       {
         var tokenResponse = this._tokenGenerator.GenerateJwtToken(user.PhoneNumber, user,
           role.FirstOrDefault(), query.RememberMe, provider);
           ;
-        var res = await _authService.SetAuthenticationTokenAsync(user, provider,
+        var res = await _authRepository.SetAuthenticationTokenAsync(user, provider,
           TokenNameProvider.CIYWAuth, (string)tokenResponse.Value);
         if (!res.Succeeded)
         {
@@ -83,17 +83,17 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
     string provider = null;
     if (query.Login.NotNullOrEmpty())
     {
-      user = await this._authService.FindUserByLoginAsync(LoginProvider.CIYWLogin, query.Login);
+      user = await this._authRepository.FindUserByLoginAsync(LoginProvider.CIYWLogin, query.Login);
       provider = LoginProvider.CIYWLogin;
     }
     if (query.Phone.NotNullOrEmpty())
     {
-      user = await this._authService.FindUserByLoginAsync(LoginProvider.CIYWPhone, query.Phone);
+      user = await this._authRepository.FindUserByLoginAsync(LoginProvider.CIYWPhone, query.Phone);
       provider = LoginProvider.CIYWPhone;
     }
     if (query.Email.NotNullOrEmpty())
     {
-      user = await this._authService.FindUserByLoginAsync(LoginProvider.CIYWEmail, query.Email);
+      user = await this._authRepository.FindUserByLoginAsync(LoginProvider.CIYWEmail, query.Email);
       provider = LoginProvider.CIYWEmail;
     }
     if (user == null)

@@ -14,16 +14,16 @@ namespace CIYW.Auth.Schemes;
 
 public class JwtCIYWHandler : AuthenticationHandler<JwtCIYWOptions>
     {
-        private IAuthService _authService;
+        private IAuthRepository _authRepository;
         public JwtCIYWHandler(
             IOptionsMonitor<JwtCIYWOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
-            IAuthService authService
+            IAuthRepository authRepository
             ) : base(options, logger, encoder, clock)
         {
-            _authService = authService;
+            _authRepository = authRepository;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -58,11 +58,11 @@ public class JwtCIYWHandler : AuthenticationHandler<JwtCIYWOptions>
             var uid = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
             if (uid == null) return AuthenticateResult.Fail("В токене не найден идентификатор пользователя");
 
-            var user = await this._authService.FindUserByIdAsync(uid.Value);
+            var user = await this._authRepository.FindUserByIdAsync(uid.Value);
             if (user ==  null) return AuthenticateResult.NoResult();
             if (user.IsBlocked) return AuthenticateResult.NoResult();
             var provider = token.Claims.FirstOrDefault(claim => claim.Type == "provider");
-            var savedTokenPhone = await this._authService.GetAuthenticationTokenAsync(user, provider?.Value ?? LoginProvider.CIYWPhone, TokenNameProvider.CIYWAuth);
+            var savedTokenPhone = await this._authRepository.GetAuthenticationTokenAsync(user, provider?.Value ?? LoginProvider.CIYWPhone, TokenNameProvider.CIYWAuth);
             if (savedTokenPhone == null) return AuthenticateResult.NoResult();
             if (savedTokenPhone != headerValue.Parameter) return AuthenticateResult.NoResult();
 

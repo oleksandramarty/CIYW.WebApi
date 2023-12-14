@@ -65,8 +65,6 @@ L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Interfaces.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Auth.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Const.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Interfaces.pdb
-L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Services.dll
-L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Services.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Mediatr.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Mediatr.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Humanizer.dll
@@ -144,3 +142,7 @@ L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NJsonSchema.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\ZymLabs.NSwag.FluentValidation.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\ZymLabs.NSwag.FluentValidation.AspNetCore.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Repositories.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CYIW.Mapper.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Repositories.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CYIW.Mapper.pdb

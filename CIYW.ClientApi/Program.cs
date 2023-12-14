@@ -8,7 +8,7 @@ using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediatr;
-using CIYW.Services;
+using CIYW.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -104,9 +104,9 @@ builder.Services.AddSwaggerGen(c =>
     // c.IncludeXmlComments(xmlPath);
 });
 
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped(typeof(IReadGenericService<>), typeof(GenericService<>));
-builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped(typeof(IReadGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
 

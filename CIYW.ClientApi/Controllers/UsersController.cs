@@ -8,7 +8,7 @@ namespace CIYW.Kernel.Extensions.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[AllowAnonymous]
+[Authorize]
 public class UsersController: BaseController
 {
     private IConfiguration _configuration;
@@ -24,12 +24,10 @@ public class UsersController: BaseController
     
     [HttpGet("Current")]
     [ProducesResponseType(typeof(CurrentUserResponse), 200)]
-    [Authorize]
     public async Task<IActionResult> CurrentUserAsync(CancellationToken cancellationToken)
     {
         Guid userId = await this.GetUserIdAsync(cancellationToken);
         CurrentUserResponse result = await this._mediatr.Send(new CurrentUserQuery(userId), cancellationToken);
         return Ok(result);
     }
-    
 }
