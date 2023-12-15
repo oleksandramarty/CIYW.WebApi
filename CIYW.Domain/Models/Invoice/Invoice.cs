@@ -1,4 +1,6 @@
-﻿namespace CIYW.Domain.Models.Invoice;
+﻿using CIYW.Const.Enum;
+
+namespace CIYW.Domain.Models.Invoice;
 
 public class Invoice: BaseWithDateEntity
 {
@@ -18,4 +20,6 @@ public class Invoice: BaseWithDateEntity
     
     public Guid? NoteId { get; set; }
     public Note.Note Note { get; set; }
+    
+    public InvoiceTypeEnum Type { get; set; }
 }

@@ -5,6 +5,8 @@ using CIYW.Const.Errors;
 using CIYW.Domain;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
+using CIYW.Models.Helpers.Base;
+using CIYW.Models.Requests.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Repositories;
@@ -14,14 +16,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     private readonly DataContext context;
     private readonly DbSet<T> dbSet;
     private readonly ICurrentUserProvider currentUserProvider;
+    private readonly IFilterProvider<T> filterProvider;
 
     public GenericRepository(
         DataContext context, 
-        ICurrentUserProvider currentUserProvider)
+        ICurrentUserProvider currentUserProvider,
+        IFilterProvider<T> filterProvider)
     {
         this.currentUserProvider = currentUserProvider;
         this.context = context ?? throw new ArgumentNullException(nameof(context));
         this.dbSet = this.context.Set<T>();
+        this.filterProvider = filterProvider;
     }
 
     public async Task<IList<T>> GetAllAsync(CancellationToken cancellationToken)
@@ -56,6 +61,37 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         await this.CheckEntityExistsAsync(entity, cancellationToken);
 
         return entity;
+    }
+    
+    public async Task<ListWithIncludeHelper<T>> GetListWithIncludeAsync(
+        Func<T, bool> condition,
+        BaseFilterQuery filter,
+        CancellationToken cancellationToken,
+        params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs)
+    {
+        IQueryable<T> query = dbSet;
+
+        foreach (var includeFunc in includeFuncs)
+        {
+            query = includeFunc(query);
+        }
+
+        if (condition != null)
+        {
+            query = query.Where(condition).AsQueryable().AsNoTracking();            
+        }
+        
+        int total = await query.CountAsync(cancellationToken);
+        
+        query = this.filterProvider.Apply(query, filter);
+
+        List<T> entities = await query.ToListAsync(cancellationToken);
+
+        return new ListWithIncludeHelper<T>
+        {
+            Entities = entities,
+            Total = total
+        };
     }
    
     public async Task<T> GetByPropertyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)

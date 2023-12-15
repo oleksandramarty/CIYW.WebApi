@@ -10,6 +10,7 @@
       <ProjectReference Include="..\CIYW.Const\CIYW.Const.csproj" />
       <ProjectReference Include="..\CIYW.Interfaces\CIYW.Interfaces.csproj" />
       <ProjectReference Include="..\CIYW.Kernel\CIYW.Kernel.csproj" />
+      <ProjectReference Include="..\CIYW.Mediatr\CIYW.Mediatr.csproj" />
     </ItemGroup>
 
     <ItemGroup>

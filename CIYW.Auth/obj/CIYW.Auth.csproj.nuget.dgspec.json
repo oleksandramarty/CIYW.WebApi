@@ -247,6 +247,9 @@
             "projectReferences": {
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
               }
             }
           }
@@ -306,6 +309,9 @@
             "projectReferences": {
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
               }
             }
           }

@@ -13,7 +13,25 @@ namespace CIYW.Domain.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
+                name: "CIYW.Category");
+
+            migrationBuilder.EnsureSchema(
+                name: "CIYW.Dictionary");
+
+            migrationBuilder.EnsureSchema(
+                name: "CIYW.Invoice");
+
+            migrationBuilder.EnsureSchema(
+                name: "CIYW.Note");
+
+            migrationBuilder.EnsureSchema(
                 name: "CIYW.Tariff");
+
+            migrationBuilder.EnsureSchema(
+                name: "CIYW.Balance");
+
+            migrationBuilder.EnsureSchema(
+                name: "CIYW.User");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -27,6 +45,38 @@ namespace CIYW.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                schema: "CIYW.Category",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Ico = table.Column<string>(type: "text", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Currencies",
+                schema: "CIYW.Dictionary",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsoCode = table.Column<string>(type: "text", nullable: false),
+                    Symbol = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,6 +132,8 @@ namespace CIYW.Domain.Migrations
                     Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastForgot = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     TariffId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CurrencyId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserBalanceId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -100,6 +152,13 @@ namespace CIYW.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalSchema: "CIYW.Dictionary",
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Tariffs_TariffId",
                         column: x => x.TariffId,
@@ -194,6 +253,135 @@ namespace CIYW.Domain.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Invoices",
+                schema: "CIYW.Invoice",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CurrencyId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    NoteId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Invoices_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "CIYW.Category",
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalSchema: "CIYW.Dictionary",
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserBalances",
+                schema: "CIYW.Balance",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    CurrencyId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBalances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserBalances_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserBalances_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalSchema: "CIYW.Dictionary",
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCategories",
+                schema: "CIYW.User",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCategories", x => new { x.UserId, x.CategoryId });
+                    table.ForeignKey(
+                        name: "FK_UserCategories_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "CIYW.Category",
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notes",
+                schema: "CIYW.Note",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Body = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    InvoiceId = table.Column<Guid>(type: "uuid", nullable: true),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Notes_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalSchema: "CIYW.Invoice",
+                        principalTable: "Invoices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -226,6 +414,11 @@ namespace CIYW.Domain.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CurrencyId",
+                table: "AspNetUsers",
+                column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_TariffId",
                 table: "AspNetUsers",
                 column: "TariffId");
@@ -235,6 +428,56 @@ namespace CIYW.Domain.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_CategoryId",
+                schema: "CIYW.Invoice",
+                table: "Invoices",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_CurrencyId",
+                schema: "CIYW.Invoice",
+                table: "Invoices",
+                column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_UserId",
+                schema: "CIYW.Invoice",
+                table: "Invoices",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notes_InvoiceId",
+                schema: "CIYW.Note",
+                table: "Notes",
+                column: "InvoiceId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notes_UserId",
+                schema: "CIYW.Note",
+                table: "Notes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBalances_CurrencyId",
+                schema: "CIYW.Balance",
+                table: "UserBalances",
+                column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBalances_UserId",
+                schema: "CIYW.Balance",
+                table: "UserBalances",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserCategories_CategoryId",
+                schema: "CIYW.User",
+                table: "UserCategories",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -256,10 +499,34 @@ namespace CIYW.Domain.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Notes",
+                schema: "CIYW.Note");
+
+            migrationBuilder.DropTable(
+                name: "UserBalances",
+                schema: "CIYW.Balance");
+
+            migrationBuilder.DropTable(
+                name: "UserCategories",
+                schema: "CIYW.User");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Invoices",
+                schema: "CIYW.Invoice");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories",
+                schema: "CIYW.Category");
+
+            migrationBuilder.DropTable(
+                name: "Currencies",
+                schema: "CIYW.Dictionary");
 
             migrationBuilder.DropTable(
                 name: "Tariffs",

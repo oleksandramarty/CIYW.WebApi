@@ -15,7 +15,7 @@ using Microsoft.OpenApi.Models;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.Kernel.Extensions.ActionFilters;
-using CIYW.Models.Mapping;
+using CYIW.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);

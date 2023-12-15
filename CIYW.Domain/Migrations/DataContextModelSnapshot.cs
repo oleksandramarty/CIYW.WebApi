@@ -102,6 +102,9 @@ namespace CIYW.Domain.Migrations
                     b.Property<Guid?>("NoteId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("timestamp with time zone");
 
@@ -354,7 +357,7 @@ namespace CIYW.Domain.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserBalance");
+                    b.ToTable("UserBalances", "CIYW.Balance");
                 });
 
             modelBuilder.Entity("CIYW.Domain.Models.User.UserCategory", b =>

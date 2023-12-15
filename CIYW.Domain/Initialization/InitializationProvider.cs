@@ -32,6 +32,7 @@ public class InitializationProvider
         return new List<Category>
         {
             new Category() { Id = InitConst.CategoryOtherId, Name = "Other", Description = "Other", Ico = "Other", Created = DateTime.UtcNow},
+            new Category() { Id = InitConst.CategorySalaryId, Name = "Salary", Description = "Salary", Ico = "Salary", Created = DateTime.UtcNow},
         };
     }
     

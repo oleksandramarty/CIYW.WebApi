@@ -18,6 +18,7 @@ namespace CIYW.Domain;
     public DbSet<Currency> Currencies { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Note> Notes { get; set; }
+    public DbSet<UserBalance> UserBalances { get; set; }
     
     public DataContext(DbContextOptions<DataContext> options)
         : base(options)
@@ -36,6 +37,8 @@ namespace CIYW.Domain;
       modelBuilder.Entity<Note>(entity => { entity.ToTable("Notes", "CIYW.Note"); });
       
       modelBuilder.Entity<Invoice>(entity => { entity.ToTable("Invoices", "CIYW.Invoice"); });
+      
+      modelBuilder.Entity<UserBalance>(entity => { entity.ToTable("UserBalances", "CIYW.Balance"); });
       
       modelBuilder.Entity<Tariff>(entity => { entity.ToTable("Tariffs", "CIYW.Tariff"); });
       

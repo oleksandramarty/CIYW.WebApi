@@ -17,4 +17,5 @@ public class ErrorMessages
     public const string EmailsDoesntMatch = "Emails do not match";
     public const string PasswordsDoesntMatch = "Passwords do not match";
     public const string AgreeBeforeSignIn = "You have to agree with terms";
+    public const string Forbidden = "Forbidden";
 }

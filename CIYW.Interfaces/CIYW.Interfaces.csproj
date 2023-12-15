@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />
+      <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
     </ItemGroup>
 
 </Project>

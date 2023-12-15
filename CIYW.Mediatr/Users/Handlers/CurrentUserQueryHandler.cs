@@ -4,7 +4,6 @@ using CIYW.Const.Errors;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
-using CIYW.Mediatr.Base.Requests;
 using CIYW.Mediatr.Currency.Requests;
 using CIYW.Mediatr.Tariff.Requests;
 using CIYW.Mediatr.Users.Requests;
@@ -61,6 +60,7 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
         
         CurrentUserResponse response = this.mapper.Map<User, CurrentUserResponse>(user);
         response = this.mapper.Map<Role, CurrentUserResponse>(role, response);
+        response = this.mapper.Map<UserBalance, CurrentUserResponse>(user.UserBalance, response);
 
         response.Tariff = await this.mediator.Send(new TariffQuery(user.TariffId), cancellationToken);
         response.Currency = await this.mediator.Send(new CurrencyQuery(user.CurrencyId), cancellationToken);

@@ -22,13 +22,16 @@ public class InitConst
         get => new Guid("45E1247B-7DA9-4A53-ACD8-455312A4554E");
     }
     
+    public static Guid CategorySalaryId
+    {
+        get => new Guid("8A80FD76-88AC-4BA1-966C-FFC3821A9390");
+    }
+    
     public static Guid CurrencyUsdId
     {
         get => new Guid("3FFBC6D3-D209-4040-858E-B1035247AE0C");
     }
     
-    // 3FFBC6D3-D209-4040-858E-B1035247AE0C
-    // 8A80FD76-88AC-4BA1-966C-FFC3821A9390
     // 5A896D8F-58DA-4693-80C1-FCB08C9344E6
     // 15623EE2-F707-4315-B303-09CB4343A1C4
     // E5FFED17-8127-4FF5-9DC9-9344FF66B92A

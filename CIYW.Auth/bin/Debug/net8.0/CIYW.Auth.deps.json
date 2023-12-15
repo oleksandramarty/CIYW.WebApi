@@ -1106,7 +1106,8 @@
       },
       "CIYW.Interfaces/1.0.0": {
         "dependencies": {
-          "CIYW.Domain": "1.0.0"
+          "CIYW.Domain": "1.0.0",
+          "CIYW.Models": "1.0.0"
         },
         "runtime": {
           "CIYW.Interfaces.dll": {}
@@ -1115,6 +1116,7 @@
       "CIYW.Kernel/1.0.0": {
         "dependencies": {
           "CIYW.Const": "1.0.0",
+          "CIYW.Domain": "1.0.0",
           "FluentValidation": "11.8.1",
           "FluentValidation.DependencyInjectionExtensions": "11.8.1",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5"
