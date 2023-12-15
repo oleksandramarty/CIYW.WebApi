@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CIYW.Domain.Models;
+namespace CIYW.Domain.Models.Note;
 
 public class Note: BaseWithDateEntity
 {    

@@ -1,4 +1,6 @@
-﻿namespace CIYW.Domain.Models;
+﻿using CIYW.Domain.Models.User;
+
+namespace CIYW.Domain.Models.Currency;
 
 public class Currency: BaseEntity
 {
@@ -8,4 +10,5 @@ public class Currency: BaseEntity
     
     public HashSet<User.User> Users { get; set; }
     public HashSet<Invoice.Invoice> Invoices { get; set; }
+    public HashSet<UserBalance> UserBalances { get; set; }
 }

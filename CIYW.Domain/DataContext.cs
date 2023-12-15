@@ -1,6 +1,8 @@
 ﻿using CIYW.Domain.Models;
 using CIYW.Domain.Models.Category;
+using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Invoice;
+using CIYW.Domain.Models.Note;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -53,6 +55,11 @@ namespace CIYW.Domain;
         .HasOne(p => p.Note)
         .WithOne(a => a.Invoice)
         .HasForeignKey<Note>(a => a.InvoiceId);
+      
+      modelBuilder.Entity<User>()
+        .HasOne(p => p.UserBalance)
+        .WithOne(a => a.User)
+        .HasForeignKey<UserBalance>(a => a.UserId);
 
       modelBuilder.Entity<Invoice>()
         .Property(p => p.NoteId)

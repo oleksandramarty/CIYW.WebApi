@@ -12,10 +12,10 @@ public class Invoice: BaseWithDateEntity
     public Category.Category Category { get; set; }
     
     public Guid CurrencyId { get; set; }
-    public Currency Currency { get; set; }
+    public Currency.Currency Currency { get; set; }
     
     public DateTime Date { get; set; }
     
     public Guid? NoteId { get; set; }
-    public Note Note { get; set; }
+    public Note.Note Note { get; set; }
 }

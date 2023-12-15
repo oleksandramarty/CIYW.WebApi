@@ -2,8 +2,10 @@
 using Autofac;
 using CIYW.Mediatr.Auth.Handlers;
 using CIYW.Mediatr.Base.Handlers;
+using CIYW.Mediatr.Currency.Handlers;
 using CIYW.Mediatr.Invoice.Handlers;
 using CIYW.Mediatr.Note;
+using CIYW.Mediatr.Tariff.Handlers;
 using CIYW.Mediatr.Users.Handlers;
 using CIYW.Mediatr.Users.Requests;
 using MediatR;
@@ -33,5 +35,9 @@ public class MediatrModule : Autofac.Module
         builder.RegisterAssemblyTypes(typeof(CreateInvoiceCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         
         builder.RegisterAssemblyTypes(typeof(CreateNoteCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        
+        
+        builder.RegisterAssemblyTypes(typeof(TariffQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(CurrencyQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
     }
 }

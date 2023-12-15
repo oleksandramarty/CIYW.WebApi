@@ -218,6 +218,7 @@ namespace CIYW.Kernel.Extensions;
         {
             builder.Services.AddHttpContextAccessor();
             
+            builder.Services.AddScoped<IEntityValidator, EntityValidator>();
             builder.Services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped(typeof(IReadGenericRepository<>), typeof(GenericRepository<>));

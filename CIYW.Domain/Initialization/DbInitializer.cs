@@ -1,5 +1,6 @@
 ﻿using CIYW.Domain.Models;
 using CIYW.Domain.Models.Category;
+using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
 

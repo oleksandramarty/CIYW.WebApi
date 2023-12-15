@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
 using CIYW.Domain.Models;
+using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Invoice;
+using CIYW.Domain.Models.Note;
+using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
 using CIYW.Mediatr.Auth.Queries;
 using CIYW.Mediatr.Invoice.Requests;
 using CIYW.Mediatr.Note.Request;
 using CIYW.Mediatr.Users.Requests;
+using CIYW.Models.Responses.Currency;
+using CIYW.Models.Responses.Tariff;
 using CIYW.Models.Responses.Users;
 using Microsoft.AspNetCore.Identity;
 
@@ -23,6 +28,7 @@ public class MappingProfile: Profile
 
         this.CreateMap<CreateUserCommand, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Login))
             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Phone))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow))
             .ForMember(dest => dest.IsBlocked, opt => opt.MapFrom(src => false))
@@ -35,5 +41,8 @@ public class MappingProfile: Profile
         this.CreateMap<CreateInvoiceCommand, Invoice>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow));
+
+        this.CreateMap<Tariff, TariffResponse>();
+        this.CreateMap<Currency, CurrencyResponse>();
     }
 }

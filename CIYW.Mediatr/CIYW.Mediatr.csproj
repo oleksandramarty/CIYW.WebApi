@@ -25,6 +25,8 @@
 
     <ItemGroup>
       <Folder Include="Auth\" />
+      <Folder Include="Common\Handlers\" />
+      <Folder Include="Common\Requests\" />
     </ItemGroup>
 
 </Project>

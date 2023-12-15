@@ -3,6 +3,7 @@ using CIYW.Const.Const;
 using CIYW.Const.Enum;
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
+using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
@@ -14,14 +15,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Mediatr.Auth.Handlers;
 
-public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand>
+public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, Guid>
 {
-    private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
-    private readonly IGenericRepository<User> _userRepository;
-    private readonly IEntityValidator _entityValidator;
-    private readonly IAuthRepository _authRepository;
-    private readonly UserManager<User> _userManager;
+    private readonly IMapper mapper;
+    private readonly IMediator mediator;
+    private readonly IGenericRepository<User> userRepository;
+    private readonly IEntityValidator entityValidator;
+    private readonly IAuthRepository authRepository;
+    private readonly UserManager<User> userManager;
 
     public CreateUserCommandHandler(
         IMapper mapper, 
@@ -31,15 +32,15 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand>
         IAuthRepository authRepository, 
         UserManager<User> userManager)
     {
-        _mapper = mapper;
-        _mediator = mediator;
-        _userRepository = userRepository;
-        _entityValidator = entityValidator;
-        _authRepository = authRepository;
-        _userManager = userManager;
+        this.mapper = mapper;
+        this.mediator = mediator;
+        this.userRepository = userRepository;
+        this.entityValidator = entityValidator;
+        this.authRepository = authRepository;
+        this.userManager = userManager;
     }
 
-    public async Task Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
         {
@@ -56,22 +57,43 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand>
             throw new LoggerException(ErrorMessages.AgreeBeforeSignIn, 409, null, EntityTypeEnum.User.ToString());
         }
         
-        await _entityValidator.ValidateExistParamAsync<User>(u => u.Email == command.Email, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email), cancellationToken);
-        await _entityValidator.ValidateExistParamAsync<User>(u => u.PhoneNumber == command.Phone, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone), cancellationToken);
-        await _entityValidator.ValidateExistParamAsync<User>(u => u.Login == command.Login, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login), cancellationToken);
+        await this.entityValidator.ValidateExistParamAsync<User>(u => u.Email == command.Email, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email), cancellationToken);
+        await this.entityValidator.ValidateExistParamAsync<User>(u => u.PhoneNumber == command.Phone, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone), cancellationToken);
+        await this.entityValidator.ValidateExistParamAsync<User>(u => u.Login == command.Login, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login), cancellationToken);
         
-        User user = this._mapper.Map<CreateUserCommand, User>(command);
+        User user = this.mapper.Map<CreateUserCommand, User>(command);
+        user.TariffId = InitConst.FreeTariffId;
+        user.CurrencyId = InitConst.CurrencyUsdId;
+
+        user.UserBalance = new UserBalance
+        {
+            Id = Guid.NewGuid(),
+            CurrencyId = user.CurrencyId,
+            UserId = user.Id,
+            Created = DateTime.UtcNow,
+            Amount = 0
+        };
       
-        var res = await _userManager.CreateAsync(user, command.Password);
+        var res = await this.userManager.CreateAsync(user, command.Password);
 
         if (res.Succeeded)
         {
-            res = await _userManager.AddToRoleAsync(user, RoleProvider.User);
+            res = await this.userManager.AddToRoleAsync(user, RoleProvider.User);
+        }
+        else
+        {
+            if (res.Errors.Any())
+            {
+                string creationError = string.Join(Environment.NewLine, res.Errors.Select(e => e.Description));
+                throw new LoggerException(creationError, 409, null, EntityTypeEnum.User.ToString());
+            }
         }
 
         List<IdentityUserLogin<Guid>> logins = this.CreateUserLogins(user);
 
-        await this._authRepository.UpdateUserLoginsAsync(user.Id, logins, cancellationToken);
+        await this.authRepository.UpdateUserLoginsAsync(user.Id, logins, cancellationToken);
+
+        return user.Id;
     }
     
     private List<IdentityUserLogin<Guid>> CreateUserLogins(User user)

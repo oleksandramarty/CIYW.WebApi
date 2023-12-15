@@ -1,9 +1,11 @@
-﻿namespace CIYW.Models.Responses.Users;
+﻿using CIYW.Models.Responses.Base;
+using CIYW.Models.Responses.Currency;
+using CIYW.Models.Responses.Tariff;
 
-public class CurrentUserResponse
+namespace CIYW.Models.Responses.Users;
+
+public class CurrentUserResponse: BaseWithDateEntityResponse
 {
-    public Guid Id { get; set; }
-    
     public string LastName { get; set; }
     public string FirstName { get; set; }
     public string Patronymic { get; set; }
@@ -14,4 +16,9 @@ public class CurrentUserResponse
     
     public Guid RoleId { get; set; }
     public string Role { get; set; }
+    
+    public CurrencyResponse Currency { get; set; }    
+    public TariffResponse Tariff { get; set; }
+    
+    public decimal BalanceAmount { get; set; }
 }

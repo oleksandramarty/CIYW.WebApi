@@ -2,7 +2,7 @@
 
 namespace CIYW.Mediatr.Auth.Queries;
 
-public class CreateUserCommand: IRequest
+public class CreateUserCommand: IRequest<Guid>
 {
     public CreateUserCommand(string lastName, string firstName, string patronymic, string login, string email, string phone, string confirmEmail, bool isAgree, string password,
         string confirmPassword, bool isAgreeDigest)

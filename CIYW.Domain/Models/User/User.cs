@@ -29,9 +29,11 @@ public class User:IdentityUser<Guid>
     public Tariff.Tariff Tariff { get; set; }
     
     public Guid CurrencyId { get; set; }
-    public Currency Currency { get; set; }
+    public Currency.Currency Currency { get; set; }
     
     public HashSet<UserCategory> UserCategories { get; set; }
     public HashSet<Invoice.Invoice> Invoices { get; set; }
-    public HashSet<Note> Notes { get; set; }
+    public HashSet<Note.Note> Notes { get; set; }
+    public Guid UserBalanceId { get; set; }
+    public UserBalance UserBalance { get; set; }
 }
