@@ -18,8 +18,6 @@ public class BaseDateRangeQuery
 {
     public DateTime? DateFrom { get; set; }
     public DateTime? DateTo { get; set; }
-    public string DateFromColumn { get; set; } = "Created";
-    public string DateToColumn { get; set; } = "Updated";
 }
 
 public class BaseIdsListQuery

@@ -8,6 +8,7 @@ using CIYW.Domain.Models.User;
 using CIYW.Mediatr.Auth.Queries;
 using CIYW.Mediatr.Invoice.Requests;
 using CIYW.Mediatr.Note.Request;
+using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Category;
 using CIYW.Models.Responses.Currency;
 using CIYW.Models.Responses.Dictionary;
@@ -15,7 +16,6 @@ using CIYW.Models.Responses.Invoice;
 using CIYW.Models.Responses.Note;
 using CIYW.Models.Responses.Tariff;
 using CIYW.Models.Responses.Users;
-using Microsoft.AspNetCore.Identity;
 
 namespace CYIW.Mapper;
 
@@ -56,7 +56,8 @@ public class MappingProfile: Profile
         this.CreateMap<Currency, CurrencyResponse>();
         this.CreateMap<Note, NoteResponse>();
         this.CreateMap<Category, CategoryResponse>();
-        
+        this.CreateMap<BaseFilterQuery, UserInvoicesQuery>();
+         
         this.CreateMap<Invoice, BalanceInvoiceResponse>()
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))

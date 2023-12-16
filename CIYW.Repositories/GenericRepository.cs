@@ -48,11 +48,14 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return entity;
     }
     
-    public async Task<T> GetWithIncludeAsync(Func<T, bool> condition, Func<IQueryable<T>, IQueryable<T>> includeFunc, CancellationToken cancellationToken)
+    public async Task<T> GetWithIncludeAsync(Func<T, bool> condition, CancellationToken cancellationToken, params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs)
     {
         IQueryable<T> query = dbSet;
 
-        query = includeFunc(query);
+        foreach (var includeFunc in includeFuncs)
+        {
+            query = includeFunc(query);
+        }
 
         List<T> entities = await query.ToListAsync(cancellationToken);
 
@@ -76,14 +79,16 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             query = includeFunc(query);
         }
 
+        IEnumerable<T> queryResult = null;
+
         if (condition != null)
         {
-            query = query.Where(condition).AsQueryable().AsNoTracking();            
+            queryResult = query.Where(condition);            
         }
         
         int total = await query.CountAsync(cancellationToken);
         
-        query = this.filterProvider.Apply(query, filter);
+        queryResult = this.filterProvider.Apply(queryResult, filter);
 
         List<T> entities = await query.ToListAsync(cancellationToken);
 

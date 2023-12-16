@@ -28,6 +28,14 @@ public class InvoiceController: BaseController
         return Ok(response);
     }
     
+    [HttpGet("monthly")]
+    [ProducesResponseType(typeof(BalanceInvoicePageableResponse), 200)]
+    public async Task<IActionResult> GetUserInvoicesAsync(CancellationToken cancellationToken)
+    {
+        BalanceInvoicePageableResponse response = await this.mediator.Send(new UserMonthlyInvoicesQuery(), cancellationToken);
+        return Ok(response);
+    }
+    
     [HttpPost("")]
     [ProducesResponseType(typeof(Guid), 200)]
     public async Task<IActionResult> CreateInvoiceAsync(CreateInvoiceCommand command, CancellationToken cancellationToken)

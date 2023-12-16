@@ -165,6 +165,9 @@
               },
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              },
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
               }
             }
           }
@@ -190,6 +193,75 @@
             "Microsoft.AspNetCore.Mvc.Core": {
               "target": "Package",
               "version": "[2.2.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj",
+        "projectName": "CIYW.Models",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj",
+        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
             }
           },
           "imports": [

@@ -8,4 +8,17 @@ public static class DateTimeExtension
         TimeSpan diff = date.ToUniversalTime() - origin;
         return Math.Floor(diff.TotalMilliseconds);
     }
+
+    public static DateTime GetStartOfTheMonth()
+    {
+        DateTime currentDate = DateTime.Today;
+        return new DateTime(currentDate.Year, currentDate.Month, 1);
+
+    }
+    
+    public static DateTime GetEndOfTheMonth()
+    {
+        DateTime currentDate = DateTime.Today;
+        return new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month), 23, 59, 59);
+    }
 }

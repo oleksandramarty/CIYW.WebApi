@@ -10,7 +10,7 @@ public interface IReadGenericRepository<T> where T : class
     Task<IList<T>> GetWithPaginationAsync(int page, int take, CancellationToken cancellationToken);
     Task<T> GetByIdAsync(Guid id,  CancellationToken cancellationToken);
 
-    Task<T> GetWithIncludeAsync(Func<T, bool> condition, Func<IQueryable<T>, IQueryable<T>> includeFunc, CancellationToken cancellationToken);
+    Task<T> GetWithIncludeAsync(Func<T, bool> condition, CancellationToken cancellationToken, params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs);
 
     Task<ListWithIncludeHelper<T>> GetListWithIncludeAsync(
         Func<T, bool> condition,

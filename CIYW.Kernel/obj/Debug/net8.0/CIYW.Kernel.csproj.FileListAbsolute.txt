@@ -16,3 +16,5 @@ L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.csproj.Ass
 L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\obj\Debug\net8.0\CIYW.Kernel.csproj.CopyComplete
 L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Domain.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Domain.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Models.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.Kernel\bin\Debug\net8.0\CIYW.Models.pdb

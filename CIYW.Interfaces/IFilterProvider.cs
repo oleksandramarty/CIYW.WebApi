@@ -4,5 +4,5 @@ namespace CIYW.Interfaces;
 
 public interface IFilterProvider<T>
 {
-    IQueryable<T> Apply(IQueryable<T> query, BaseFilterQuery filter);
+    IEnumerable<T> Apply(IEnumerable<T> query, BaseFilterQuery filter);
 }

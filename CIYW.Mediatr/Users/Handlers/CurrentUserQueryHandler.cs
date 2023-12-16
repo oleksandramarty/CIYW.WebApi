@@ -43,9 +43,8 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
     public async Task<CurrentUserResponse> Handle(CurrentUserQuery query, CancellationToken cancellationToken)
     {
         Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
-        User user = await this.userRepository.GetWithIncludeAsync(u => u.Id == userId,
-            query => query.Include(u => u.UserBalance),
-            cancellationToken);
+        User user = await this.userRepository.GetWithIncludeAsync(u => u.Id == userId, cancellationToken,
+            query => query.Include(u => u.UserBalance));
         
         IList<IdentityUserRole<Guid>> userRoles =
             await this.userRoleRepository.GetListByPropertyAsync(ur => ur.UserId == user.Id, cancellationToken);

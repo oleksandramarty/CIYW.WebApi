@@ -12,21 +12,21 @@ namespace CIYW.Repositories;
 
 public class CurrentUserProvider: ICurrentUserProvider
 {
-    private readonly UserManager<User> _userManager;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly DataContext _context;
+    private readonly UserManager<User> userManager;
+    private readonly IHttpContextAccessor httpContextAccessor;
+    private readonly DataContext context;
 
     public CurrentUserProvider(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor, DataContext context)
     {
-        _userManager = userManager;
-        _httpContextAccessor = httpContextAccessor;
-        _context = context;
+        this.userManager = userManager;
+        this.httpContextAccessor = httpContextAccessor;
+        this.context = context;
     }
     
     public async Task<Guid> GetUserIdAsync(CancellationToken cancellationToken)
     {
         // Try to get user ID from HttpContext
-        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = this.httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (userId != null)
         {
@@ -34,7 +34,7 @@ public class CurrentUserProvider: ICurrentUserProvider
         }
 
         // If HttpContext is not available or user ID is not found, fall back to UserManager
-        var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
+        var user = await this.userManager.GetUserAsync(this.httpContextAccessor.HttpContext?.User);
 
         if (user == null)
         {
