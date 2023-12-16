@@ -51,7 +51,7 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
             await this.userRoleRepository.GetListByPropertyAsync(ur => ur.UserId == user.Id, cancellationToken);
         if (!userRoles.Any())
         {
-            throw new LoggerException(ErrorMessages.RoleNotFound, 404, null, EntityTypeEnum.User.ToString());
+            throw new LoggerException(ErrorMessages.RoleNotFound, 404);
         }
         
         Guid roleId = userRoles.FirstOrDefault().RoleId;

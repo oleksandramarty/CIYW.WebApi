@@ -6,23 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CIYW.Kernel.Extensions.Controllers;
 
-[Route("api/[controller]")]
+[Route("api-ciyw/[controller]")]
 [ApiController]
 [Authorize]
 public class UsersController: BaseController
 {
-    private readonly IMediator _mediatr;
+    private readonly IMediator mediator;
     
-    public UsersController(IMediator mediatr) : base(mediatr)
+    public UsersController(IMediator mediator)
     {
-        _mediatr = mediatr;
+        this.mediator = mediator;
     }
     
     [HttpGet("Current")]
     [ProducesResponseType(typeof(CurrentUserResponse), 200)]
     public async Task<IActionResult> CurrentUserAsync(CancellationToken cancellationToken)
     {
-        CurrentUserResponse result = await this._mediatr.Send(new CurrentUserQuery(), cancellationToken);
+        CurrentUserResponse result = await this.mediator.Send(new CurrentUserQuery(), cancellationToken);
         return Ok(result);
     }
 }

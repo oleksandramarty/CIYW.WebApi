@@ -68,13 +68,13 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
         if (!res.Succeeded)
         {
           throw new LoggerException("Failed to save persistent token to database", 500,
-            userId, EntityTypeEnum.Session.ToString());
+            userId);
         }
 
         return tokenResponse;
       }
 
-      throw new AuthenticationException(ErrorMessages.UserNotFound, 404, null, EntityTypeEnum.User.ToString());
+      throw new AuthenticationException(ErrorMessages.UserNotFound, 404, null);
     }
 
   private async Task<Tuple<User, string>> GetUserAsync(AuthLoginQuery query)
@@ -99,7 +99,7 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
     if (user == null)
     {
       throw new LoggerException(ErrorMessages.UserNotFound, 404,
-        null, EntityTypeEnum.Session.ToString());
+        null);
     }
     return new Tuple<User, string>(user, provider);
   }

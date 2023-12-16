@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CIYW.Kernel.Extensions.Controllers;
 
-[Route("api/[controller]")]
+[Route("api-ciyw/[controller]")]
 [ApiController]
 [Authorize]
 public class NoteController: BaseController
 {
     private readonly IMediator mediator;
     
-    public NoteController(IMediator mediator) : base(mediator)
+    public NoteController(IMediator mediator)
     {
         this.mediator = mediator;
     }

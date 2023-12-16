@@ -10,10 +10,12 @@ using CIYW.Mediatr.Invoice.Requests;
 using CIYW.Mediatr.Note.Request;
 using CIYW.Models.Responses.Category;
 using CIYW.Models.Responses.Currency;
+using CIYW.Models.Responses.Dictionary;
 using CIYW.Models.Responses.Invoice;
 using CIYW.Models.Responses.Note;
 using CIYW.Models.Responses.Tariff;
 using CIYW.Models.Responses.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace CYIW.Mapper;
 
@@ -59,5 +61,14 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
             .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency));
+
+        this.CreateMap<Category, DictionaryItemResponse>()
+            .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Description));
+        this.CreateMap<Currency, DictionaryItemResponse>()
+            .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Symbol));
+        this.CreateMap<Tariff, DictionaryItemResponse>()
+            .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Description));
+        this.CreateMap<Role, DictionaryItemResponse>()
+            .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.NormalizedName));
     }
 }

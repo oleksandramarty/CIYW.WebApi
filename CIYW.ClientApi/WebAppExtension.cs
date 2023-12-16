@@ -218,6 +218,7 @@ namespace CIYW.Kernel.Extensions;
         {
             builder.Services.AddHttpContextAccessor();
             
+            builder.Services.AddScoped<IDictionaryRepository, DictionaryRepository>();
             builder.Services.AddScoped(typeof(IFilterProvider<>), typeof(FilterProvider<>));
             builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
             builder.Services.AddScoped<IEntityValidator, EntityValidator>();

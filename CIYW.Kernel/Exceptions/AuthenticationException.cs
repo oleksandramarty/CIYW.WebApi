@@ -5,14 +5,10 @@ namespace CIYW.Kernel.Exceptions;
 
 public class AuthenticationException : LoggerException
 {
-    public AuthenticationException(string message, int _statusCode, Guid? _userId, string _entityType, string _payload = null) : base(message, _statusCode, _userId, _entityType, _payload)
+    public AuthenticationException(string message, int _statusCode, Guid? _userId = null, string _payload = null) : base(message, _statusCode, _userId, _payload)
     {
     }
-
-    public AuthenticationException(Exception ex, int _statusCode, Guid? _userId, string _entityType, string _payload = null) : base(ex, _statusCode, _userId, _entityType, _payload)
-    {
-    }
-
+    
     new public ErrorMessage ToErrorMessage()
     {
         if(statusCode == 409)

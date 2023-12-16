@@ -24,7 +24,7 @@ public class EntityValidator: IEntityValidator
 
         if (entity != null)
         {
-            throw new LoggerException(customErrorMessage.NotNullOrEmpty() ? customErrorMessage : ErrorMessages.EntityAlreadyExists, 409, null, EntityTypeEnum.User.ToString());
+            throw new LoggerException(customErrorMessage.NotNullOrEmpty() ? customErrorMessage : ErrorMessages.EntityAlreadyExists, 409);
         }
     }
 }

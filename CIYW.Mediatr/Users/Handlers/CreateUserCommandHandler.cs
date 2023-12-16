@@ -44,17 +44,17 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, Guid>
     {
         if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
         {
-            throw new LoggerException(ErrorMessages.EmailsDoesntMatch, 409, null, EntityTypeEnum.User.ToString());
+            throw new LoggerException(ErrorMessages.EmailsDoesntMatch, 409);
         }
         
         if (!command.Password.TrimWhiteSpaces().Equals(command.ConfirmPassword.TrimWhiteSpaces()))
         {
-            throw new LoggerException(ErrorMessages.PasswordsDoesntMatch, 409, null, EntityTypeEnum.User.ToString());
+            throw new LoggerException(ErrorMessages.PasswordsDoesntMatch, 409);
         }
         
         if (!command.IsAgree)
         {
-            throw new LoggerException(ErrorMessages.AgreeBeforeSignIn, 409, null, EntityTypeEnum.User.ToString());
+            throw new LoggerException(ErrorMessages.AgreeBeforeSignIn, 409);
         }
         
         await this.entityValidator.ValidateExistParamAsync<User>(u => u.Email == command.Email, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email), cancellationToken);
@@ -85,7 +85,7 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, Guid>
             if (res.Errors.Any())
             {
                 string creationError = string.Join(Environment.NewLine, res.Errors.Select(e => e.Description));
-                throw new LoggerException(creationError, 409, null, EntityTypeEnum.User.ToString());
+                throw new LoggerException(creationError, 409);
             }
         }
 

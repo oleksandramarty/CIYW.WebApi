@@ -6,23 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CIYW.Kernel.Extensions.Controllers;
 
-[Route("api/[controller]")]
+[Route("api-ciyw/[controller]")]
 [ApiController]
 [AllowAnonymous]
 public class AuthController: BaseController
 {
-    private readonly IMediator _mediatr;
+    private readonly IMediator mediator;
     
-    public AuthController(IMediator mediatr) : base(mediatr)
+    public AuthController(IMediator mediator)
     {
-        _mediatr = mediatr;
+        this.mediator = mediator;
     }
     
     [HttpPost("SignIn")]
     [ProducesResponseType(typeof(void), 200)]
     public async Task<IActionResult> SignInAsync([FromBody]CreateUserCommand command, CancellationToken cancellationToken)
     {
-        await this._mediatr.Send(command, cancellationToken);
+        await this.mediator.Send(command, cancellationToken);
         return Ok();
     }
 
@@ -30,7 +30,7 @@ public class AuthController: BaseController
     [ProducesResponseType(typeof(TokenResponse), 200)]
     public async Task<IActionResult> LoginAsync([FromBody]AuthLoginQuery query, CancellationToken cancellationToken)
     {
-        TokenResponse result = await this._mediatr.Send(query, cancellationToken);
+        TokenResponse result = await this.mediator.Send(query, cancellationToken);
         return Ok(result);
     }
 
@@ -39,7 +39,7 @@ public class AuthController: BaseController
     [Authorize]
     public async Task<IActionResult> LogoutAsync(CancellationToken cancellationToken)
     {
-        await this._mediatr.Send(new AuthLogoutQuery(), cancellationToken);
+        await this.mediator.Send(new AuthLogoutQuery(), cancellationToken);
         return Ok(true);
     }
 
@@ -48,7 +48,7 @@ public class AuthController: BaseController
     [Authorize]
     public async Task<IActionResult> ChangePasswordAsync([FromBody]ChangePasswordCommand command, CancellationToken cancellationToken)
     {
-        await this._mediatr.Send(command, cancellationToken);
+        await this.mediator.Send(command, cancellationToken);
         return Ok();
     }
 
@@ -57,7 +57,7 @@ public class AuthController: BaseController
     [AllowAnonymous]
     public async Task<IActionResult> ForgotPasswordAsync([FromBody]ForgotPasswordQuery query, CancellationToken cancellationToken)
     {
-        await this._mediatr.Send(query, cancellationToken);
+        await this.mediator.Send(query, cancellationToken);
         return Ok();
     }
     
@@ -66,7 +66,7 @@ public class AuthController: BaseController
     public async Task<IActionResult> ResetPasswordCheckAccessAsync([FromRoute] string url,
         CancellationToken cancellationToken)
     {
-        await this._mediatr.Send(new ResetPasswordCheckAccessQuery(url), cancellationToken);
+        await this.mediator.Send(new ResetPasswordCheckAccessQuery(url), cancellationToken);
         return Ok();
     }
 
@@ -74,7 +74,7 @@ public class AuthController: BaseController
     [AllowAnonymous]
     public async Task<IActionResult> RestorePasswordAsync([FromBody] RestorePasswordCommand command, CancellationToken cancellationToken)
     {
-        await this._mediatr.Send(command, cancellationToken);
+        await this.mediator.Send(command, cancellationToken);
         return Ok();
     }
 
@@ -83,7 +83,7 @@ public class AuthController: BaseController
     [Authorize]
     public async Task<IActionResult> CheckTemporaryPasswordAsync(CancellationToken cancellationToken)
     {
-        bool result = await this._mediatr.Send(new CheckTemporaryPasswordQuery(), cancellationToken);
+        bool result = await this.mediator.Send(new CheckTemporaryPasswordQuery(), cancellationToken);
         return Ok(true);
     }
 }

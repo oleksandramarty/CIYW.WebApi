@@ -29,12 +29,12 @@ namespace CIYW.Auth;
             }
             catch (Exception e)
             {
-                throw new LoggerException($"{ErrorMessages.HashGenerationError}: [{e.GetError()}]", 500, null, EntityTypeEnum.Session.ToString());
+                throw new LoggerException($"{ErrorMessages.HashGenerationError}: [{e.GetError()}]", 500);
             }
 
             if (passwordHash == null)
             {
-                throw new LoggerException(ErrorMessages.HashGenerationError, 500, null, EntityTypeEnum.Session.ToString());
+                throw new LoggerException(ErrorMessages.HashGenerationError, 500);
             }
 
             return passwordHash;

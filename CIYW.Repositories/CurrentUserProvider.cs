@@ -38,7 +38,7 @@ public class CurrentUserProvider: ICurrentUserProvider
 
         if (user == null)
         {
-            throw new LoggerException(ErrorMessages.UserNotFound, 404, null, EntityTypeEnum.User.ToString());
+            throw new LoggerException(ErrorMessages.UserNotFound, 404);
         }
         
         return user.Id;

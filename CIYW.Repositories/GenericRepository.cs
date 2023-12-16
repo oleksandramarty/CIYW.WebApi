@@ -131,7 +131,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         if (entity == null)
         {
             Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
-            throw new LoggerException($"{typeof(T).Name} {ErrorMessages.NotFound}", 404, userId, EntityTypeEnum.Generic.ToString());
+            throw new LoggerException($"{typeof(T).Name} {ErrorMessages.NotFound}", 404, userId);
         }
     }
 }

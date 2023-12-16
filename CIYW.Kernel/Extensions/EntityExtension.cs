@@ -16,7 +16,7 @@ public static class EntityExtension
             
             if (entityUserId != userId)
             {
-                throw new LoggerException(ErrorMessages.Forbidden, 403, userId, EntityTypeEnum.Entity.ToString());
+                throw new LoggerException(ErrorMessages.Forbidden, 403, userId);
             }
         }
 

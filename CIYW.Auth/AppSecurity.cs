@@ -35,7 +35,7 @@ namespace CIYW.Auth;
         {
             if (data == null)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA256 hash, hashing data was not transmitted", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA256 hash, hashing data was not transmitted", 400);
             }
 
             byte[] byteList = null;
@@ -46,7 +46,7 @@ namespace CIYW.Auth;
             }
             catch (Exception e)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA256 hash, incorrect data was transmitted: [{e.GetError()}]", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA256 hash, incorrect data was transmitted: [{e.GetError()}]", 400);
             }
 
             return GetSHA256(byteList);
@@ -56,7 +56,7 @@ namespace CIYW.Auth;
         {
             if (data == null)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA256 hash, hashing data was not transmitted", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA256 hash, hashing data was not transmitted", 400);
             }
 
             SHA256Managed hashObject = new SHA256Managed();
@@ -69,7 +69,7 @@ namespace CIYW.Auth;
             }
             catch (Exception e)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA25 hash6: [{e.GetError()}]", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA25 hash6: [{e.GetError()}]", 400);
             }
             finally
             {
@@ -90,7 +90,7 @@ namespace CIYW.Auth;
         {
             if (data == null)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA512 hash, the hashing data was not transmitted", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA512 hash, the hashing data was not transmitted", 400);
             }
 
             byte[] byteList = null;
@@ -101,7 +101,7 @@ namespace CIYW.Auth;
             }
             catch (Exception e)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA512 hash, incorrect data was transmitted: [{e.GetError()}]", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA512 hash, incorrect data was transmitted: [{e.GetError()}]", 400);
             }
 
             return GetSHA512(byteList);
@@ -111,7 +111,7 @@ namespace CIYW.Auth;
         {
             if (data == null)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA512 hash, hashing data was not transmitted", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA512 hash, hashing data was not transmitted", 400);
             }
 
             SHA512Managed hashObject = new SHA512Managed();
@@ -124,7 +124,7 @@ namespace CIYW.Auth;
             }
             catch (Exception e)
             {
-                throw new LoggerException($"An error occurred while retrieving the SHA512 hash: [{e.GetError()}]", 400, null, "");
+                throw new LoggerException($"An error occurred while retrieving the SHA512 hash: [{e.GetError()}]", 400);
             }
             finally
             {

@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CIYW.Kernel.Extensions.Controllers;
 
-[Route("api/[controller]")]
+[Route("api-ciyw/[controller]")]
 [ApiController]
 [Authorize]
 public class InvoiceController: BaseController
 {
     private readonly IMediator mediator;
     
-    public InvoiceController(IMediator mediator) : base(mediator)
+    public InvoiceController(IMediator mediator)
     {
         this.mediator = mediator;
     }

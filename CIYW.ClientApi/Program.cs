@@ -106,13 +106,6 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.AddDependencyInjection();
 
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
-
-builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
-{
-    builder.RegisterModule(new MediatrModule());
-});
-
 builder.Services.AddMvc(mvcOptions =>
     {
         mvcOptions.CacheProfiles.Add("OneHour",
@@ -141,9 +134,14 @@ builder.Services.AddMvc(mvcOptions =>
     }).AddXmlSerializerFormatters()
     .AddXmlDataContractSerializerFormatters();
 
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Host.ConfigureContainer<ContainerBuilder>(
-    builder => builder.RegisterModule(new MediatrModule()));
+
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+    builder.RegisterModule(new MediatrModule());
+});
 
 var app = builder.Build();
 

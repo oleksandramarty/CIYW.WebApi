@@ -4,9 +4,8 @@ namespace CIYW.Const.Enum;
 
 public enum EntityTypeEnum
 {
-    [Description("Entity")]Entity = 1,
-    [Description("User")]User = 2,
-    [Description("Session")]Session = 3,
-    [Description("Generic")]Generic = 4,
-    [Description("Invoice")]Invoice = 5,
+    [Description("Tariff")]Tariff = 1,
+    [Description("Category")]Category = 2,
+    [Description("Currency")]Currency = 3,
+    [Description("Role")]Role = 4,
 }

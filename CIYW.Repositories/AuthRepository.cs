@@ -71,7 +71,7 @@ public class AuthRepository: IAuthRepository
         var user = await _context.Users.FirstOrDefaultAsync(_ => _.Id == userId, cancellationToken);
         if (user == null)
         {
-            throw new LoggerException(ErrorMessages.UserNotFound, 404, userId, EntityTypeEnum.User.ToString());
+            throw new LoggerException(ErrorMessages.UserNotFound, 404, userId);
         }
 
         var logins = await _context.UserLogins.Where(_ => _.UserId == user.Id).ToListAsync(cancellationToken);
