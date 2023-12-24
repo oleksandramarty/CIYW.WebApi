@@ -79,18 +79,15 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             query = includeFunc(query);
         }
 
-        IEnumerable<T> queryResult = null;
+        // IEnumerable<T> queryResult = null;
 
-        if (condition != null)
-        {
-            queryResult = query.Where(condition);            
-        }
+        var queryResult = condition != null ? query.Where(condition).AsQueryable() : query;       
         
         int total = await query.CountAsync(cancellationToken);
         
         queryResult = this.filterProvider.Apply(queryResult, filter);
 
-        List<T> entities = await query.ToListAsync(cancellationToken);
+        List<T> entities = await queryResult.ToListAsync(cancellationToken);
 
         return new ListWithIncludeHelper<T>
         {

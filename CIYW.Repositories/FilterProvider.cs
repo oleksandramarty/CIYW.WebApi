@@ -7,24 +7,22 @@ namespace CIYW.Repositories;
 
 public class FilterProvider<T>: IFilterProvider<T> where T : class
 {
-    public IEnumerable<T> Apply(IEnumerable<T> query, BaseFilterQuery filter)
+    public IQueryable<T> Apply(IQueryable<T> query, BaseFilterQuery filter)
     {
         if (filter == null)
         {
             return query;
         }
         
-        query = this.ApplyPagination(query, filter.Paginator);
-
-        return query;
+        return this.ApplyPagination(query, filter.Paginator);
     }
     
     
-    private IEnumerable<T> ApplyPagination(IEnumerable<T> query, BasePageableQuery filter)
+    private IQueryable<T> ApplyPagination(IQueryable<T> query, BasePageableQuery filter)
     {
         if (filter == null)
         {
-            return query;
+            return  query;
         }
 
         if (filter.PageNumber < 1)
@@ -39,7 +37,7 @@ public class FilterProvider<T>: IFilterProvider<T> where T : class
 
         if (!filter.IsFull)
         {
-            query = query
+            return query
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
         }
