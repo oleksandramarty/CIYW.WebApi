@@ -65,8 +65,6 @@ L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Interfaces.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Auth.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Const.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Interfaces.pdb
-L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Mediatr.dll
-L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Mediatr.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Humanizer.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
@@ -146,3 +144,15 @@ L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Repositories.d
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CYIW.Mapper.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Repositories.pdb
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CYIW.Mapper.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Mediator.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\CIYW.Mediator.pdb
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NJsonSchema.Annotations.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NJsonSchema.NewtonsoftJson.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NJsonSchema.Yaml.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Annotations.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.AspNetCore.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Core.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Core.Yaml.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Generation.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Generation.AspNetCore.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\YamlDotNet.dll

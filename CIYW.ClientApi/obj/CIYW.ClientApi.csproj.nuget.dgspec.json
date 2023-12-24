@@ -122,8 +122,8 @@
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj"
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj"
               },
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
@@ -208,6 +208,10 @@
             "Microsoft.Extensions.DependencyInjection.Abstractions": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "NSwag.AspNetCore": {
+              "target": "Package",
+              "version": "[14.0.0-preview010, )"
             },
             "Npgsql": {
               "target": "Package",
@@ -526,14 +530,14 @@
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj": {
+    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj",
-        "projectName": "CIYW.Mediatr",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj",
+        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj",
+        "projectName": "CIYW.Mediator",
+        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj",
         "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\obj\\",
+        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -724,8 +728,8 @@
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj"
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj"
               }
             }
           }
@@ -792,8 +796,8 @@
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediatr\\CIYW.Mediatr.csproj"
+              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
+                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj"
               },
               "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
                 "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"

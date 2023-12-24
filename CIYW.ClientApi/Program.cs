@@ -7,13 +7,14 @@ using CIYW.Domain;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
-using CIYW.Mediatr;
+using CIYW.Mediator;
 using CIYW.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CIYW.ClientApi.Filters;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CYIW.Mapper;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,14 @@ builder.Services.AddAuthentication(options =>
     .AddScheme<JwtCIYWOptions, JwtCIYWHandler>(JwtCIYWDefaults.AuthenticationScheme,
         options => { options.Realm = "Protect JwtCIYW"; });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder
+            .AllowAnyHeader()
+            .AllowAnyOrigin());
+});
+
 builder.Services.AddHealthChecks();
 builder.Services.AddResponseCompression();
 builder.Services.AddResponseCaching();
@@ -65,6 +74,7 @@ builder.Services.AddAutoMapper(config => config.AddProfile(new MappingProfile())
 //builder.Services.AddScoped<IHotelRoomRepository, HotelRoomRepository>();
 builder.Services.AddRouting(option => option.LowercaseUrls = true);
 builder.Services.AddControllers();
+builder.Services.AddOpenApiDocument();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -80,6 +90,8 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "JwtCIYW"
     });
+    
+    c.OperationFilter<CustomOperationIdFilter>();
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement()
     {

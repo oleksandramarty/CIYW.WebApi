@@ -14,25 +14,63 @@ public class InitializationProvider
     {
         return new List<Role>
         {
-            new Role { Id = InitConst.UserRoleId, Name = RoleEnum.User.ToString(), NormalizedName = RoleProvider.User.ToUpper(), ConcurrencyStamp = InitConst.UserRoleId.ToString() },
-            new Role { Id = InitConst.AdminUserId, Name = RoleEnum.Admin.ToString(), NormalizedName = RoleProvider.Admin.ToUpper(), ConcurrencyStamp = InitConst.AdminUserId.ToString() }
+            GetUserRole(),
+            GetAdminRole(),
         };
+    }
+
+    public static Role GetUserRole()
+    {
+        return new Role
+        {
+            Id = InitConst.UserRoleId, Name = RoleEnum.User.ToString(), NormalizedName = RoleProvider.User.ToUpper(),
+            ConcurrencyStamp = InitConst.UserRoleId.ToString()
+        };
+    }
+    
+    public static Role GetAdminRole()
+    {
+        return new Role { Id = InitConst.AdminUserId, Name = RoleEnum.Admin.ToString(), NormalizedName = RoleProvider.Admin.ToUpper(), ConcurrencyStamp = InitConst.AdminUserId.ToString() };
     }
     
     public static List<Tariff> GetTariffs()
     {
         return new List<Tariff>
         {
-            new Tariff() { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow},
+            GetFreeTariff(),
         };
+    }
+
+    public static Tariff GetFreeTariff()
+    {
+        return new Tariff()
+            { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow };
     }
     
     public static List<Category> GetCategories()
     {
         return new List<Category>
         {
-            new Category() { Id = InitConst.CategoryOtherId, Name = "Other", Description = "Other", Ico = "Other", Created = DateTime.UtcNow},
-            new Category() { Id = InitConst.CategorySalaryId, Name = "Salary", Description = "Salary", Ico = "Salary", Created = DateTime.UtcNow},
+            GetOtherCategory(),
+            GetSalaryCategory(),
+        };
+    }
+
+    public static Category GetOtherCategory()
+    {
+        return new Category()
+        {
+            Id = InitConst.CategoryOtherId, Name = "Other", Description = "Other", Ico = "Other",
+            Created = DateTime.UtcNow
+        };
+    }
+    
+    public static Category GetSalaryCategory()
+    {
+        return new Category()
+        {
+            Id = InitConst.CategorySalaryId, Name = "Salary", Description = "Salary", Ico = "Salary",
+            Created = DateTime.UtcNow
         };
     }
     
@@ -40,7 +78,12 @@ public class InitializationProvider
     {
         return new List<Currency>
         {
-            new Currency() { Id = InitConst.CurrencyUsdId, Name = "US Dollar", Symbol = "$", IsoCode = "USD"},
+            GetUSDCurrency(),
         };
+    }
+
+    public static Currency GetUSDCurrency()
+    {
+        return new Currency() { Id = InitConst.CurrencyUsdId, Name = "US Dollar", Symbol = "$", IsoCode = "USD" };
     }
 }

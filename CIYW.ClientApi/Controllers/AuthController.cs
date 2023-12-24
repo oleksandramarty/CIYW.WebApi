@@ -1,12 +1,14 @@
-﻿using CIYW.Mediatr.Auth.Queries;
+﻿using System.Runtime.CompilerServices;
+using CIYW.Mediator.Auth.Queries;
 using CIYW.Models.Responses.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 
 namespace CIYW.Kernel.Extensions.Controllers;
 
-[Route("api-ciyw/[controller]")]
+[Route("api-ciyw/[controller]/v1")]
 [ApiController]
 [AllowAnonymous]
 public class AuthController: BaseController
@@ -18,6 +20,12 @@ public class AuthController: BaseController
         this.mediator = mediator;
     }
     
+    /// <summary>
+    /// Register new user
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost("SignIn")]
     [ProducesResponseType(typeof(void), 200)]
     public async Task<IActionResult> SignInAsync([FromBody]CreateUserCommand command, CancellationToken cancellationToken)

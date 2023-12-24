@@ -1,4 +1,4 @@
-﻿using CIYW.Mediatr.Users.Requests;
+﻿using CIYW.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CIYW.Kernel.Extensions.Controllers;
 
-[Route("api-ciyw/[controller]")]
+[Route("api-ciyw/[controller]/v1")]
 [ApiController]
 [Authorize]
 public class UsersController: BaseController
