@@ -5,6 +5,13 @@ public class BaseFilterQuery
     public BaseIdsListQuery? Ids { get; set; }
     public BasePageableQuery? Paginator { get; set; }
     public BaseDateRangeQuery? DateRange { get; set; }
+    public BaseSortableQuery? Sort { get; set; }
+}
+
+public class BaseSortableQuery
+{
+    public string Column { get; set; }
+    public string Direction { get; set; }
 }
 
 public class BasePageableQuery

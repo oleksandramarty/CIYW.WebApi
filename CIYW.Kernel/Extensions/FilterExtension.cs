@@ -21,7 +21,9 @@ public static class FilterExtension
             {
                 DateFrom = DateTimeExtension.GetStartOfTheMonth(),
                 DateTo = DateTimeExtension.GetEndOfTheMonth()
-            }
+            },
+            
+            Sort = null
         };
     }
 }

@@ -2,6 +2,7 @@
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.Models.Requests.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Repositories;
 
@@ -13,7 +14,8 @@ public class FilterProvider<T>: IFilterProvider<T> where T : class
         {
             return query;
         }
-        
+
+        query = this.ApplySort(query, filter.Sort);
         return this.ApplyPagination(query, filter.Paginator);
     }
     
@@ -22,7 +24,7 @@ public class FilterProvider<T>: IFilterProvider<T> where T : class
     {
         if (filter == null)
         {
-            return  query;
+            return query;
         }
 
         if (filter.PageNumber < 1)
@@ -40,6 +42,28 @@ public class FilterProvider<T>: IFilterProvider<T> where T : class
             return query
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
+        }
+
+        return query;
+    }
+
+    private IQueryable<T> ApplySort(IQueryable<T> query, BaseSortableQuery filter)
+    {
+        if (filter == null)
+        {
+            return query;
+        }
+        
+        if (!string.IsNullOrWhiteSpace(filter.Column))
+        {
+            if (string.Equals(filter.Direction, "asc", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.OrderBy(x => EF.Property<object>(x, filter.Column));
+            }
+            else if (string.Equals(filter.Direction, "desc", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.OrderByDescending(x => EF.Property<object>(x, filter.Column));
+            }
         }
 
         return query;
