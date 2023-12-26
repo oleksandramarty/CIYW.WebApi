@@ -6,6 +6,8 @@ using CIYW.Domain.Models.Note;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace CIYW.UnitTests;
 
@@ -86,4 +88,13 @@ public static class MockHelper
             UserBalance = userBalance,
         };
     }
+    
+    public static void SetupData<T>(this Mock<DbSet<T>> dbSetMock, IEnumerable<T> data) where T : class
+    {
+        dbSetMock.As<IQueryable<T>>().Setup(m => m.Provider).Returns(data.AsQueryable().Provider);
+        dbSetMock.As<IQueryable<T>>().Setup(m => m.Expression).Returns(data.AsQueryable().Expression);
+        dbSetMock.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(data.AsQueryable().ElementType);
+        dbSetMock.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+    }
+
 }

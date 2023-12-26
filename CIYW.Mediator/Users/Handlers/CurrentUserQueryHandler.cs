@@ -22,6 +22,7 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
     private readonly IReadGenericRepository<IdentityUserRole<Guid>> userRoleRepository;
     private readonly IReadGenericRepository<Role> roleRepository;
     private readonly ICurrentUserProvider currentUserProvider;
+    private readonly IEntityValidator entityValidator;
 
 
     public CurrentUserQueryHandler(
@@ -30,7 +31,8 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
         IReadGenericRepository<User> userRepository, 
         IReadGenericRepository<IdentityUserRole<Guid>> userRoleRepository, 
         IReadGenericRepository<Role> roleRepository, 
-        ICurrentUserProvider currentUserProvider)
+        ICurrentUserProvider currentUserProvider, 
+        IEntityValidator entityValidator)
     {
         this.mapper = mapper;
         this.mediator = mediator;
@@ -38,6 +40,7 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
         this.userRoleRepository = userRoleRepository;
         this.roleRepository = roleRepository;
         this.currentUserProvider = currentUserProvider;
+        this.entityValidator = entityValidator;
     }
 
     public async Task<CurrentUserResponse> Handle(CurrentUserQuery query, CancellationToken cancellationToken)
@@ -45,6 +48,7 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
         Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
         User user = await this.userRepository.GetWithIncludeAsync(u => u.Id == userId, cancellationToken,
             query => query.Include(u => u.UserBalance));
+        this.entityValidator.ValidateExist<User, Guid?>(user, userId);
         
         IList<IdentityUserRole<Guid>> userRoles =
             await this.userRoleRepository.GetListByPropertyAsync(ur => ur.UserId == user.Id, cancellationToken);

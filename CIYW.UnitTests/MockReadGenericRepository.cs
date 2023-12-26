@@ -4,8 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using CIYW.Const.Errors;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
+using CIYW.Kernel.Exceptions;
 using CIYW.Models.Helpers;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
@@ -33,6 +35,7 @@ public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : 
     public Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = _data.FirstOrDefault(item => GetIdFromEntity(item) == id);
+        this.CheckEntityExistsAsync(result, cancellationToken);
         return Task.FromResult(result);
     }
 
@@ -44,6 +47,7 @@ public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : 
             filteredData = includeFunc(filteredData);
         }
         var result = filteredData.FirstOrDefault();
+        this.CheckEntityExistsAsync(result, cancellationToken);
         return Task.FromResult(result);
     }
 
@@ -84,5 +88,13 @@ public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : 
     {
         var idProperty = typeof(T).GetProperty("Id");
         return (Guid)idProperty.GetValue(entity);
+    }
+    
+    private async Task CheckEntityExistsAsync(T entity, CancellationToken cancellationToken)
+    {
+        if (entity == null)
+        {
+            throw new LoggerException($"{typeof(T).Name} {ErrorMessages.NotFound}", 404, null);
+        }
     }
 }

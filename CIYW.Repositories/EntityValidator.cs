@@ -27,4 +27,12 @@ public class EntityValidator: IEntityValidator
             throw new LoggerException(customErrorMessage.NotNullOrEmpty() ? customErrorMessage : ErrorMessages.EntityAlreadyExists, 409);
         }
     }
+    
+    public void ValidateExist<T, TId>(T entity, TId? entityId) where T : class
+    {
+        if (entity == null)
+        {
+            throw new LoggerException(String.Format(ErrorMessages.EntityWithIdNotFound, typeof(T).Name, entityId), 404);
+        }
+    }
 }

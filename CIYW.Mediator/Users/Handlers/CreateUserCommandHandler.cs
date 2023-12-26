@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CIYW.Const.Const;
-using CIYW.Const.Enum;
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
 using CIYW.Domain.Initialization;
@@ -9,38 +8,31 @@ using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Auth.Queries;
-using CIYW.Mediator.Users.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Mediator.Auth.Handlers;
 
-public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, Guid>
+public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, User>
 {
     private readonly IMapper mapper;
-    private readonly IMediator mediator;
-    private readonly IGenericRepository<User> userRepository;
     private readonly IEntityValidator entityValidator;
     private readonly IAuthRepository authRepository;
     private readonly UserManager<User> userManager;
 
     public CreateUserCommandHandler(
-        IMapper mapper, 
-        IMediator mediator, 
-        IGenericRepository<User> userRepository, 
+        IMapper mapper,
         IEntityValidator entityValidator, 
         IAuthRepository authRepository, 
         UserManager<User> userManager)
     {
         this.mapper = mapper;
-        this.mediator = mediator;
-        this.userRepository = userRepository;
         this.entityValidator = entityValidator;
         this.authRepository = authRepository;
         this.userManager = userManager;
     }
 
-    public async Task<Guid> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<User> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
         {
@@ -89,35 +81,12 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, Guid>
             }
         }
 
-        List<IdentityUserLogin<Guid>> logins = this.CreateUserLogins(user);
+        List<IdentityUserLogin<Guid>> logins = user.CreateUserLogins();
 
         await this.authRepository.UpdateUserLoginsAsync(user.Id, logins, cancellationToken);
 
-        return user.Id;
-    }
-    
-    private List<IdentityUserLogin<Guid>> CreateUserLogins(User user)
-    {
-        return new List<IdentityUserLogin<Guid>>
-        {
-            new IdentityUserLogin<Guid> {
-                UserId = user.Id,
-                LoginProvider = LoginProvider.CIYWLogin,
-                ProviderKey = user.Login,
-                ProviderDisplayName = user.Login
-            },
-            new IdentityUserLogin<Guid> {
-                UserId = user.Id,
-                LoginProvider = LoginProvider.CIYWEmail,
-                ProviderKey = user.Email,
-                ProviderDisplayName = user.Email
-            },
-            new IdentityUserLogin<Guid> {
-                UserId = user.Id,
-                LoginProvider = LoginProvider.CIYWPhone,
-                ProviderKey = user.PhoneNumber,
-                ProviderDisplayName = user.PhoneNumber
-            }
-        };
+        this.entityValidator.ValidateExist<User, Guid?>(user, user?.Id);
+
+        return user;
     }
 }

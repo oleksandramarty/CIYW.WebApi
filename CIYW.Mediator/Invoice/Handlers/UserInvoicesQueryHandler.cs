@@ -16,17 +16,20 @@ public class UserInvoicesQueryHandler: IRequestHandler<UserInvoicesQuery, Balanc
     private readonly IReadGenericRepository<Domain.Models.Invoice.Invoice> invoiceRepository;
     private readonly IReadGenericRepository<Domain.Models.User.User> userRepository;
     private readonly ICurrentUserProvider currentUserProvider;
+    private readonly IEntityValidator entityValidator;
 
     public UserInvoicesQueryHandler(
         IMapper mapper, 
         IReadGenericRepository<Domain.Models.Invoice.Invoice> invoiceRepository,
         IReadGenericRepository<Domain.Models.User.User> userRepository,
-        ICurrentUserProvider currentUserProvider)
+        ICurrentUserProvider currentUserProvider, 
+        IEntityValidator entityValidator)
     {
         this.mapper = mapper;
         this.invoiceRepository = invoiceRepository;
         this.userRepository = userRepository;
         this.currentUserProvider = currentUserProvider;
+        this.entityValidator = entityValidator;
     }
 
     public async Task<BalanceInvoicePageableResponse> Handle(UserInvoicesQuery query, CancellationToken cancellationToken)
@@ -48,6 +51,7 @@ public class UserInvoicesQueryHandler: IRequestHandler<UserInvoicesQuery, Balanc
             query => query.Include(u => u.UserBalance),
             query => query.Include(u => u.Currency));
         
+        this.entityValidator.ValidateExist<User, Guid?>(user, userId);
 
         return new BalanceInvoicePageableResponse
         {

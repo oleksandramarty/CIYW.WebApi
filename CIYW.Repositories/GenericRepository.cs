@@ -42,8 +42,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         T entity = await dbSet.FindAsync(id, cancellationToken);
-
-        await this.CheckEntityExistsAsync(entity, cancellationToken);
         
         return entity;
     }
@@ -60,8 +58,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         List<T> entities = await query.ToListAsync(cancellationToken);
 
         T entity = entities.FirstOrDefault(e => condition(e));
-
-        await this.CheckEntityExistsAsync(entity, cancellationToken);
 
         return entity;
     }
@@ -125,15 +121,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         {
             this.dbSet.Remove(entity);
             await this.context.SaveChangesAsync(cancellationToken);
-        }
-    }
-        
-    private async Task CheckEntityExistsAsync(T entity, CancellationToken cancellationToken)
-    {
-        if (entity == null)
-        {
-            Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
-            throw new LoggerException($"{typeof(T).Name} {ErrorMessages.NotFound}", 404, userId);
         }
     }
 }

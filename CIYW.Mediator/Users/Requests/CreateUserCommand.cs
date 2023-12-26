@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using CIYW.Domain.Models.User;
+using MediatR;
 
 namespace CIYW.Mediator.Auth.Queries;
 
-public class CreateUserCommand: IRequest<Guid>
+public class CreateUserCommand: IRequest<User>
 {
     public CreateUserCommand(string lastName, string firstName, string patronymic, string login, string email, string phone, string confirmEmail, bool isAgree, string password,
         string confirmPassword, bool isAgreeDigest)

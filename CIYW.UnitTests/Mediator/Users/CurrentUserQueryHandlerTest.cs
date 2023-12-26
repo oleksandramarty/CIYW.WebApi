@@ -32,6 +32,7 @@ namespace CIYW.UnitTests.Mediator.Users
             var userRoleRepositoryMock = new Mock<IReadGenericRepository<IdentityUserRole<Guid>>>();
             var roleRepositoryMock = new Mock<IReadGenericRepository<Role>>();
             var currentUserProviderMock = new Mock<ICurrentUserProvider>();
+            var centityValidatorMock = new Mock<IEntityValidator>();
 
             var query = new CurrentUserQuery();
             User mockUser = MockHelper.GetMockUser();
@@ -60,7 +61,8 @@ namespace CIYW.UnitTests.Mediator.Users
                 userRepositoryMock.Object,
                 userRoleRepositoryMock.Object,
                 roleRepositoryMock.Object,
-                currentUserProviderMock.Object
+                currentUserProviderMock.Object,
+                centityValidatorMock.Object
             );
 
             // Act
@@ -69,7 +71,5 @@ namespace CIYW.UnitTests.Mediator.Users
             // Assert
             Assert.IsNotNull(result);
         }
-
-
     }
 }
