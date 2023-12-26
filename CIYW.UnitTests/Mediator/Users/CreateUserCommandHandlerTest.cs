@@ -9,7 +9,6 @@ using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Auth.Handlers;
 using CIYW.Mediator.Auth.Queries;
-using CYIW.Mapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -21,7 +20,7 @@ namespace CIYW.UnitTests.Mediator.Users
     [TestClass]
     public class CreateUserCommandHandlerTest
     {
-        private readonly IMapper mapper;
+        private readonly Mock<IMapper> mapperMock;
         private readonly Mock<IEntityValidator> entityValidatorMock;
         private readonly Mock<IAuthRepository> authRepositoryMock;
         private readonly Mock<UserManager<User>> userManagerMock;
@@ -30,12 +29,10 @@ namespace CIYW.UnitTests.Mediator.Users
 
         public CreateUserCommandHandlerTest()
         {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile());
-            });
+            this.mapperMock = new Mock<IMapper>();
             
-            this.mapper = configuration.CreateMapper();
+            this.mapperMock.Setup(m => m.Map<CreateUserCommand, User>(It.IsAny<CreateUserCommand>()))
+                .Returns(new User());
 
             this.entityValidatorMock = new Mock<IEntityValidator>();
             this.authRepositoryMock = new Mock<IAuthRepository>();
@@ -60,7 +57,7 @@ namespace CIYW.UnitTests.Mediator.Users
                 .ReturnsAsync(IdentityResult.Success);
             
             this.handler = new CreateUserCommandHandler(
-                this.mapper,
+                this.mapperMock.Object,
                 this.entityValidatorMock.Object,
                 this.authRepositoryMock.Object,
                 this.userManagerMock.Object

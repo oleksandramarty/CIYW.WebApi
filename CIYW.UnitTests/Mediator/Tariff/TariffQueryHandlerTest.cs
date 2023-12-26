@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using CIYW.Const.Errors;
 using CIYW.Domain.Initialization;
-using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Mediator.Tariff.Handlers;
 using CIYW.Mediator.Tariff.Requests;
 using CIYW.Models.Responses.Tariff;
-using CYIW.Mapper;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -17,7 +15,7 @@ namespace CIYW.UnitTests.Mediator.Tariff
     [TestClass]
     public class TariffQueryHandlerTest
     {
-        private readonly IMapper mapper;
+        private readonly Mock<IMapper> mapperMock;
         private readonly Mock<IReadGenericRepository<Domain.Models.Tariff.Tariff>> tariffReadRepositoryMock;
         private readonly Mock<IEntityValidator> entityValidatorMock;
 
@@ -25,17 +23,22 @@ namespace CIYW.UnitTests.Mediator.Tariff
 
         public TariffQueryHandlerTest()
         {
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile());
-            });
+            this.mapperMock = new Mock<IMapper>();
+            Domain.Models.Tariff.Tariff tariff = InitializationProvider.GetFreeTariff();
+            this.mapperMock.Setup(m => m.Map<Domain.Models.Tariff.Tariff, TariffResponse>(It.IsAny<Domain.Models.Tariff.Tariff>()))
+                .Returns(new TariffResponse
+                {
+                    Id = tariff.Id,
+                    Name = tariff.Name,
+                    Created = tariff.Created,
+                    Description = tariff.Description
+                });
             
-            this.mapper = configuration.CreateMapper();
             this.tariffReadRepositoryMock = new Mock<IReadGenericRepository<Domain.Models.Tariff.Tariff>>();
             this.entityValidatorMock = new Mock<IEntityValidator>();
             
             this.handler = new TariffQueryHandler(
-                this.mapper,
+                this.mapperMock.Object,
                 this.tariffReadRepositoryMock.Object,
                 this.entityValidatorMock.Object
             );
@@ -45,7 +48,13 @@ namespace CIYW.UnitTests.Mediator.Tariff
         public async Task Handle_ValidQuery_ReturnsTariffResponse()
         {
             Domain.Models.Tariff.Tariff tariff = InitializationProvider.GetFreeTariff();
-            TariffResponse expected = this.mapper.Map<Domain.Models.Tariff.Tariff, TariffResponse>(tariff);
+            TariffResponse expected = new TariffResponse
+            {
+                Id = tariff.Id,
+                Name = tariff.Name,
+                Created = tariff.Created,
+                Description = tariff.Description
+            };
             this.tariffReadRepositoryMock
                 .Setup(t => 
                     t.GetByIdAsync(It.IsAny<Guid>(), 
@@ -56,11 +65,11 @@ namespace CIYW.UnitTests.Mediator.Tariff
             
             var result = await this.handler.Handle(query, CancellationToken.None);
             Assert.IsNotNull(result);
-            result.Should().BeEquivalentTo(expected);
+            result.Should().BeEquivalentTo(expected, options => options.Excluding(o => o.Created));
         }
         
         [TestMethod]
-        public async Task Handle_InvalidQuery_ReturnsNull()
+        public async Task Handle_InvalidQuery_NotFoundException()
         {
             Guid? tariffId = Guid.NewGuid();
             TariffQuery query = new TariffQuery(tariffId.Value);

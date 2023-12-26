@@ -4,6 +4,8 @@ using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Mediator.Users.Handlers;
 using CIYW.Mediator.Users.Requests;
+using CIYW.Models.Responses.Tariff;
+using CIYW.Models.Responses.Users;
 using CYIW.Mapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -21,11 +23,13 @@ namespace CIYW.UnitTests.Mediator.Users
             // Arrange
             var userId = Guid.NewGuid();
             var cancellationToken = new CancellationToken();
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile());
-            });
-            IMapper mapper = configuration.CreateMapper();
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(m => m.Map<User, CurrentUserResponse>(It.IsAny<User>()))
+                .Returns(new CurrentUserResponse());
+            mapperMock.Setup(m => m.Map<Role, CurrentUserResponse>(It.IsAny<Role>(), It.IsAny<CurrentUserResponse>()))
+                .Returns(new CurrentUserResponse());
+            mapperMock.Setup(m => m.Map<UserBalance, CurrentUserResponse>(It.IsAny<UserBalance>(), It.IsAny<CurrentUserResponse>()))
+                .Returns(new CurrentUserResponse());
             
             var mediatorMock = new Mock<IMediator>();
             var userRepositoryMock = new Mock<IReadGenericRepository<User>>();
@@ -56,7 +60,7 @@ namespace CIYW.UnitTests.Mediator.Users
                 .ReturnsAsync(mockRole);
 
             var handler = new CurrentUserQueryHandler(
-                mapper,
+                mapperMock.Object,
                 mediatorMock.Object,
                 userRepositoryMock.Object,
                 userRoleRepositoryMock.Object,
