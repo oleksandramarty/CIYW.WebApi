@@ -156,3 +156,4 @@ L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Core.Yaml.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Generation.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\NSwag.Generation.AspNetCore.dll
 L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\YamlDotNet.dll
+L:\Projects\CIYW\CIYW.WebApi\CIYW.ClientApi\bin\Debug\net8.0\appsettings.Test.json

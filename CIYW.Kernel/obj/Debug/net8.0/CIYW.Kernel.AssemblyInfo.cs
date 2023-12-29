@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CIYW.Kernel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c84d6762308f57c1634f017f57bbd5f64179b1b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("CIYW.Kernel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CIYW.Kernel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -5,6 +5,7 @@ using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.Note;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
+using CIYW.Mediator.Auth.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -73,6 +74,10 @@ public static class MockHelper
             FirstName = "John",
             Patronymic = "MiddleName",
             Salt = "some_salt",
+            Email = "myemail@mail.com",
+            EmailConfirmed = true,
+            PhoneNumber = "12124567890",
+            PhoneNumberConfirmed = true,
             IsTemporaryPassword = false,
             Created = DateTime.UtcNow,
             Updated = null,
@@ -87,6 +92,22 @@ public static class MockHelper
             UserBalanceId = userBalance.Id,
             UserBalance = userBalance,
         };
+    }
+    
+    public static CreateUserCommand CreateCreateUserCommand()
+    {
+        return new CreateUserCommand(
+            "LastName",
+            "FirstName",
+            "Test",
+            "Login",
+            "email@mail.com",
+            "12124567890",
+            "email@mail.com",
+            true,
+            "Password123",
+            "Password123",
+            false);
     }
     
     public static void SetupData<T>(this Mock<DbSet<T>> dbSetMock, IEnumerable<T> data) where T : class

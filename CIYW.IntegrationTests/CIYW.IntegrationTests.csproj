@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="7.1.0" />
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+      <PackageReference Include="FluentAssertions" Version="7.0.0-alpha.3" />
+      <PackageReference Include="MediatR" Version="12.2.0" />
+      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="8.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+      <PackageReference Include="MSTest.TestAdapter" Version="3.2.0-preview.23623.1" />
+      <PackageReference Include="MSTest.TestFramework" Version="3.2.0-preview.23623.1" />
+      <PackageReference Include="NUnit" Version="4.0.1" />
+      <PackageReference Include="xunit.extensibility.core" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CIYW.ClientApi\CIYW.ClientApi.csproj" />
+      <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />
+      <ProjectReference Include="..\CIYW.Interfaces\CIYW.Interfaces.csproj" />
+      <ProjectReference Include="..\CIYW.Repositories\CIYW.Repositories.csproj" />
+      <ProjectReference Include="..\CIYW.TestHelper\CIYW.TestHelper.csproj" />
+      <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
+    </ItemGroup>
+
+</Project>
