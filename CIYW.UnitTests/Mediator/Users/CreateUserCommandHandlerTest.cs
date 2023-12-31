@@ -9,6 +9,7 @@ using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Auth.Handlers;
 using CIYW.Mediator.Auth.Queries;
+using CIYW.TestHelper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -69,7 +70,7 @@ namespace CIYW.UnitTests.Mediator.Users
         public async Task Handle_ValidCommand_CreatesUser()
         {
             // Arrange
-            var command = MockHelper.CreateCreateUserCommand();
+            var command = MockCommandQueryHelper.CreateCreateUserCommand();
             
             // Act
             var result = await this.handler.Handle(command, CancellationToken.None);
@@ -97,7 +98,7 @@ namespace CIYW.UnitTests.Mediator.Users
         public async Task Handle_InvalidCommand_EmailException()
         {
             // Arrange
-            var command = MockHelper.CreateCreateUserCommand();
+            var command = MockCommandQueryHelper.CreateCreateUserCommand();
             command.ConfirmEmail = "123";
             
             // Act
@@ -108,7 +109,7 @@ namespace CIYW.UnitTests.Mediator.Users
         public async Task Handle_InvalidCommand_PasswordException()
         {
             // Arrange
-            var command = MockHelper.CreateCreateUserCommand();
+            var command = MockCommandQueryHelper.CreateCreateUserCommand();
             command.ConfirmPassword = "123";
             
             // Act
@@ -119,7 +120,7 @@ namespace CIYW.UnitTests.Mediator.Users
         public async Task Handle_InvalidCommand_AgreeException()
         {
             // Arrange
-            var command = MockHelper.CreateCreateUserCommand();
+            var command = MockCommandQueryHelper.CreateCreateUserCommand();
             command.IsAgree = false;
             
             // Act
@@ -130,7 +131,7 @@ namespace CIYW.UnitTests.Mediator.Users
         public async Task Handle_InvalidCommand_EmailExists()
         {
             // Arrange
-            var command = MockHelper.CreateCreateUserCommand();
+            var command = MockCommandQueryHelper.CreateCreateUserCommand();
             string errorMessage = String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email);
             this.AddEntityValidatorThrow(errorMessage);
             
@@ -142,7 +143,7 @@ namespace CIYW.UnitTests.Mediator.Users
         public async Task Handle_InvalidCommand_PhoneExists()
         {
             // Arrange
-            var command = MockHelper.CreateCreateUserCommand();
+            var command = MockCommandQueryHelper.CreateCreateUserCommand();
             string errorMessage = String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone);
             this.AddEntityValidatorThrow(errorMessage);
             
@@ -154,7 +155,7 @@ namespace CIYW.UnitTests.Mediator.Users
         public async Task Handle_InvalidCommand_LoginExists()
         {
             // Arrange
-            var command = MockHelper.CreateCreateUserCommand();
+            var command = MockCommandQueryHelper.CreateCreateUserCommand();
             string errorMessage = String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login);
             this.AddEntityValidatorThrow(errorMessage);
             

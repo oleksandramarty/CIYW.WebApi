@@ -53,7 +53,10 @@ namespace CIYW.Kernel.Extensions;
             }
         }
         
-        public static void InitDatabase(this IApplicationBuilder app, bool isProd)
+        public static void InitDatabase(
+            this IApplicationBuilder app, 
+            bool isProd,
+            bool isIntegrationTests)
         {
             using (var serviceScope = app.ApplicationServices
                        .GetRequiredService<IServiceScopeFactory>()
@@ -61,7 +64,8 @@ namespace CIYW.Kernel.Extensions;
             {
                 using (var context = serviceScope.ServiceProvider.GetService<DataContext>())
                 {
-                    DbInitializer.Initialize(context, isProd);
+                    var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
+                    DbInitializer.Initialize(context, userManager, isProd, isIntegrationTests);
                 }
             }
         }
@@ -264,6 +268,6 @@ namespace CIYW.Kernel.Extensions;
             var cts = new CancellationTokenSource();
             var cancellationToken = cts.Token;
             app.UpdateDatabaseAsync().Wait(cancellationToken);
-            app.InitDatabase(app.Environment.IsProduction());
+            app.InitDatabase(app.Environment.IsProduction(), app.Environment.IsEnvironment("IntegrationTests"));
         }
     }

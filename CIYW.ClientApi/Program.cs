@@ -172,13 +172,13 @@ public class Program
         var cts = new CancellationTokenSource();
         var cancellationToken = cts.Token;
 
-        // if (app.Environment.IsDevelopment())
-        // {
-        //     app.RemoveDatabaseAsync().Wait(cancellationToken);
-        // }
+        if (app.Environment.IsEnvironment("IntegrationTests"))
+        {
+            app.RemoveDatabaseAsync().Wait(cancellationToken);
+        }
 
         app.UpdateDatabaseAsync().Wait(cancellationToken);
-        app.InitDatabase(app.Environment.IsProduction());
+        app.InitDatabase(app.Environment.IsProduction(), app.Environment.IsEnvironment("IntegrationTests"));
 
         app.UseHttpsRedirection();
         app.UseResponseCompression();

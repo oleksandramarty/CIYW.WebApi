@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {}
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {}
   },
   "projects": {
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj",
         "projectName": "CIYW.Const",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -55,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

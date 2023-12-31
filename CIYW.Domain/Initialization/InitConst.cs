@@ -32,6 +32,11 @@ public class InitConst
         get => new Guid("3FFBC6D3-D209-4040-858E-B1035247AE0C");
     }
     
+    public static Guid MockUserId
+    {
+        get => new Guid("5A896D8F-58DA-4693-80C1-FCB08C9344E6");
+    }
+    
     // 5A896D8F-58DA-4693-80C1-FCB08C9344E6
     // 15623EE2-F707-4315-B303-09CB4343A1C4
     // E5FFED17-8127-4FF5-9DC9-9344FF66B92A

@@ -1,47 +1,45 @@
 {
   "format": 1,
   "restore": {
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.ClientApi\\CIYW.ClientApi.csproj": {}
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.ClientApi/CIYW.ClientApi.csproj": {}
   },
   "projects": {
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\CIYW.Auth.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/CIYW.Auth.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\CIYW.Auth.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/CIYW.Auth.csproj",
         "projectName": "CIYW.Auth",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\CIYW.Auth.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/CIYW.Auth.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj"
               }
             }
           }
@@ -85,54 +83,52 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.ClientApi\\CIYW.ClientApi.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.ClientApi/CIYW.ClientApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.ClientApi\\CIYW.ClientApi.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.ClientApi/CIYW.ClientApi.csproj",
         "projectName": "CIYW.ClientApi",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.ClientApi\\CIYW.ClientApi.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.ClientApi\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.ClientApi/CIYW.ClientApi.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.ClientApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\CIYW.Auth.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\CIYW.Auth.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/CIYW.Auth.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/CIYW.Auth.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Repositories/CIYW.Repositories.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Repositories/CIYW.Repositories.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CYIW.Mapper/CYIW.Mapper.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CYIW.Mapper/CYIW.Mapper.csproj"
               }
             }
           }
@@ -253,28 +249,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj",
         "projectName": "CIYW.Const",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -308,36 +302,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj",
         "projectName": "CIYW.Domain",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj"
               }
             }
           }
@@ -385,39 +377,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj",
         "projectName": "CIYW.Interfaces",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj"
               }
             }
           }
@@ -447,42 +437,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj",
         "projectName": "CIYW.Kernel",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj"
               }
             }
           }
@@ -526,51 +514,49 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj",
         "projectName": "CIYW.Mediator",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\CIYW.Auth.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Auth\\CIYW.Auth.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/CIYW.Auth.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Auth/CIYW.Auth.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj"
               }
             }
           }
@@ -622,36 +608,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj",
         "projectName": "CIYW.Models",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj"
               }
             }
           }
@@ -691,45 +675,43 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Repositories/CIYW.Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Repositories/CIYW.Repositories.csproj",
         "projectName": "CIYW.Repositories",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\CIYW.Repositories.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Repositories\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Repositories/CIYW.Repositories.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Repositories/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Const\\CIYW.Const.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Const/CIYW.Const.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Interfaces\\CIYW.Interfaces.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Interfaces/CIYW.Interfaces.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Kernel\\CIYW.Kernel.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Kernel/CIYW.Kernel.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj"
               }
             }
           }
@@ -765,42 +747,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj": {
+    "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CYIW.Mapper/CYIW.Mapper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj",
+        "projectUniqueName": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CYIW.Mapper/CYIW.Mapper.csproj",
         "projectName": "CYIW.Mapper",
-        "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\CYIW.Mapper.csproj",
-        "packagesPath": "C:\\Users\\Interstellar\\.nuget\\packages\\",
-        "outputPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CYIW.Mapper\\obj\\",
+        "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CYIW.Mapper/CYIW.Mapper.csproj",
+        "packagesPath": "/Users/oleksandrmartynin/.nuget/packages/",
+        "outputPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CYIW.Mapper/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Interstellar\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/oleksandrmartynin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Domain\\CIYW.Domain.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Domain/CIYW.Domain.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Mediator\\CIYW.Mediator.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Mediator/CIYW.Mediator.csproj"
               },
-              "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj": {
-                "projectPath": "L:\\Projects\\CIYW\\CIYW.WebApi\\CIYW.Models\\CIYW.Models.csproj"
+              "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj": {
+                "projectPath": "/Users/oleksandrmartynin/Documents/GitHub/CIYW.WebApi/CIYW.Models/CIYW.Models.csproj"
               }
             }
           }
@@ -836,7 +816,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

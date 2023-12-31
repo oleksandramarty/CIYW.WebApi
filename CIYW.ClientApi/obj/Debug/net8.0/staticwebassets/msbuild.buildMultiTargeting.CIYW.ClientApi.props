@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="..\build\CIYW.ClientApi.props" />
+  <Import Project="../build/CIYW.ClientApi.props" />
 </Project>

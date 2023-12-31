@@ -1,6 +1,5 @@
 ﻿using CIYW.Const.Enum;
 using CIYW.Const.Providers;
-using CIYW.Domain.Models;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Tariff;
@@ -45,6 +44,18 @@ public class InitializationProvider
     {
         return new Tariff()
             { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow };
+    }
+    
+    public static UserBalance GetUserBalance(Guid userId, Guid currencyId, decimal amount)
+    {                                                                     
+        return new UserBalance                                            
+        {                                                                 
+            Id = Guid.NewGuid(),                                          
+            UserId = userId,                                              
+            CurrencyId = currencyId,                                      
+            Created = DateTime.UtcNow,                                    
+            Amount = amount,                                             
+        };                                                                
     }
     
     public static List<Category> GetCategories()

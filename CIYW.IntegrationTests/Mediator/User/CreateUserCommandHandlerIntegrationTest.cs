@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CIYW.Interfaces;
 using CIYW.Mediator.Auth.Handlers;
+using CIYW.TestHelper;
 using CIYW.UnitTests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +16,7 @@ public class CreateUserCommandHandlerIntegrationTest: CommonIntegrationTestSetup
     public async Task Handle_ValidCreateUserCommand_ReturnsUser()
     {
         // Arrange
-        var command = MockHelper.CreateCreateUserCommand();
+        var command = MockCommandQueryHelper.CreateCreateUserCommand();
             
         using (var scope = this.testApplicationFactory.Services.CreateScope())
         {
