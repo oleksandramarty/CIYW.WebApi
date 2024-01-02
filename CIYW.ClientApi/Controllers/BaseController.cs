@@ -1,7 +1,7 @@
 ﻿using CIYW.Kernel.Errors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CIYW.Kernel.Extensions.Controllers;
+namespace CIYW.ClientApi.Controllers;
 
 [Route("api-ciyw/[controller]")]
 [ApiController]

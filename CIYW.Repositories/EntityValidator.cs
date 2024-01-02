@@ -5,6 +5,9 @@ using CIYW.Domain;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
+using FluentValidation;
+using FluentValidation.Results;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Repositories;
@@ -34,5 +37,18 @@ public class EntityValidator: IEntityValidator
         {
             throw new LoggerException(String.Format(ErrorMessages.EntityWithIdNotFound, typeof(T).Name, entityId), 404);
         }
+    }
+
+    public void ValidateRequest<TCommand, TResult>(TCommand command, Func<IValidator<TCommand>> validatorFactory) where TCommand : IRequest<TResult>
+    {
+        IValidator<TCommand> validator = validatorFactory.Invoke();
+        ValidationResult validationResult = validator.Validate(command);
+        
+        if (validationResult.IsValid)
+        {
+           return;
+        }
+        
+        throw new LoggerException(ErrorMessages.ValidationError, 409, null, validationResult.GetInvalidFieldInfo());
     }
 }

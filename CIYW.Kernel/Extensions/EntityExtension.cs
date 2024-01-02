@@ -18,6 +18,8 @@ public static class EntityExtension
             {
                 throw new LoggerException(ErrorMessages.Forbidden, 403, userId);
             }
+            
+            return;
         }
 
         throw new InvalidOperationException($"Type {typeof(TEntity).Name} does not have a UserId property.");

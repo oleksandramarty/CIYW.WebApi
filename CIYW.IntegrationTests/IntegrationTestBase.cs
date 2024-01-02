@@ -61,10 +61,6 @@ public class IntegrationTestBase: WebApplicationFactory<Program>
                 .UseTestServer()
                 .ConfigureTestServices(services =>
                 {
-                    services.AddLogging();
-
-                    var httpContextAccessorForTesting = new HttpContextAccessorForTesting();
-                    services.AddSingleton<IHttpContextAccessor>(httpContextAccessorForTesting);
                     services.AddSingleton<IHttpContextAccessor>(httpContextAccessorForTesting);
                 })
                 .ConfigureAppConfiguration(config =>

@@ -1,12 +1,12 @@
-﻿using System.Runtime.CompilerServices;
-using CIYW.Mediator.Auth.Queries;
+﻿using CIYW.Mediator.Mediatr.Auth.Queries;
+using CIYW.Mediator.Mediatr.Auth.Requests;
+using CIYW.Mediator.Mediatr.Users.Requests;
 using CIYW.Models.Responses.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NSwag.Annotations;
 
-namespace CIYW.Kernel.Extensions.Controllers;
+namespace CIYW.ClientApi.Controllers;
 
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]

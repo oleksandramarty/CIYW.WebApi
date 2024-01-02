@@ -2,8 +2,8 @@
 using AutoMapper;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
-using CIYW.Mediator.Users.Handlers;
-using CIYW.Mediator.Users.Requests;
+using CIYW.Mediator.Mediatr.Users.Handlers;
+using CIYW.Mediator.Mediatr.Users.Requests;
 using CIYW.Models.Responses.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

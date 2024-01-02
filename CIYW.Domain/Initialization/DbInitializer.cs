@@ -68,6 +68,7 @@ namespace CIYW.Domain.Initialization;
         {
           Id = userId,
           Login = login,
+          UserName = login,
           LastName = lastName,
           FirstName = firstName,
           Patronymic = patronymic,
@@ -118,14 +119,9 @@ namespace CIYW.Domain.Initialization;
         {
           return;
         }
-        
-        var cts = new CancellationTokenSource();
-        var cancellationToken = cts.Token;
-        
-        var res = userManager.CreateAsync(user, password);
-        var temp2 = res.WaitAsync(cancellationToken);
-        context.SaveChangesAsync(cancellationToken).Wait(cancellationToken);
-        User temp = context.Users.FirstOrDefault(u => u.Id == userId);
+
+        var result = Task.Run(() => userManager.CreateAsync(user, password)).Result;
+        context.SaveChanges();
         context.UserRoles.Add(new IdentityUserRole<Guid>
         {
           UserId = userId,

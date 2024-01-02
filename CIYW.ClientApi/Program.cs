@@ -13,7 +13,10 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.ClientApi.Filters;
 using CIYW.Kernel.Extensions.ActionFilters;
+using CIYW.Kernel.Extensions.Validators.Note;
 using CYIW.Mapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
 public class Program
@@ -71,9 +74,42 @@ public class Program
         builder.Services.AddResponseCaching();
 
         builder.Services.AddAutoMapper(config => config.AddProfile(new MappingProfile()));
+        
+        builder.Services.AddMvc(mvcOptions =>
+            {
+                mvcOptions.CacheProfiles.Add("OneHour",
+                    new CacheProfile {
+                        Duration = 3600,
+                        Location = ResponseCacheLocation.Any
+                    });
+                mvcOptions.CacheProfiles.Add("FiveMinutes",
+                    new CacheProfile {
+                        Duration = 300,
+                        Location = ResponseCacheLocation.Any
+                    });
+                mvcOptions.CacheProfiles.Add("Week",
+                    new CacheProfile {
+                        Duration = 604800,
+                        Location = ResponseCacheLocation.Any
+                    });
+                mvcOptions.CacheProfiles.Add("Month",
+                    new CacheProfile {
+                        Duration = 2419200,
+                        Location = ResponseCacheLocation.Any
+                    });
+                mvcOptions.Filters.Add(typeof(ValidateModelStateAttribute));
+                mvcOptions.Filters.Add(new HttpResponseExceptionFilter());
+                mvcOptions.AllowEmptyInputInBodyModelBinding = false;
+            }).AddXmlSerializerFormatters()
+            .AddXmlDataContractSerializerFormatters();
 
         builder.Services.AddRouting(option => option.LowercaseUrls = true);
+        
+        builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateNoteCommandValidator>();
+        
         builder.Services.AddControllers();
+
+        builder.Services.AddOpenApiDocument();
         builder.Services.AddOpenApiDocument();
 
         builder.Services.AddEndpointsApiExplorer();
@@ -117,34 +153,6 @@ public class Program
         });
 
         builder.AddDependencyInjection();
-
-        builder.Services.AddMvc(mvcOptions =>
-            {
-                mvcOptions.CacheProfiles.Add("OneHour",
-                    new CacheProfile {
-                        Duration = 3600,
-                        Location = ResponseCacheLocation.Any
-                    });
-                mvcOptions.CacheProfiles.Add("FiveMinutes",
-                    new CacheProfile {
-                        Duration = 300,
-                        Location = ResponseCacheLocation.Any
-                    });
-                mvcOptions.CacheProfiles.Add("Week",
-                    new CacheProfile {
-                        Duration = 604800,
-                        Location = ResponseCacheLocation.Any
-                    });
-                mvcOptions.CacheProfiles.Add("Month",
-                    new CacheProfile {
-                        Duration = 2419200,
-                        Location = ResponseCacheLocation.Any
-                    });
-                mvcOptions.Filters.Add(typeof(ValidateModelStateAttribute));
-                mvcOptions.Filters.Add(new HttpResponseExceptionFilter());
-                mvcOptions.AllowEmptyInputInBodyModelBinding = false;
-            }).AddXmlSerializerFormatters()
-            .AddXmlDataContractSerializerFormatters();
 
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
 

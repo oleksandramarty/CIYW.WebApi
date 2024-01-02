@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using CIYW.Domain;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
-using CIYW.Mediator.Auth.Handlers;
-using CIYW.Mediator.Users.Handlers;
-using CIYW.Mediator.Users.Requests;
+using CIYW.Mediator.Mediatr.Users.Handlers;
+using CIYW.Mediator.Mediatr.Users.Requests;
 using CIYW.Models.Responses.Users;
 using CIYW.UnitTests;
 using FluentAssertions;
@@ -25,6 +25,8 @@ public class CurrentUserQueryHandlerIntegrationTest: CommonIntegrationTestSetup
             
             using (var scope = this.testApplicationFactory.Services.CreateScope())
             {
+                DataContext dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+                
                 var handler = new CurrentUserQueryHandler(
                     scope.ServiceProvider.GetRequiredService<IMapper>(),
                     scope.ServiceProvider.GetRequiredService<IMediator>(),
@@ -41,10 +43,10 @@ public class CurrentUserQueryHandlerIntegrationTest: CommonIntegrationTestSetup
                 // Assert
                 result.Should().NotBe(null);
                 
-                this.dbContext.Users.Count(u => u.Id == result.Id).Should().Be(1);
-                this.dbContext.UserLogins.Count(ul => ul.UserId == result.Id).Should().Be(3);
-                this.dbContext.UserBalances.Count(ub => ub.UserId == result.Id).Should().Be(1);
-                this.dbContext.UserRoles.Count(u => u.UserId == result.Id).Should().Be(1);
+                dbContext.Users.Count(u => u.Id == result.Id).Should().Be(1);
+                dbContext.UserLogins.Count(ul => ul.UserId == result.Id).Should().Be(3);
+                dbContext.UserBalances.Count(ub => ub.UserId == result.Id).Should().Be(1);
+                dbContext.UserRoles.Count(u => u.UserId == result.Id).Should().Be(1);
             }
         }
 }

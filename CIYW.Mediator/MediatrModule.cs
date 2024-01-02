@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
 using Autofac;
-using CIYW.Mediator.Auth.Handlers;
-using CIYW.Mediator.Balance.Requests;
-using CIYW.Mediator.Currency.Handlers;
-using CIYW.Mediator.Dictionary.Handlers;
-using CIYW.Mediator.Invoice.Handlers;
-using CIYW.Mediator.Note;
-using CIYW.Mediator.Tariff.Handlers;
-using CIYW.Mediator.Users.Handlers;
+using CIYW.Mediator.Mediatr.Auth.Handlers;
+using CIYW.Mediator.Mediatr.Balance.Requests;
+using CIYW.Mediator.Mediatr.Currency.Handlers;
+using CIYW.Mediator.Mediatr.Dictionary.Handlers;
+using CIYW.Mediator.Mediatr.Invoice.Handlers;
+using CIYW.Mediator.Mediatr.Note.Handlers;
+using CIYW.Mediator.Mediatr.Tariff.Handlers;
+using CIYW.Mediator.Mediatr.Users.Handlers;
 using MediatR;
 
 namespace CIYW.Mediator;
@@ -43,7 +43,7 @@ public class MediatrModule : Autofac.Module
 
         #region Note
         builder.RegisterAssemblyTypes(typeof(CreateNoteCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
-        builder.RegisterAssemblyTypes(typeof(UpdateNoteCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<>));
+        builder.RegisterAssemblyTypes(typeof(UpdateNoteCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         builder.RegisterAssemblyTypes(typeof(DeleteNoteCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<>));
         #endregion
 

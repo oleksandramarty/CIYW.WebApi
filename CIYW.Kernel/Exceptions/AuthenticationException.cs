@@ -5,7 +5,7 @@ namespace CIYW.Kernel.Exceptions;
 
 public class AuthenticationException : LoggerException
 {
-    public AuthenticationException(string message, int _statusCode, Guid? _userId = null, string _payload = null) : base(message, _statusCode, _userId, _payload)
+    public AuthenticationException(string message, int _statusCode, Guid? _userId = null, string _payload = null) : base(message, _statusCode, _userId, null, _payload)
     {
     }
     

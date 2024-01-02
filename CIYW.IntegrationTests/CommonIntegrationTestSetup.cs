@@ -27,8 +27,6 @@ namespace CIYW.IntegrationTests;
 public class CommonIntegrationTestSetup: IDisposable 
 {
     protected HttpClient Client { get; set; }
-    protected DataContext dbContext;
-    protected UserManager<User> userManager;
 
     protected IntegrationTestBase testApplicationFactory;
 
@@ -37,12 +35,6 @@ public class CommonIntegrationTestSetup: IDisposable
     {
         this.testApplicationFactory = new IntegrationTestBase();
         this.Client = this.testApplicationFactory.CreateClient();
-        using(var scope = this.testApplicationFactory.Services.CreateScope())
-        {
-            this.dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-            this.userManager = scope.ServiceProvider.GetService<UserManager<User>>();
-        }
-
     }
     
     [OneTimeTearDown]

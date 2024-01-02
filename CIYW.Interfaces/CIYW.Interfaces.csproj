@@ -11,4 +11,9 @@
       <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.8.1" />
+      <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+    </ItemGroup>
+
 </Project>

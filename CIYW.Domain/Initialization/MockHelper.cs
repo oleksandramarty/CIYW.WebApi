@@ -1,4 +1,5 @@
-﻿using CIYW.Const.Providers;
+﻿using CIYW.Const.Enum;
+using CIYW.Const.Providers;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
@@ -30,6 +31,35 @@ public static class MockHelper
     public static Role GetMockRole()
     {
         return InitializationProvider.GetUserRole();
+    }
+
+    public static Note GetMockNote(Guid userId, Guid invoiceId)
+    {
+        return new Note
+        {
+            Id = Guid.NewGuid(),
+            InvoiceId = invoiceId,
+            UserId = userId,
+            Name = "Name",
+            Body = "Body",
+            Created = DateTime.UtcNow
+        };
+    }
+
+    public static Invoice GetMockInvoice(Guid userId, Guid categoryId, Guid currencyId, Guid? noteId = null)
+    {
+        return new Invoice
+        {
+            Id = Guid.NewGuid(),
+            Amount = 100.0m,
+            UserId = userId,
+            CategoryId = categoryId,
+            CurrencyId = currencyId,
+            Created = DateTime.UtcNow,
+            Name = "Name",
+            NoteId = noteId,
+            Type = InvoiceTypeEnum.Expense
+        };
     }
     
     public static IList<IdentityUserRole<Guid>> GetMockRoles(Guid userId)

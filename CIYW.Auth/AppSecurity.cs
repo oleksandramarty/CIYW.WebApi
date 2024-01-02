@@ -19,7 +19,7 @@ namespace CIYW.Auth;
             }
             catch (Exception e)
             {
-                throw new LoggerException($"An error occurred while generating a new salt: [{e.GetError()}]", 500, null, "");
+                throw new LoggerException($"An error occurred while generating a new salt: [{e.GetError()}]", 500, null, null,"");
             }
             finally
             {

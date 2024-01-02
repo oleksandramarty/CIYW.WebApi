@@ -1,12 +1,10 @@
-﻿using CIYW.Mediator.Invoice.Requests;
-using CIYW.Mediator.Users.Requests;
+﻿using CIYW.Mediator.Mediatr.Invoice.Requests;
 using CIYW.Models.Responses.Invoice;
-using CIYW.Models.Responses.Users;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CIYW.Kernel.Extensions.Controllers;
+namespace CIYW.ClientApi.Controllers;
 
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]

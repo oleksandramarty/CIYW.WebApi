@@ -1,11 +1,9 @@
-﻿
-using CIYW.Mediator.Balance.Requests;
+﻿using CIYW.Mediator.Mediatr.Balance.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CIYW.Kernel.Extensions.Controllers;
+namespace CIYW.ClientApi.Controllers;
 
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]

@@ -1,12 +1,11 @@
 ﻿using CIYW.Const.Enum;
-using CIYW.Mediator.Dictionary.Requests;
+using CIYW.Mediator.Mediatr.Dictionary.Requests;
 using CIYW.Models.Responses.Dictionary;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NSwag.Annotations;
 
-namespace CIYW.Kernel.Extensions.Controllers;
+namespace CIYW.ClientApi.Controllers;
 
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]

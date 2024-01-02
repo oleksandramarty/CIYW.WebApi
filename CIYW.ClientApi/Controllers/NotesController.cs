@@ -1,9 +1,9 @@
-﻿using CIYW.Mediator.Note.Request;
+﻿using CIYW.Mediator.Mediatr.Note.Request;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CIYW.Kernel.Extensions.Controllers;
+namespace CIYW.ClientApi.Controllers;
 
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]
@@ -19,7 +19,7 @@ public class NotesController: BaseController
     
     [HttpPost("")]
     [ProducesResponseType(typeof(Guid), 200)]
-    public async Task<IActionResult> CreateNoteAsync(CreateNoteCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateNoteAsync(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
         Guid response = await this.mediator.Send(command, cancellationToken);
         return Ok(response);
@@ -27,7 +27,7 @@ public class NotesController: BaseController
     
     [HttpPut("")]
     [ProducesResponseType(typeof(void), 200)]
-    public async Task<IActionResult> UpdateNoteAsync(UpdateNoteCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateNoteAsync(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
         await this.mediator.Send(command, cancellationToken);
         return Ok();
