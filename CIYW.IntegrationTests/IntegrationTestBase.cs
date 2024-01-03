@@ -35,8 +35,11 @@ namespace CIYW.IntegrationTests;
 
 public class IntegrationTestBase: WebApplicationFactory<Program>
 {
-    public IntegrationTestBase()
+    private bool withClaims { get;}
+    
+    public IntegrationTestBase(bool withClaims = true)
     {
+        this.withClaims = withClaims;
     }
     
     protected override IHost CreateHost(IHostBuilder builder)
@@ -51,7 +54,7 @@ public class IntegrationTestBase: WebApplicationFactory<Program>
         var httpContextAccessorForTesting = new HttpContextAccessorForTesting();
         httpContextAccessorForTesting.HttpContext = new DefaultHttpContext
         {
-            User = claimsPrincipal
+            User = this.withClaims ? claimsPrincipal : null
         };
         
         builder.ConfigureWebHost(webHostBuilder =>

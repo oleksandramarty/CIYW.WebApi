@@ -2,43 +2,15 @@
 
 public class InitConst
 {
-    public static Guid UserRoleId
-    {
-        get => new Guid("C5B2F100-1711-44F2-8338-83822D22EB06");
-    }
-
-    public static Guid AdminUserId
-    {
-        get => new Guid("851A3339-BEDA-4313-A5FA-A03266B85253");
-    }
+    public static readonly Guid UserRoleId = new Guid("C5B2F100-1711-44F2-8338-83822D22EB06");
+    public static readonly Guid AdminUserId = new Guid("851A3339-BEDA-4313-A5FA-A03266B85253");
+    public static readonly Guid FreeTariffId = new Guid("F76B2192-D512-4E7D-9013-70EEB0BE5518");
+    public static readonly Guid CategoryOtherId = new Guid("45E1247B-7DA9-4A53-ACD8-455312A4554E");
+    public static readonly Guid CategorySalaryId = new Guid("8A80FD76-88AC-4BA1-966C-FFC3821A9390");
+    public static readonly Guid CurrencyUsdId = new Guid("3FFBC6D3-D209-4040-858E-B1035247AE0C");
+    public static readonly Guid MockUserId = new Guid("5A896D8F-58DA-4693-80C1-FCB08C9344E6");
+    public static readonly Guid MockAuthUserId = new Guid("15623EE2-F707-4315-B303-09CB4343A1C4");
     
-    public static Guid FreeTariffId
-    {
-        get => new Guid("F76B2192-D512-4E7D-9013-70EEB0BE5518");
-    }
-    
-    public static Guid CategoryOtherId
-    {
-        get => new Guid("45E1247B-7DA9-4A53-ACD8-455312A4554E");
-    }
-    
-    public static Guid CategorySalaryId
-    {
-        get => new Guid("8A80FD76-88AC-4BA1-966C-FFC3821A9390");
-    }
-    
-    public static Guid CurrencyUsdId
-    {
-        get => new Guid("3FFBC6D3-D209-4040-858E-B1035247AE0C");
-    }
-    
-    public static Guid MockUserId
-    {
-        get => new Guid("5A896D8F-58DA-4693-80C1-FCB08C9344E6");
-    }
-    
-    // 5A896D8F-58DA-4693-80C1-FCB08C9344E6
-    // 15623EE2-F707-4315-B303-09CB4343A1C4
     // E5FFED17-8127-4FF5-9DC9-9344FF66B92A
     // CAE37D29-4B74-4D9F-8A59-517BC70762BB
     // 3382C218-11E4-485F-839F-632D2CC341A5

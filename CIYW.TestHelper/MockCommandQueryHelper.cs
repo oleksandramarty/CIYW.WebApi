@@ -1,4 +1,8 @@
-﻿using CIYW.Mediator.Mediatr.Note.Request;
+﻿using CIYW.Const.Enum;
+using CIYW.Domain.Models.Invoice;
+using CIYW.Mediator.Mediatr.Auth.Queries;
+using CIYW.Mediator.Mediatr.Invoice.Requests;
+using CIYW.Mediator.Mediatr.Note.Request;
 using CIYW.Mediator.Mediatr.Users.Requests;
 
 namespace CIYW.TestHelper;
@@ -28,6 +32,58 @@ public static class MockCommandQueryHelper
             Id = id,
             Name = "Name",
             Body = "Body"
+        };
+    }
+
+    public static AuthLoginQuery CreateAuthLoginQuery()
+    {
+        return new AuthLoginQuery("anime.kit", "animekit@mail.com", "22334433221", "zcbm13579", false);
+    }
+
+    public static CreateInvoiceCommand CreateCreateInvoiceCommand(
+        decimal amount,
+        Guid categoryId,
+        Guid currencyId,
+        DateTime date,
+        InvoiceTypeEnum type,
+        CreateOrUpdateNoteCommand? noteCommand = null)
+    {
+        return new CreateInvoiceCommand
+        {
+            Name = "TestInvoice",
+            Amount = amount,
+            CategoryId = categoryId,
+            CurrencyId = currencyId,
+            Date = date,
+            Type = type,
+            NoteCommand = noteCommand
+        };
+    }
+    
+    public static UpdateInvoiceCommand CreateUpdateInvoiceCommand(
+        decimal amount,
+        Guid categoryId,
+        Guid currencyId,
+        DateTime date,
+        InvoiceTypeEnum type)
+    {
+        return new UpdateInvoiceCommand
+        {
+            Name = "TestInvoice",
+            Amount = amount,
+            CategoryId = categoryId,
+            CurrencyId = currencyId,
+            Date = date,
+            Type = type,
+        };
+    }
+
+    public static CreateOrUpdateNoteCommand CreateCreateOrUpdateNoteCommand(string name = "TestNoteName", string body = "TestNoteBody")
+    {
+        return new CreateOrUpdateNoteCommand
+        {
+            Name = name,
+            Body = body
         };
     }
 }

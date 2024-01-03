@@ -51,14 +51,14 @@ public class MappingProfile: Profile
                 {
                     return new Note();
                 }
-                else
+                
+                return new Note
                 {
-                    return new Note
-                    {
-                        Id = Guid.NewGuid(),
-                        Created = DateTime.UtcNow
-                    };
-                }
+                    Id = Guid.NewGuid(),
+                    Created = DateTime.UtcNow,
+                    Name = src.Name,
+                    Body = src.Body
+                };
             });
         
         this.CreateMap<CreateInvoiceCommand, Invoice>()

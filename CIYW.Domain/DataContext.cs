@@ -1,4 +1,5 @@
-﻿using CIYW.Domain.Models;
+﻿using CIYW.Const.Enum;
+using CIYW.Domain.Models;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Invoice;

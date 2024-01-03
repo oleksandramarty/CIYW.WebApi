@@ -1,36 +1,33 @@
 ﻿using CIYW.Const.Enum;
-using CIYW.Const.Errors;
-using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
-using CIYW.Kernel.Exceptions;
 
 namespace CIYW.Kernel.Extensions;
 
 public static class BalanceExtension
 {
-    public static void AddInvoice(this UserBalance balance, Invoice invoice)
+    public static void AddInvoice(this UserBalance balance, InvoiceTypeEnum type, decimal amount)
     {
-        balance.UpdateBalance(invoice);
+        balance.UpdateBalance(type, amount);
         balance.UpdateBalanceTime();
     }
     
-    public static void UpdateInvoice(this UserBalance balance, Invoice invoice, Invoice updatedInvoice)
+    public static void UpdateInvoice(this UserBalance balance, InvoiceTypeEnum type, decimal amount, InvoiceTypeEnum updatedType, decimal updatedAmount)
     {
-        balance.UpdateBalance(invoice, -1);
-        balance.UpdateBalance(updatedInvoice);
+        balance.UpdateBalance(type, amount, -1);
+        balance.UpdateBalance(updatedType, updatedAmount);
         balance.UpdateBalanceTime();
     }
     
-    public static void DeleteInvoice(this UserBalance balance, Invoice invoice)
+    public static void DeleteInvoice(this UserBalance balance, InvoiceTypeEnum type, decimal amount)
     {
-        balance.UpdateBalance(invoice, -1);
+        balance.UpdateBalance(type, amount, -1);
         balance.UpdateBalanceTime();
     }
     
-    private static void UpdateBalance(this UserBalance balance, Invoice invoice, int sign = 1)
+    private static void UpdateBalance(this UserBalance balance, InvoiceTypeEnum type, decimal amount, int sign = 1)
     {
         balance.Amount = balance.Amount + (sign) *
-            (invoice.Type == InvoiceTypeEnum.Income ? invoice.Amount : (-1) * invoice.Amount);
+            (type == InvoiceTypeEnum.Income ? amount : (-1) * amount);
     }
 
     private static void UpdateBalanceTime(this UserBalance balance)

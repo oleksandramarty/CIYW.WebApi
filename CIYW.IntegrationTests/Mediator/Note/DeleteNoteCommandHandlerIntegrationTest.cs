@@ -1,6 +1,9 @@
 using AutoMapper;
+using CIYW.Const.Errors;
 using CIYW.Domain;
+using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
+using CIYW.Kernel.Exceptions;
 using CIYW.Mediator.Mediatr.Note.Handlers;
 using CIYW.Mediator.Mediatr.Note.Request;
 using CIYW.TestHelper;
@@ -23,25 +26,65 @@ public class DeleteNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
         {
             DataContext dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
             
-            var handlerAdd = new CreateNoteCommandHandler(
-                scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Note.Note>>(),
-                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
-                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
-            );
+            Domain.Models.Note.Note note = dbContext.Notes.FirstOrDefault(i => i.UserId == InitConst.MockUserId);
             
-            var handlerDelete = new DeleteNoteCommandHandler(
+            var handler = new DeleteNoteCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Note.Note>>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>()
             );
 
             // Act
-            Guid noteId = await handlerAdd.Handle(command, CancellationToken.None);
-            await handlerDelete.Handle(new DeleteNoteCommand(noteId), CancellationToken.None);
+            await handler.Handle(new DeleteNoteCommand(note.Id), CancellationToken.None);
 
             // Assert
-            dbContext.Notes.Count(u => u.Id == noteId).Should().Be(0);
+            dbContext.Notes.Count(u => u.Id == note.Id).Should().Be(0);
+        }
+    }
+    
+    [Test]
+    public async Task Handle_InvalidDeleteNoteCommand_ReturnsExceptionNotFound()
+    {
+        // Arrange
+        Guid noteId = Guid.NewGuid();
+        
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {
+            var handler = new DeleteNoteCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Note.Note>>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+
+            // Act
+            await TestUtilities.Handle_InvalidCommand<DeleteNoteCommand, LoggerException>(
+                handler, 
+                new DeleteNoteCommand(noteId), 
+                String.Format(ErrorMessages.EntityWithIdNotFound, nameof(Domain.Models.Note.Note), noteId));
+        }
+    }
+    
+    [Test]
+    public async Task Handle_InvalidDeleteNoteCommand_ReturnsExceptionForbidden()
+    {
+        // Arrange
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {
+            DataContext dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+            
+            Domain.Models.Note.Note note = dbContext.Notes.FirstOrDefault(i => i.UserId == InitConst.MockAuthUserId);
+            
+            var handler = new DeleteNoteCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Note.Note>>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+
+            // Act
+            await TestUtilities.Handle_InvalidCommand<DeleteNoteCommand, LoggerException>(
+                handler, 
+                new DeleteNoteCommand(note.Id), 
+                ErrorMessages.Forbidden);
         }
     }
 }

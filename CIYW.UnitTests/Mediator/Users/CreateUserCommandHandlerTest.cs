@@ -102,7 +102,7 @@ namespace CIYW.UnitTests.Mediator.Users
             command.ConfirmEmail = "123";
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User>(this.handler, command, ErrorMessages.EmailsDoesntMatch);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User, LoggerException>(this.handler, command, ErrorMessages.EmailsDoesntMatch);
         }
         
         [TestMethod]
@@ -113,7 +113,7 @@ namespace CIYW.UnitTests.Mediator.Users
             command.ConfirmPassword = "123";
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User>(this.handler, command, ErrorMessages.PasswordsDoesntMatch);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User, LoggerException>(this.handler, command, ErrorMessages.PasswordsDoesntMatch);
         }
         
         [TestMethod]
@@ -124,7 +124,7 @@ namespace CIYW.UnitTests.Mediator.Users
             command.IsAgree = false;
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User>(this.handler, command, ErrorMessages.AgreeBeforeSignIn);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User, LoggerException>(this.handler, command, ErrorMessages.AgreeBeforeSignIn);
         }
         
         [TestMethod]
@@ -136,7 +136,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.AddEntityValidatorThrow(errorMessage);
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User>(this.handler, command, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email));
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User, LoggerException>(this.handler, command, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email));
         }
         
         [TestMethod]
@@ -148,7 +148,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.AddEntityValidatorThrow(errorMessage);
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User>(this.handler, command, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User, LoggerException>(this.handler, command, errorMessage);
         }
         
         [TestMethod]
@@ -160,7 +160,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.AddEntityValidatorThrow(errorMessage);
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User>(this.handler, command, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, User, LoggerException>(this.handler, command, errorMessage);
         }
 
         private void AddEntityValidatorThrow(string errorMessage)

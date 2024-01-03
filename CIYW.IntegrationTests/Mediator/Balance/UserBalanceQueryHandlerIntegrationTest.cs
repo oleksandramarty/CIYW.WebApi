@@ -1,12 +1,9 @@
-using AutoMapper;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediatr.Balance.Handlers;
 using CIYW.Mediator.Mediatr.Balance.Requests;
-using CIYW.Mediator.Mediatr.Currency.Handlers;
-using CIYW.Models.Responses.Currency;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;

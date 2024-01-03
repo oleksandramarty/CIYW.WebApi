@@ -20,15 +20,15 @@ namespace CIYW.Mediator.Mediatr.Auth.Handlers;
 
 public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenResponse>
 {
-  private readonly TokenGenerator _tokenGenerator;
-  private readonly IAuthRepository _authRepository;
-  private readonly IHttpContextAccessor _httpContextAccessor;
+  private readonly TokenGenerator tokenGenerator;
+  private readonly IAuthRepository authRepository;
+  private readonly IHttpContextAccessor httpContextAccessor;
 
   public AuthLoginQueryHandler(IAuthRepository authRepository, TokenGenerator tokenGenerator, IHttpContextAccessor httpContextAccessor)
   {
-    _authRepository = authRepository;
-    _tokenGenerator = tokenGenerator;
-    _httpContextAccessor = httpContextAccessor;
+    this.authRepository = authRepository;
+    this.tokenGenerator = tokenGenerator;
+    this.httpContextAccessor = httpContextAccessor;
   }
 
   public async Task<TokenResponse> Handle(AuthLoginQuery query, CancellationToken cancellationToken)
@@ -38,7 +38,7 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
       User user = userHelper.Item1;
       string provider = userHelper.Item2;
       
-      HttpContext httpContext = this._httpContextAccessor.HttpContext;
+      HttpContext httpContext = this.httpContextAccessor.HttpContext;
       HttpRequest httpRequest = httpContext.Request;
       ClaimsPrincipal principal = httpContext.User;
 
@@ -56,15 +56,15 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
         return tokenResponse;
       }
 
-      var role = await this._authRepository.GetRolesAsync(user);
-      var passwordCorrect = await _authRepository.CheckPasswordAsync(user, query.Password);
+      var role = await this.authRepository.GetRolesAsync(user);
+      var passwordCorrect = await authRepository.CheckPasswordAsync(user, query.Password);
 
       if (passwordCorrect)
       {
-        var tokenResponse = this._tokenGenerator.GenerateJwtToken(user.PhoneNumber, user,
+        var tokenResponse = this.tokenGenerator.GenerateJwtToken(user.PhoneNumber, user,
           role.FirstOrDefault(), query.RememberMe, provider);
           ;
-        var res = await _authRepository.SetAuthenticationTokenAsync(user, provider,
+        var res = await this.authRepository.SetAuthenticationTokenAsync(user, provider,
           TokenNameProvider.CIYWAuth, (string)tokenResponse.Value);
         if (!res.Succeeded)
         {
@@ -77,7 +77,7 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
         return tokenResponse;
       }
 
-      throw new AuthenticationException(ErrorMessages.UserNotFound, 404, null);
+      throw new AuthenticationException(ErrorMessages.WrongAuth, 404, null);
     }
 
   private async Task<Tuple<User, string>> GetUserAsync(AuthLoginQuery query)
@@ -86,22 +86,22 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
     string provider = null;
     if (query.Login.NotNullOrEmpty())
     {
-      user = await this._authRepository.FindUserByLoginAsync(LoginProvider.CIYWLogin, query.Login);
+      user = await this.authRepository.FindUserByLoginAsync(LoginProvider.CIYWLogin, query.Login);
       provider = LoginProvider.CIYWLogin;
     }
     if (query.Phone.NotNullOrEmpty())
     {
-      user = await this._authRepository.FindUserByLoginAsync(LoginProvider.CIYWPhone, query.Phone);
+      user = await this.authRepository.FindUserByLoginAsync(LoginProvider.CIYWPhone, query.Phone);
       provider = LoginProvider.CIYWPhone;
     }
     if (query.Email.NotNullOrEmpty())
     {
-      user = await this._authRepository.FindUserByLoginAsync(LoginProvider.CIYWEmail, query.Email);
+      user = await this.authRepository.FindUserByLoginAsync(LoginProvider.CIYWEmail, query.Email);
       provider = LoginProvider.CIYWEmail;
     }
     if (user == null)
     {
-      throw new LoggerException(ErrorMessages.UserNotFound, 404,
+      throw new AuthenticationException(ErrorMessages.UserNotFound, 404,
         null);
     }
     return new Tuple<User, string>(user, provider);

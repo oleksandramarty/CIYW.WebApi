@@ -30,7 +30,7 @@ public class TransactionRepository: ITransactionRepository
                 UserBalance userBalance =
                     await this.context.UserBalances.FirstOrDefaultAsync(u => u.UserId == userId, cancellationToken);
 
-                userBalance.AddInvoice(invoice);
+                userBalance.AddInvoice(invoice.Type, invoice.Amount);
                 
                 if (note != null)
                 {
@@ -67,7 +67,7 @@ public class TransactionRepository: ITransactionRepository
                 UserBalance userBalance =
                     await this.context.UserBalances.FirstOrDefaultAsync(u => u.UserId == userId, cancellationToken);
 
-                userBalance.UpdateInvoice(invoice, updatedInvoice);
+                userBalance.UpdateInvoice(invoice.Type, invoice.Amount, updatedInvoice.Type, updatedInvoice.Amount);
                 
                 this.context.Invoices.Update(updatedInvoice);
 
@@ -98,7 +98,7 @@ public class TransactionRepository: ITransactionRepository
                 UserBalance userBalance =
                     await this.context.UserBalances.FirstOrDefaultAsync(u => u.UserId == userId, cancellationToken);
 
-                userBalance.DeleteInvoice(invoice);
+                userBalance.DeleteInvoice(invoice.Type, invoice.Amount);
 
                 if (invoice.NoteId.HasValue)
                 {

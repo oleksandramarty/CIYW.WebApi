@@ -25,8 +25,6 @@ namespace CIYW.Domain.Initialization;
         AddEntitiesWithExisting<Category, Guid>(context, InitializationProvider.GetCategories(), c => c.Categories);
         AddEntitiesWithExisting<Currency, Guid>(context, InitializationProvider.GetCurrencies(), c => c.Currencies);
 
-        // AddTestInvoices(context);
-
         if (isIntegrationTests)
         {
           AddUserIfNotExist(
@@ -44,6 +42,28 @@ namespace CIYW.Domain.Initialization;
             "zcbm13579",
             RoleProvider.User
           );
+          
+          AddUserIfNotExist(
+            context,
+            userManager,
+            InitConst.MockAuthUserId,
+            "anime.kit",
+            "Anime",
+            "Kit",
+            "Kitovich",
+            "animekit@mail.com",
+            "22334433221",
+            InitConst.FreeTariffId,
+            InitConst.CurrencyUsdId,
+            "zcbm13579",
+            RoleProvider.User
+          );
+          
+          AddTestInvoices(context, InitConst.MockUserId);
+          AddTestInvoices(context, InitConst.MockAuthUserId);
+          
+          AddTestNotes(context, InitConst.MockUserId);
+          AddTestNotes(context, InitConst.MockAuthUserId);
         }
       }
 
@@ -122,19 +142,45 @@ namespace CIYW.Domain.Initialization;
 
         var result = Task.Run(() => userManager.CreateAsync(user, password)).Result;
         context.SaveChanges();
-        context.UserRoles.Add(new IdentityUserRole<Guid>
-        {
-          UserId = userId,
-          RoleId = InitConst.UserRoleId
-        });
+        result = Task.Run(() => userManager.AddToRoleAsync(user, role)).Result;
         context.SaveChanges();
         context.UserLogins.AddRange(logins);
         context.SaveChanges();
       }
 
-      static void AddTestInvoices(DataContext context)
+      static void AddTestNotes(DataContext context, Guid userId)
       {
-        User user = context.Users.FirstOrDefault();
+        User user = context.Users.FirstOrDefault(u => u.Id == userId);
+        if (user == null)
+        {
+          return;
+        }
+        
+        var count = 0;
+        
+        IList<Note> notes = new List<Note>();
+        
+        for (var i = 0; i < 10; i++)
+        {
+          Note temp = new Note
+          {
+            Id = Guid.NewGuid(),
+            Created = DateTime.UtcNow,
+            Name = $"Name # {count++}",
+            Body = $"Body # {count++}",
+            UserId = user.Id
+          };
+
+          notes.Add(temp);
+        }
+        
+        context.Notes.AddRange(notes);
+        context.SaveChanges();
+      }
+
+      static void AddTestInvoices(DataContext context, Guid userId)
+      {
+        User user = context.Users.FirstOrDefault(u => u.Id == userId);
         if (user == null)
         {
           return;
@@ -151,7 +197,7 @@ namespace CIYW.Domain.Initialization;
 
         var count = 0;
         
-        for (var i = 0; i < 500; i++)
+        for (var i = 0; i < 50; i++)
         {
           int randomDays = random.Next(0, 61);
           DateTime randomDate = today.AddDays(-randomDays);
@@ -174,7 +220,7 @@ namespace CIYW.Domain.Initialization;
           invoices.Add(temp);
         }
         
-        for (var i = 0; i < 50; i++)
+        for (var i = 0; i < 5; i++)
         {
           int randomDays = random.Next(0, 61);
           DateTime randomDate = today.AddDays(-randomDays);

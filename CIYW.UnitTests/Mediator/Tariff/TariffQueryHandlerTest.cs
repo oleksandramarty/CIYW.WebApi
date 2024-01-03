@@ -6,6 +6,7 @@ using CIYW.Kernel.Exceptions;
 using CIYW.Mediator.Mediatr.Tariff.Handlers;
 using CIYW.Mediator.Mediatr.Tariff.Requests;
 using CIYW.Models.Responses.Tariff;
+using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -80,7 +81,7 @@ namespace CIYW.UnitTests.Mediator.Tariff
                     e => e.ValidateExist(It.IsAny<Domain.Models.Tariff.Tariff>(), tariffId))
                 .Throws(new LoggerException(errorMessage, 404));
             
-            await TestUtilities.Handle_InvalidCommand<TariffQuery, TariffResponse>(this.handler, query, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<TariffQuery, TariffResponse, LoggerException>(this.handler, query, errorMessage);
         }
     }
 }

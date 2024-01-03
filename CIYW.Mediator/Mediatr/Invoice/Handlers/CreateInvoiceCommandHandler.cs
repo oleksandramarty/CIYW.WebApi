@@ -26,16 +26,19 @@ public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, 
     {
         Domain.Models.Note.Note note = null;
 
-        if (command.NoteCommand != null)
-        {
-            note = this.mapper.Map<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>(command.NoteCommand);
-        }
-        
         Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
         
         Domain.Models.Invoice.Invoice invoice = this.mapper.Map<CreateInvoiceCommand, Domain.Models.Invoice.Invoice>(command);
+        
         invoice.UserId = userId;
-        invoice.NoteId = note?.Id;
+        if (command.NoteCommand != null)
+        {
+            note = this.mapper.Map<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>(command.NoteCommand, opts => opts.Items["IsUpdate"] = false);
+            note.Id = Guid.NewGuid();
+            note.UserId = userId;
+            note.InvoiceId = invoice.Id;
+            invoice.NoteId = note.Id;
+        }
 
         await this.transactionRepository.AddInvoiceAsync(userId, invoice, note, cancellationToken);
 

@@ -6,6 +6,7 @@ using CIYW.Kernel.Exceptions;
 using CIYW.Mediator.Mediatr.Currency.Handlers;
 using CIYW.Mediator.Mediatr.Currency.Requests;
 using CIYW.Models.Responses.Currency;
+using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -70,7 +71,7 @@ namespace CIYW.UnitTests.Mediator.Currency
                     e => e.ValidateExist(It.IsAny<Domain.Models.Currency.Currency>(), currencyId))
                 .Throws(new LoggerException(errorMessage, 404));
             
-            await TestUtilities.Handle_InvalidCommand<CurrencyQuery, CurrencyResponse>(this.handler, query, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<CurrencyQuery, CurrencyResponse, LoggerException>(this.handler, query, errorMessage);
         }
     }
 }
