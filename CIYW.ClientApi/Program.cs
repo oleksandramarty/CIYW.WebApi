@@ -160,7 +160,7 @@ public class Program
 
         builder.Host.ConfigureContainer<ContainerBuilder>(opts =>
         {
-            opts.RegisterModule(new MediatrModule());
+            opts.RegisterModule(new MediatorModule());
         });
 
         var app = builder.Build();

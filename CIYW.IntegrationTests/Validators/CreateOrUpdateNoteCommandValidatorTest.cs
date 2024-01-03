@@ -1,9 +1,8 @@
 using CIYW.Const.Errors;
 using CIYW.Kernel.Extensions;
 using CIYW.Kernel.Extensions.Validators.Note;
-using CIYW.Mediator.Mediatr.Note.Request;
+using CIYW.Mediator.Mediator.Note.Request;
 using CIYW.TestHelper;
-using CIYW.UnitTests;
 using NUnit.Framework;
 
 namespace CIYW.IntegrationTests.Validators;

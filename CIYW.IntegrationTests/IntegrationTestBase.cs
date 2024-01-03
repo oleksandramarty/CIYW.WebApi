@@ -9,27 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using CIYW.Auth;
-using CIYW.Auth.Schemes;
-using CIYW.Auth.Tokens;
-using CIYW.ClientApi.Filters;
-using CIYW.Domain;
 using CIYW.Domain.Initialization;
-using CIYW.Domain.Models.User;
-using CIYW.Mediator;
-using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using CIYW.Interfaces;
-using CIYW.Kernel.Extensions.ActionFilters;
-using CIYW.Repositories;
-using CYIW.Mapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.OpenApi.Models;
 
 namespace CIYW.IntegrationTests;
 

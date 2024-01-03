@@ -1,5 +1,5 @@
 ﻿using CIYW.Const.Enum;
-using CIYW.Mediator.Mediatr.Dictionary.Requests;
+using CIYW.Mediator.Mediator.Dictionary.Requests;
 using CIYW.Models.Responses.Dictionary;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

@@ -1,6 +1,6 @@
-﻿using CIYW.Mediator.Mediatr.Auth.Queries;
-using CIYW.Mediator.Mediatr.Auth.Requests;
-using CIYW.Mediator.Mediatr.Users.Requests;
+﻿using CIYW.Mediator.Mediator.Auth.Queries;
+using CIYW.Mediator.Mediator.Auth.Requests;
+using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

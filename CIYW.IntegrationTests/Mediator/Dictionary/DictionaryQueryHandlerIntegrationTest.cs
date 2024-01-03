@@ -1,6 +1,6 @@
 using CIYW.Domain;
-using CIYW.Mediator.Mediatr.Dictionary.Handlers;
-using CIYW.Mediator.Mediatr.Dictionary.Requests;
+using CIYW.Mediator.Mediator.Dictionary.Handlers;
+using CIYW.Mediator.Mediator.Dictionary.Requests;
 using CIYW.Models.Responses.Dictionary;
 using FluentAssertions;
 using MediatR;

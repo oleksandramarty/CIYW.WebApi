@@ -1,8 +1,8 @@
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediatr.Auth.Handlers;
-using CIYW.Mediator.Mediatr.Auth.Requests;
+using CIYW.Mediator.Mediator.Auth.Handlers;
+using CIYW.Mediator.Mediator.Auth.Requests;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;

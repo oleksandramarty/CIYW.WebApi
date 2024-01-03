@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using CIYW.Domain;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediatr.Users.Handlers;
+using CIYW.Mediator.Mediator.Users.Handlers;
 using CIYW.TestHelper;
-using CIYW.UnitTests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

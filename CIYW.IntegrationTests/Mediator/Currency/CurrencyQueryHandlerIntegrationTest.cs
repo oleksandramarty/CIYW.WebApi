@@ -1,9 +1,8 @@
 using AutoMapper;
-using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediatr.Currency.Handlers;
-using CIYW.Mediator.Mediatr.Currency.Requests;
+using CIYW.Mediator.Mediator.Currency.Handlers;
+using CIYW.Mediator.Mediator.Currency.Requests;
 using CIYW.Models.Responses.Currency;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;

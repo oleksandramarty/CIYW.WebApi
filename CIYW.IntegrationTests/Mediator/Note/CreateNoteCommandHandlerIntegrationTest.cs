@@ -1,7 +1,7 @@
 using AutoMapper;
 using CIYW.Domain;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediatr.Note.Handlers;
+using CIYW.Mediator.Mediator.Note.Handlers;
 using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;

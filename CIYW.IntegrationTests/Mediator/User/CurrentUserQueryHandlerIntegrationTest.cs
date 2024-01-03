@@ -2,10 +2,9 @@
 using CIYW.Domain;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediatr.Users.Handlers;
-using CIYW.Mediator.Mediatr.Users.Requests;
+using CIYW.Mediator.Mediator.Users.Handlers;
+using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
-using CIYW.UnitTests;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

@@ -1,4 +1,4 @@
-﻿using CIYW.Mediator.Mediatr.Balance.Requests;
+﻿using CIYW.Mediator.Mediator.Balance.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

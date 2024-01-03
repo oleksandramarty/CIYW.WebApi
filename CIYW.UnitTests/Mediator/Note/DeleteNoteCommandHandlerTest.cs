@@ -2,8 +2,8 @@ using AutoMapper;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediatr.Note.Handlers;
-using CIYW.Mediator.Mediatr.Note.Request;
+using CIYW.Mediator.Mediator.Note.Handlers;
+using CIYW.Mediator.Mediator.Note.Request;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

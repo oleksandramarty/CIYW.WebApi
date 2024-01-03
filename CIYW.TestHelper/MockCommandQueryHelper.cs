@@ -1,9 +1,8 @@
 ﻿using CIYW.Const.Enum;
-using CIYW.Domain.Models.Invoice;
-using CIYW.Mediator.Mediatr.Auth.Queries;
-using CIYW.Mediator.Mediatr.Invoice.Requests;
-using CIYW.Mediator.Mediatr.Note.Request;
-using CIYW.Mediator.Mediatr.Users.Requests;
+using CIYW.Mediator.Mediator.Auth.Queries;
+using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Mediator.Users.Requests;
 
 namespace CIYW.TestHelper;
 

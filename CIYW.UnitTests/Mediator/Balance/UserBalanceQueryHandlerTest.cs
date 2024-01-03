@@ -2,9 +2,8 @@ using System.Linq.Expressions;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediatr.Balance.Handlers;
-using CIYW.Mediator.Mediatr.Balance.Requests;
-using CIYW.Models.Responses.Currency;
+using CIYW.Mediator.Mediator.Balance.Handlers;
+using CIYW.Mediator.Mediator.Balance.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

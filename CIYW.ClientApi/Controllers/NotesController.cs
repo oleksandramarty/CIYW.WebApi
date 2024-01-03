@@ -1,4 +1,4 @@
-﻿using CIYW.Mediator.Mediatr.Note.Request;
+﻿using CIYW.Mediator.Mediator.Note.Request;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

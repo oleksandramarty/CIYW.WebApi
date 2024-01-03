@@ -1,4 +1,4 @@
-﻿using CIYW.Mediator.Mediatr.Invoice.Requests;
+﻿using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Models.Responses.Invoice;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
