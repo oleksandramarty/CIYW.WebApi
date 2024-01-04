@@ -79,6 +79,8 @@ namespace CIYW.Domain.Initialization;
           AddTestNotes(context, InitConst.MockUserId);
           AddTestNotes(context, InitConst.MockAuthUserId);
         }
+        
+        // AddTestInvoices(context, new Guid("f406bb8b-db38-47f8-a199-0191a56e93b1"));
       }
 
       static void AddUserIfNotExist(

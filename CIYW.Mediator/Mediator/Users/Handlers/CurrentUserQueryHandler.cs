@@ -63,6 +63,7 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
         CurrentUserResponse response = this.mapper.Map<User, CurrentUserResponse>(user);
         this.mapper.Map<Role, CurrentUserResponse>(role, response);
         this.mapper.Map<UserBalance, CurrentUserResponse>(user.UserBalance, response);
+        response.BalanceAmount = user.UserBalance.Amount;
 
         response.Tariff = await this.mediator.Send(new TariffQuery(user.TariffId), cancellationToken);
         response.Currency = await this.mediator.Send(new CurrencyQuery(user.CurrencyId), cancellationToken);
