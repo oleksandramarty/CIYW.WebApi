@@ -2,7 +2,7 @@ using CIYW.Const.Errors;
 using CIYW.Mediator.Mediator.Note.Request;
 using FluentValidation;
 
-namespace CIYW.Kernel.Extensions.Validators.Note;
+namespace CIYW.Mediator.Validators.Notes;
 
 public class CreateOrUpdateNoteCommandValidator: AbstractValidator<CreateOrUpdateNoteCommand>
 {

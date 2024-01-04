@@ -10,6 +10,8 @@ public class Category: BaseWithDateEntity
     
     public string Ico { get; set; }
     
+    public bool IsActive { get; set; }
+    
     public HashSet<UserCategory> UserCategories { get; set; }
     public HashSet<Invoice.Invoice> Invoices { get; set; }
 }

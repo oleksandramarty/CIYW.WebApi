@@ -13,7 +13,12 @@ using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Kernel.Utils;
+using CIYW.Mediator.Validators.Categories;
+using CIYW.Mediator.Validators.Currencies;
+using CIYW.Mediator.Validators.Notes;
+using CIYW.Mediator.Validators.Tariffs;
 using CIYW.Repositories;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -269,5 +274,13 @@ namespace CIYW.Kernel.Extensions;
             var cancellationToken = cts.Token;
             app.UpdateDatabaseAsync().Wait(cancellationToken);
             app.InitDatabase(app.Environment.IsProduction(), app.Environment.IsEnvironment("IntegrationTests"));
+        }
+
+        public static void AddFluentValidations(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateNoteCommandValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateCategoryCommandValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateTariffCommandValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateCurrencyCommandValidator>();
         }
     }

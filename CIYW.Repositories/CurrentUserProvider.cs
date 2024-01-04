@@ -5,6 +5,7 @@ using CIYW.Domain;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
+using CIYW.Kernel.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
@@ -42,5 +43,20 @@ public class CurrentUserProvider: ICurrentUserProvider
         }
         
         return user.Id;
+    }
+    
+    public async Task IsUserInRoleAsync(string roleName, CancellationToken cancellationToken)
+    {
+        var role = this.httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
+
+        if (role.IsNullOrEmpty())
+        {
+            throw new LoggerException(ErrorMessages.RoleNotFound, 404);
+        }
+        
+        if (!role.Equals(roleName))
+        {
+            throw new LoggerException(ErrorMessages.Forbidden, 403);
+        }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using CIYW.Const.Enum;
 using CIYW.Const.Providers;
-using CIYW.Domain.Models;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.Note;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
-using CIYW.UnitTests;
 using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Domain.Initialization;
@@ -57,6 +55,22 @@ namespace CIYW.Domain.Initialization;
             InitConst.CurrencyUsdId,
             "zcbm13579",
             RoleProvider.User
+          );
+          
+          AddUserIfNotExist(
+            context,
+            userManager,
+            InitConst.MockAdminUserId,
+            "admin.test",
+            "Admin",
+            "Test",
+            "Adminovich",
+            "admintest@mail.com",
+            "44332255332",
+            InitConst.FreeTariffId,
+            InitConst.CurrencyUsdId,
+            "zcbm13579",
+            RoleProvider.Admin
           );
           
           AddTestInvoices(context, InitConst.MockUserId);

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using CIYW.Domain.Initialization;
+using NUnit.Framework;
 
 namespace CIYW.IntegrationTests;
 
@@ -8,17 +9,22 @@ public class CommonIntegrationTestSetup: IDisposable
 
     protected IntegrationTestBase testApplicationFactory;
     
-    private bool withClaims { get; }
+    private Guid? claimUserId { get; }
 
-    public CommonIntegrationTestSetup(bool withClaims = true)
+    public CommonIntegrationTestSetup()
     {
-        this.withClaims = withClaims;
+        this.claimUserId = InitConst.MockUserId;
+    }
+
+    public CommonIntegrationTestSetup(Guid? claimUserId)
+    {
+        this.claimUserId = claimUserId;
     }
 
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
-        this.testApplicationFactory = new IntegrationTestBase(this.withClaims);
+        this.testApplicationFactory = new IntegrationTestBase(this.claimUserId);
         this.Client = this.testApplicationFactory.CreateClient();
     }
     

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CIYW.Interfaces;
-using CIYW.Kernel.Extensions.Validators.Note;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Validators.Notes;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Note.Handlers;

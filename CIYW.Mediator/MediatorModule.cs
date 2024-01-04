@@ -2,6 +2,7 @@
 using Autofac;
 using CIYW.Mediator.Mediator.Auth.Handlers;
 using CIYW.Mediator.Mediator.Balance.Requests;
+using CIYW.Mediator.Mediator.Category.Handlers;
 using CIYW.Mediator.Mediator.Currency.Handlers;
 using CIYW.Mediator.Mediator.Dictionary.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Handlers;
@@ -31,6 +32,8 @@ public class MediatorModule : Autofac.Module
 
         #region Currency
         builder.RegisterAssemblyTypes(typeof(CurrencyQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(CreateCurrencyCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(UpdateCurrencyCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         #endregion
 
         #region Invoice
@@ -49,6 +52,8 @@ public class MediatorModule : Autofac.Module
 
         #region Tariff
         builder.RegisterAssemblyTypes(typeof(TariffQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(CreateTariffCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(UpdateTariffCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         #endregion
 
         #region User
@@ -63,6 +68,11 @@ public class MediatorModule : Autofac.Module
         #region Dictionary
         builder.RegisterAssemblyTypes(typeof(DictionaryTypeQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         builder.RegisterAssemblyTypes(typeof(DictionaryQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        #endregion
+
+        #region Category
+        builder.RegisterAssemblyTypes(typeof(CreateCategoryCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(UpdateCategoryCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         #endregion
     }
 }

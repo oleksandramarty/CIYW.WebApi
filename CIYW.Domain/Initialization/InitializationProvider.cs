@@ -43,7 +43,7 @@ public class InitializationProvider
     public static Tariff GetFreeTariff()
     {
         return new Tariff()
-            { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow };
+            { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow, IsActive = true };
     }
     
     public static UserBalance GetUserBalance(Guid userId, Guid currencyId, decimal amount)
@@ -72,7 +72,7 @@ public class InitializationProvider
         return new Category()
         {
             Id = InitConst.CategoryOtherId, Name = "Other", Description = "Other", Ico = "Other",
-            Created = DateTime.UtcNow
+            Created = DateTime.UtcNow, IsActive = true
         };
     }
     
@@ -81,7 +81,7 @@ public class InitializationProvider
         return new Category()
         {
             Id = InitConst.CategorySalaryId, Name = "Salary", Description = "Salary", Ico = "Salary",
-            Created = DateTime.UtcNow
+            Created = DateTime.UtcNow, IsActive = true
         };
     }
     
@@ -95,6 +95,6 @@ public class InitializationProvider
 
     public static Currency GetUSDCurrency()
     {
-        return new Currency() { Id = InitConst.CurrencyUsdId, Name = "US Dollar", Symbol = "$", IsoCode = "USD" };
+        return new Currency() { Id = InitConst.CurrencyUsdId, Name = "US Dollar", Symbol = "$", IsoCode = "USD", IsActive = true};
     }
 }

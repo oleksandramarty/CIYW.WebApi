@@ -23,8 +23,4 @@
       <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Mediator\" />
-    </ItemGroup>
-
 </Project>

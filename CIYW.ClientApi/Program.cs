@@ -13,10 +13,10 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.ClientApi.Filters;
 using CIYW.Kernel.Extensions.ActionFilters;
-using CIYW.Kernel.Extensions.Validators.Note;
+using CIYW.Mediator.Validators.Categories;
+using CIYW.Mediator.Validators.Notes;
 using CYIW.Mapper;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
 public class Program
@@ -104,8 +104,8 @@ public class Program
             .AddXmlDataContractSerializerFormatters();
 
         builder.Services.AddRouting(option => option.LowercaseUrls = true);
-        
-        builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateNoteCommandValidator>();
+
+        builder.AddFluentValidations();
         
         builder.Services.AddControllers();
 

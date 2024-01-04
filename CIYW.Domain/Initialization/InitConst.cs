@@ -10,8 +10,8 @@ public class InitConst
     public static readonly Guid CurrencyUsdId = new Guid("3FFBC6D3-D209-4040-858E-B1035247AE0C");
     public static readonly Guid MockUserId = new Guid("5A896D8F-58DA-4693-80C1-FCB08C9344E6");
     public static readonly Guid MockAuthUserId = new Guid("15623EE2-F707-4315-B303-09CB4343A1C4");
+    public static readonly Guid MockAdminUserId = new Guid("E5FFED17-8127-4FF5-9DC9-9344FF66B92A");
     
-    // E5FFED17-8127-4FF5-9DC9-9344FF66B92A
     // CAE37D29-4B74-4D9F-8A59-517BC70762BB
     // 3382C218-11E4-485F-839F-632D2CC341A5
     // F1603A58-6EE7-4A57-8212-1E510B83D918

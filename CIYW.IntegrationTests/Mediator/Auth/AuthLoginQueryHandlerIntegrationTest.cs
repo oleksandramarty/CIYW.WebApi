@@ -18,9 +18,9 @@ using NUnit.Framework;
 namespace CIYW.IntegrationTests.Mediator.Auth;
 
 [TestFixture]
-public class AuthLoginQueryHandlerIntegrationTest() : CommonIntegrationTestSetup(false)
+public class AuthLoginQueryHandlerIntegrationTest() : CommonIntegrationTestSetup(null)
 {
-    private static IEnumerable<TestCaseData> CreateInvoiceTestCases()
+    private static IEnumerable<TestCaseData> CreateAuthLoginTestCases()
     {   
         yield return new TestCaseData("anime.kit", null, null, "zcbm13579", LoginProvider.CIYWLogin, null);
         yield return new TestCaseData(null, "animekit@mail.com", null, "zcbm13579", LoginProvider.CIYWEmail, null);
@@ -33,7 +33,7 @@ public class AuthLoginQueryHandlerIntegrationTest() : CommonIntegrationTestSetup
         yield return new TestCaseData(null, null, "22334433221", "zcbm135791", LoginProvider.CIYWPhone, ErrorMessages.WrongAuth);
     }
     
-    [Test, TestCaseSource(nameof(CreateInvoiceTestCases))]
+    [Test, TestCaseSource(nameof(CreateAuthLoginTestCases))]
     public async Task Handle_ValidUserAuthLoginWithLogin_ReturnsTokenResponse(string login, string email, string phone, string password, string provider, string errorMessage )
     {
         // Arrange

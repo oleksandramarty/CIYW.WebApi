@@ -1,7 +1,7 @@
 using CIYW.Const.Errors;
 using CIYW.Kernel.Extensions;
-using CIYW.Kernel.Extensions.Validators.Note;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Validators.Notes;
 using CIYW.TestHelper;
 using NUnit.Framework;
 
@@ -9,68 +9,36 @@ namespace CIYW.IntegrationTests.Validators;
 
 [TestFixture]
 public class CreateOrUpdateNoteCommandValidatorTest
-{
-    [Test]
-    public async Task Handle_InvalidQuery_NameLengthException()
+{    
+    private static IEnumerable<TestCaseData> CreateTestCases()
+    {
+        string req_Name = String.Format(ErrorMessages.FieldIsRequired, nameof(CreateOrUpdateNoteCommand.Name));
+        string req_Body = String.Format(ErrorMessages.FieldIsRequired, nameof(CreateOrUpdateNoteCommand.Body));
+        string req_Id = String.Format(ErrorMessages.FieldIsRequired, nameof(CreateOrUpdateNoteCommand.Id));
+        string maxLen_Name = String.Format(ErrorMessages.FieldMaxLengthError, nameof(CreateOrUpdateNoteCommand.Name), 50);
+        string maxLen_Body = String.Format(ErrorMessages.FieldMaxLengthError, nameof(CreateOrUpdateNoteCommand.Body), 500);
+        
+        yield return new TestCaseData(1, true, null, StringExtension.GenerateRandomString(49), StringExtension.GenerateRandomString(499), null);
+        yield return new TestCaseData(2, false, Guid.NewGuid(), StringExtension.GenerateRandomString(49), StringExtension.GenerateRandomString(499), null);
+        yield return new TestCaseData(3, true, null, StringExtension.GenerateRandomString(50), StringExtension.GenerateRandomString(500), null);
+        yield return new TestCaseData(4, false, Guid.NewGuid(), StringExtension.GenerateRandomString(50), StringExtension.GenerateRandomString(500), null);
+        
+        yield return new TestCaseData(5, false, null, StringExtension.GenerateRandomString(51), StringExtension.GenerateRandomString(501), new string[] { req_Id, maxLen_Name, maxLen_Body });
+        yield return new TestCaseData(6, false, null, null, null, new string[] { req_Id, req_Name, req_Body });
+        
+    }
+    
+    [Test, TestCaseSource(nameof(CreateTestCases))]
+    public async Task Handle_Query_ValidateResult(int number, bool isNew, Guid? id, string name, string body,  string[]? expectedErrors)
     {
         // Arrange
         CreateOrUpdateNoteCommand command = MockCommandQueryHelper.CreateNoteCommand();
-        command.Name = StringExtension.GenerateRandomString(51);
-        string[] expectedErrors = { String.Format(ErrorMessages.FieldMaxLengthError, nameof(CreateOrUpdateNoteCommand.Name), 50) };
+        command.Id = id;
+        command.Name = name;
+        command.Body = body;
         
         // Act
-        TestUtilities.Validate_InvalidCommand<CreateOrUpdateNoteCommand, Guid>(
-            command, () => new CreateOrUpdateNoteCommandValidator(true), expectedErrors);
-    }
-    
-    [Test]
-    public async Task Handle_InvalidQuery_NameRequiredException()
-    {
-        // Arrange
-        CreateOrUpdateNoteCommand command = MockCommandQueryHelper.CreateNoteCommand();
-        command.Name = null;
-        string[] expectedErrors = { String.Format(ErrorMessages.FieldIsRequired, nameof(CreateOrUpdateNoteCommand.Name)) };
-        
-        // Act
-        TestUtilities.Validate_InvalidCommand<CreateOrUpdateNoteCommand, Guid>(
-            command, () => new CreateOrUpdateNoteCommandValidator(true), expectedErrors);
-    }
-    
-    [Test]
-    public async Task Handle_InvalidQuery_BodyLengthException()
-    {
-        // Arrange
-        CreateOrUpdateNoteCommand command = MockCommandQueryHelper.CreateNoteCommand();
-        command.Body = StringExtension.GenerateRandomString(501);
-        string[] expectedErrors = { String.Format(ErrorMessages.FieldMaxLengthError, nameof(CreateOrUpdateNoteCommand.Body), 500) };
-        
-        // Act
-        TestUtilities.Validate_InvalidCommand<CreateOrUpdateNoteCommand, Guid>(
-            command, () => new CreateOrUpdateNoteCommandValidator(true), expectedErrors);
-    }
-    
-    [Test]
-    public async Task Handle_InvalidQuery_BodyRequiredException()
-    {
-        // Arrange
-        CreateOrUpdateNoteCommand command = MockCommandQueryHelper.CreateNoteCommand();
-        command.Body = null;
-        string[] expectedErrors = { String.Format(ErrorMessages.FieldIsRequired, nameof(CreateOrUpdateNoteCommand.Body)) };
-        
-        // Act
-        TestUtilities.Validate_InvalidCommand<CreateOrUpdateNoteCommand, Guid>(
-            command, () => new CreateOrUpdateNoteCommandValidator(true), expectedErrors);
-    }
-    
-    [Test]
-    public async Task Handle_InvalidQuery_IdForUpdateRequiredException()
-    {
-        // Arrange
-        CreateOrUpdateNoteCommand command = MockCommandQueryHelper.CreateNoteCommand(null);
-        string[] expectedErrors = { String.Format(ErrorMessages.FieldIsRequired, nameof(CreateOrUpdateNoteCommand.Id)) };
-        
-        // Act
-        TestUtilities.Validate_InvalidCommand<CreateOrUpdateNoteCommand, Guid>(
-            command, () => new CreateOrUpdateNoteCommandValidator(false), expectedErrors);
+        TestUtilities.Validate_Command<CreateOrUpdateNoteCommand, Guid>(
+            command, () => new CreateOrUpdateNoteCommandValidator(isNew), expectedErrors);
     }
 }

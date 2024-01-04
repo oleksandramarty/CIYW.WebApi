@@ -1,12 +1,16 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.Note;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
+using CIYW.Mediator.Mediator.Category.Requests;
+using CIYW.Mediator.Mediator.Currency.Requests;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Mediator.Tariff.Requests;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Category;
@@ -44,22 +48,14 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.IsBlocked, opt => opt.MapFrom(src => false))
             .ForMember(dest => dest.IsTemporaryPassword, opt => opt.MapFrom(src => true));
         
+        CreateMap<CreateOrUpdateCategoryCommand, Category>()
+            .ConstructUsing(this.CreateOrUpdateEntity<Category, CreateOrUpdateCategoryCommand>);        
+        CreateMap<CreateOrUpdateTariffCommand, Tariff>()
+            .ConstructUsing(this.CreateOrUpdateEntity<Tariff, CreateOrUpdateTariffCommand>);        
         CreateMap<CreateOrUpdateNoteCommand, Note>()
-            .ConstructUsing((src, ctx) =>
-            {
-                if (ctx.Items["IsUpdate"] is bool isUpdate && isUpdate)
-                {
-                    return new Note();
-                }
-                
-                return new Note
-                {
-                    Id = Guid.NewGuid(),
-                    Created = DateTime.UtcNow,
-                    Name = src.Name,
-                    Body = src.Body
-                };
-            });
+            .ConstructUsing(this.CreateOrUpdateEntity<Note, CreateOrUpdateNoteCommand>);        
+        CreateMap<CreateOrUpdateCurrencyCommand, Currency>()
+            .ConstructUsing(this.CreateOrUpdateEntity<Currency, CreateOrUpdateCurrencyCommand>);
         
         this.CreateMap<CreateInvoiceCommand, Invoice>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
@@ -84,5 +80,39 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Description));
         this.CreateMap<Role, DictionaryItemResponse>()
             .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.NormalizedName));
+    }
+    
+    private TEntity CreateOrUpdateEntity<TEntity, TCommand>(TCommand src, ResolutionContext ctx)
+        where TEntity : new()
+    {
+        TEntity entity = new TEntity();
+
+        if (ctx.Items["IsUpdate"] is bool isUpdate && isUpdate)
+        {
+            return entity;
+        }
+
+        // If TEntity has an "Id" property
+        PropertyInfo idProperty = typeof(TEntity).GetProperty("Id");
+        if (idProperty != null && idProperty.PropertyType == typeof(Guid))
+        {
+            idProperty.SetValue(entity, Guid.NewGuid());
+        }
+
+        // If TEntity has a "Created" property
+        PropertyInfo createdProperty = typeof(TEntity).GetProperty("Created");
+        if (createdProperty != null && createdProperty.PropertyType == typeof(DateTime))
+        {
+            createdProperty.SetValue(entity, DateTime.UtcNow);
+        }
+        
+        // If TEntity has a "IsActive" property
+        PropertyInfo isActiveProperty = typeof(TEntity).GetProperty("IsActive");
+        if (isActiveProperty != null && isActiveProperty.PropertyType == typeof(bool))
+        {
+            isActiveProperty.SetValue(entity, true);
+        }
+
+        return entity;
     }
 }

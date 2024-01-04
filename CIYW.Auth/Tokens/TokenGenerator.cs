@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using CIYW.Auth.Schemes;
-using CIYW.Const.Providers;
 using CIYW.Domain.Models.User;
 using CIYW.Kernel.Extensions;
 using CIYW.Models.Responses.Auth;
