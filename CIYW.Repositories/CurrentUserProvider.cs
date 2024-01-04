@@ -59,4 +59,21 @@ public class CurrentUserProvider: ICurrentUserProvider
             throw new LoggerException(ErrorMessages.Forbidden, 403);
         }
     }
+    
+    public async Task<bool> HasUserInRoleAsync(string roleName, CancellationToken cancellationToken)
+    {
+        var role = this.httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
+
+        if (role.IsNullOrEmpty())
+        {
+            return false;
+        }
+        
+        if (!role.Equals(roleName))
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -51,4 +51,23 @@ public class EntityValidator: IEntityValidator
         
         throw new LoggerException(ErrorMessages.ValidationError, 409, null, validationResult.GetInvalidFieldInfo());
     }
+    
+    public void HasAccess<TEntity>(TEntity entity, Guid userId)
+    {
+        var propertyInfo = typeof(TEntity).GetProperty("UserId");
+
+        if (propertyInfo != null)
+        {
+            var entityUserId = (Guid)propertyInfo.GetValue(entity);
+            
+            if (entityUserId != userId)
+            {
+                throw new LoggerException(ErrorMessages.Forbidden, 403, userId);
+            }
+            
+            return;
+        }
+
+        throw new InvalidOperationException($"Type {typeof(TEntity).Name} does not have a UserId property.");
+    }
 }

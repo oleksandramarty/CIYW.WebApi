@@ -283,4 +283,12 @@ namespace CIYW.Kernel.Extensions;
             builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateTariffCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateCurrencyCommandValidator>();
         }
+        
+        public static void AddGraphQL(this WebApplicationBuilder builder)
+        {
+            builder.Services
+                .AddGraphQLServer();
+            //   .AddQueryType<YourQueryType>();
+        }
     }
+    

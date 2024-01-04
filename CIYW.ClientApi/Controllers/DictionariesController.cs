@@ -21,7 +21,7 @@ public class DictionariesController: BaseController
     
     [HttpGet("")]
     [ProducesResponseType(typeof(DictionariesResponse), 200)]
-    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_GetAllAsync(CancellationToken cancellationToken)
     {
         DictionariesResponse response = await this.mediator.Send(new DictionaryQuery(), cancellationToken);
         return Ok(response);
@@ -29,7 +29,7 @@ public class DictionariesController: BaseController
     
     [HttpGet("{type}")]
     [ProducesResponseType(typeof(DictionaryResponse), 200)]
-    public async Task<IActionResult> GetByTypeAsync([FromRoute] EntityTypeEnum type, CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_GetByTypeAsync([FromRoute] EntityTypeEnum type, CancellationToken cancellationToken)
     {
         DictionaryResponse response = await this.mediator.Send(new DictionaryTypeQuery(type), cancellationToken);
         return Ok(response);

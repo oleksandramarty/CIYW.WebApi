@@ -13,10 +13,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.ClientApi.Filters;
 using CIYW.Kernel.Extensions.ActionFilters;
-using CIYW.Mediator.Validators.Categories;
-using CIYW.Mediator.Validators.Notes;
 using CYIW.Mapper;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 public class Program
@@ -106,13 +103,19 @@ public class Program
         builder.Services.AddRouting(option => option.LowercaseUrls = true);
 
         builder.AddFluentValidations();
+        //builder.AddGraphQL();
         
         builder.Services.AddControllers();
 
-        builder.Services.AddOpenApiDocument();
-        builder.Services.AddOpenApiDocument();
-
         builder.Services.AddEndpointsApiExplorer();
+        
+        builder.Services.AddOpenApiDocument();
+        
+        builder.Services.AddSwaggerDocument(config =>
+        {
+            config.DocumentName = "swagger";
+        });
+        
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "CIYW.WebApi", Version = "v1" });
@@ -151,7 +154,7 @@ public class Program
             // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             // c.IncludeXmlComments(xmlPath);
         });
-
+        
         builder.AddDependencyInjection();
 
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
@@ -202,6 +205,12 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        
+     //   app.UseRouting();
+       // app.UseEndpoints(endpoints =>
+        //{
+         //   endpoints.MapGraphQL();s
+        //});
 
         app.Run();
     }

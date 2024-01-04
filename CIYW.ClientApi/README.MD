@@ -15,3 +15,7 @@
 
 ### Swagger
 > /swagger/index.html
+
+
+# NSWAG CMD
+> nswag run

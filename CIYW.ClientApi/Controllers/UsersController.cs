@@ -20,7 +20,7 @@ public class UsersController: BaseController
     
     [HttpGet("Current")]
     [ProducesResponseType(typeof(CurrentUserResponse), 200)]
-    public async Task<IActionResult> CurrentUserAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_CurrentUserAsync(CancellationToken cancellationToken)
     {
         CurrentUserResponse result = await this.mediator.Send(new CurrentUserQuery(), cancellationToken);
         return Ok(result);

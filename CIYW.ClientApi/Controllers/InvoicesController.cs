@@ -20,7 +20,7 @@ public class InvoicesController: BaseController
     
     [HttpPost("history")]
     [ProducesResponseType(typeof(BalanceInvoicePageableResponse), 200)]
-    public async Task<IActionResult> GetUserInvoicesAsync(UserInvoicesQuery query, CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_GetUserInvoicesAsync(UserInvoicesQuery query, CancellationToken cancellationToken)
     {
         BalanceInvoicePageableResponse response = await this.mediator.Send(query, cancellationToken);
         return Ok(response);
@@ -28,15 +28,23 @@ public class InvoicesController: BaseController
     
     [HttpGet("monthly")]
     [ProducesResponseType(typeof(BalanceInvoicePageableResponse), 200)]
-    public async Task<IActionResult> GetUserInvoicesAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_GetUserInvoicesAsync(CancellationToken cancellationToken)
     {
         BalanceInvoicePageableResponse response = await this.mediator.Send(new UserMonthlyInvoicesQuery(), cancellationToken);
         return Ok(response);
     }
     
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(BalanceInvoiceResponse), 200)]
+    public async Task<IActionResult> V1_GetInvoiceByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        BalanceInvoiceResponse response = await this.mediator.Send(new GetInvoiceByIdQuery(id), cancellationToken);
+        return Ok(response);
+    }
+    
     [HttpPost("")]
     [ProducesResponseType(typeof(Guid), 200)]
-    public async Task<IActionResult> CreateInvoiceAsync(CreateInvoiceCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_CreateInvoiceAsync(CreateInvoiceCommand command, CancellationToken cancellationToken)
     {
         Guid response = await this.mediator.Send(command, cancellationToken);
         return Ok(response);
@@ -44,7 +52,7 @@ public class InvoicesController: BaseController
     
     [HttpPut("")]
     [ProducesResponseType(typeof(void), 200)]
-    public async Task<IActionResult> UpdateInvoiceAsync(UpdateInvoiceCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_UpdateInvoiceAsync(UpdateInvoiceCommand command, CancellationToken cancellationToken)
     {
         await this.mediator.Send(command, cancellationToken);
         return Ok();
@@ -52,7 +60,7 @@ public class InvoicesController: BaseController
     
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(void), 200)]
-    public async Task<IActionResult> DeleteInvoiceAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_DeleteInvoiceAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         await this.mediator.Send(new DeleteInvoiceCommand(id), cancellationToken);
         return Ok();

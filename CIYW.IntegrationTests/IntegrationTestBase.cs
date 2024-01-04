@@ -1,11 +1,6 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
-using System.Reflection;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Autofac;

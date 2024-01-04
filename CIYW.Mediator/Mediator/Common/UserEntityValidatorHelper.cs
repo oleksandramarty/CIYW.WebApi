@@ -1,5 +1,7 @@
+using CIYW.Const.Errors;
 using CIYW.Const.Providers;
 using CIYW.Interfaces;
+using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
 using FluentValidation;
 using MediatR;
@@ -36,16 +38,36 @@ public class UserEntityValidatorHelper
     
     protected async Task IsUserUserAsync(CancellationToken cancellationToken)
     {
-        await this.currentUserProvider.IsUserInRoleAsync(RoleProvider.User, cancellationToken);
+        await this.IsUserInRoleAsync(RoleProvider.User, cancellationToken);
     }
     
     protected async Task IsUserAdminAsync(CancellationToken cancellationToken)
     {
-        await this.currentUserProvider.IsUserInRoleAsync(RoleProvider.Admin, cancellationToken);
+        await this.IsUserInRoleAsync(RoleProvider.Admin, cancellationToken);
+    }
+    
+    protected async Task<bool> HasUserInRoleAsync(string roleName, CancellationToken cancellationToken)
+    {
+        return await this.currentUserProvider.HasUserInRoleAsync(roleName, cancellationToken);
+    }
+    
+    protected async Task<bool> HasUserUserAsync(CancellationToken cancellationToken)
+    {
+        return await this.HasUserInRoleAsync(RoleProvider.User, cancellationToken);
+    }
+    
+    protected async Task<bool> HasUserAdminAsync(CancellationToken cancellationToken)
+    {
+        return await this.HasUserInRoleAsync(RoleProvider.Admin, cancellationToken);
     }
 
     protected void ValidateExist<T, TId>(T entity, TId? entityId) where T : class
     {
         this.entityValidator.ValidateExist<T, TId>(entity, entityId);
+    }
+    
+    protected void HasAccess<TEntity>(TEntity entity, Guid userId)
+    {
+        this.entityValidator.HasAccess<TEntity>(entity, userId);
     }
 }

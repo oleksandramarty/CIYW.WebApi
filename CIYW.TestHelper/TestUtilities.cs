@@ -37,7 +37,6 @@ public static class TestUtilities
         IValidator<TCommand> validator = validatorFactory.Invoke();
         ValidationResult validationResult = validator.Validate(command);
         
-        Console.WriteLine(validationResult.Errors);
         if (expectedErrors == null)
         {
             Assert.IsTrue(validationResult.IsValid);

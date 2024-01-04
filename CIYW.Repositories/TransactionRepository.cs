@@ -1,8 +1,10 @@
-﻿using CIYW.Domain;
+﻿using CIYW.Const.Errors;
+using CIYW.Domain;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.Note;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
+using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,7 +60,10 @@ public class TransactionRepository: ITransactionRepository
         Invoice updatedInvoice,
         CancellationToken cancellationToken)
     {
-        EntityExtension.HasAccess(invoice, userId);
+        if (invoice.UserId != userId)
+        {
+            throw new LoggerException(ErrorMessages.Forbidden, 403, userId);
+        }
         
         using (var transaction = await this.context.Database.BeginTransactionAsync(cancellationToken))
         {
@@ -89,7 +94,10 @@ public class TransactionRepository: ITransactionRepository
         Invoice invoice,
         CancellationToken cancellationToken)
     {
-        EntityExtension.HasAccess(invoice, userId);
+        if (invoice.UserId != userId)
+        {
+            throw new LoggerException(ErrorMessages.Forbidden, 403, userId);
+        }
         
         using (var transaction = await this.context.Database.BeginTransactionAsync(cancellationToken))
         {

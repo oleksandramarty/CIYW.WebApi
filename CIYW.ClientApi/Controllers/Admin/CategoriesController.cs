@@ -20,7 +20,7 @@ public class CategoriesController: BaseController
     
     [HttpPost("")]
     [ProducesResponseType(typeof(void), 200)]
-    public async Task<IActionResult> CreateCategoryAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_CreateCategoryAsync(CancellationToken cancellationToken)
     {
         decimal response = await this.mediator.Send(new UserBalanceQuery(), cancellationToken);
         return Ok(response);

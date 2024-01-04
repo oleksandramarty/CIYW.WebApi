@@ -19,7 +19,7 @@ public class BalancesController: BaseController
     
     [HttpGet("")]
     [ProducesResponseType(typeof(decimal), 200)]
-    public async Task<IActionResult> GetUserBalanceAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_GetUserBalanceAsync(CancellationToken cancellationToken)
     {
         decimal response = await this.mediator.Send(new UserBalanceQuery(), cancellationToken);
         return Ok(response);
