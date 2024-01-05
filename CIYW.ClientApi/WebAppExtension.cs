@@ -6,10 +6,12 @@ using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
+using CIYW.ClientApi.GraphQL;
 using CIYW.ClientApi.Middleware;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
+using CIYW.GraphQL.Schemas.Invoice;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Kernel.Utils;
@@ -20,6 +22,9 @@ using CIYW.Mediator.Validators.Tariffs;
 using CIYW.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using GraphQL;
+using GraphQL.MicrosoftDI;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -235,6 +240,8 @@ namespace CIYW.Kernel.Extensions;
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped(typeof(IReadGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            
+            builder.Services.AddScoped<ContextServiceLocator>();
         }
 
         public static void AddMvcSupport(this WebApplicationBuilder builder)
@@ -283,12 +290,20 @@ namespace CIYW.Kernel.Extensions;
             builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateTariffCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateCurrencyCommandValidator>();
         }
-        
+
         public static void AddGraphQL(this WebApplicationBuilder builder)
         {
-            builder.Services
-                .AddGraphQLServer();
-            //   .AddQueryType<YourQueryType>();
+            //builder.Services.AddSingleton<ISchema, NotesSchema>(services => new NotesSchema(new SelfActivatingServiceProvider(services)));
+            builder.Services.AddSingleton<ISchema, InvoiceSchema>(services => new InvoiceSchema(new SelfActivatingServiceProvider(services)));
+           
+            builder.Services.AddGraphQL(options =>
+                options.ConfigureExecution((opt, next) =>
+                {
+                    opt.EnableMetrics = true;
+                    opt.ThrowOnUnhandledException = true;
+                    return next(opt);
+                }).AddSystemTextJson()
+            );
         }
     }
     

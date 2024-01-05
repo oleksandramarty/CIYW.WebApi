@@ -12,8 +12,12 @@ using Microsoft.OpenApi.Models;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.ClientApi.Filters;
+using CIYW.ClientApi.GraphQL;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CYIW.Mapper;
+using GraphQL.MicrosoftDI;
+using GraphQL.Server;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
 
 public class Program
@@ -156,6 +160,8 @@ public class Program
         });
         
         builder.AddDependencyInjection();
+        
+        builder.AddGraphQL();
 
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
 
@@ -173,13 +179,13 @@ public class Program
         {
             app.UseSwagger(options => options.SerializeAsV2 = true);
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CIYW.WebApi v1"));
+            app.UseGraphQLPlayground("/graphql/playground");
         }
         else
         {
             app.UseHsts();
         }
-
-
+        
         var cts = new CancellationTokenSource();
         var cancellationToken = cts.Token;
 
@@ -205,6 +211,8 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        
+        app.UseGraphQL();
         
      //   app.UseRouting();
        // app.UseEndpoints(endpoints =>
