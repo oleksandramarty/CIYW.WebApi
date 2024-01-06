@@ -2735,12 +2735,12 @@ export enum EntityTypeEnum {
     Role = 4,
 }
 
-export class BasePageableResponse implements IBasePageableResponse {
+export class Paginator implements IPaginator {
     pageNumber!: number;
     pageSize!: number;
-    totalCount!: number;
+    isFull!: boolean;
 
-    constructor(data?: IBasePageableResponse) {
+    constructor(data?: IPaginator) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2753,13 +2753,13 @@ export class BasePageableResponse implements IBasePageableResponse {
         if (_data) {
             this.pageNumber = _data["pageNumber"];
             this.pageSize = _data["pageSize"];
-            this.totalCount = _data["totalCount"];
+            this.isFull = _data["isFull"];
         }
     }
 
-    static fromJS(data: any): BasePageableResponse {
+    static fromJS(data: any): Paginator {
         data = typeof data === 'object' ? data : {};
-        let result = new BasePageableResponse();
+        let result = new Paginator();
         result.init(data);
         return result;
     }
@@ -2768,21 +2768,22 @@ export class BasePageableResponse implements IBasePageableResponse {
         data = typeof data === 'object' ? data : {};
         data["pageNumber"] = this.pageNumber;
         data["pageSize"] = this.pageSize;
-        data["totalCount"] = this.totalCount;
+        data["isFull"] = this.isFull;
         return data;
     }
 }
 
-export interface IBasePageableResponse {
+export interface IPaginator {
     pageNumber: number;
     pageSize: number;
-    totalCount: number;
+    isFull: boolean;
 }
 
-export class BalanceInvoicePageableResponse extends BasePageableResponse implements IBalanceInvoicePageableResponse {
+export class BalanceInvoicePageableResponse extends Paginator implements IBalanceInvoicePageableResponse {
     invoices!: BalanceInvoiceResponse[];
     balance!: number;
     currency!: CurrencyResponse;
+    totalCount!: number;
 
     constructor(data?: IBalanceInvoicePageableResponse) {
         super(data);
@@ -2802,6 +2803,7 @@ export class BalanceInvoicePageableResponse extends BasePageableResponse impleme
             }
             this.balance = _data["balance"];
             this.currency = _data["currency"] ? CurrencyResponse.fromJS(_data["currency"]) : new CurrencyResponse();
+            this.totalCount = _data["totalCount"];
         }
     }
 
@@ -2821,15 +2823,17 @@ export class BalanceInvoicePageableResponse extends BasePageableResponse impleme
         }
         data["balance"] = this.balance;
         data["currency"] = this.currency ? this.currency.toJSON() : <any>undefined;
+        data["totalCount"] = this.totalCount;
         super.toJSON(data);
         return data;
     }
 }
 
-export interface IBalanceInvoicePageableResponse extends IBasePageableResponse {
+export interface IBalanceInvoicePageableResponse extends IPaginator {
     invoices: BalanceInvoiceResponse[];
     balance: number;
     currency: CurrencyResponse;
+    totalCount: number;
 }
 
 export class BaseEntityResponse implements IBaseEntityResponse {
@@ -3101,7 +3105,7 @@ export enum InvoiceTypeEnum {
 
 export class BaseFilterQuery implements IBaseFilterQuery {
     ids?: BaseIdsListQuery | undefined;
-    paginator?: BasePageableQuery | undefined;
+    paginator?: Paginator | undefined;
     dateRange?: BaseDateRangeQuery | undefined;
     sort?: BaseSortableQuery | undefined;
 
@@ -3117,7 +3121,7 @@ export class BaseFilterQuery implements IBaseFilterQuery {
     init(_data?: any) {
         if (_data) {
             this.ids = _data["ids"] ? BaseIdsListQuery.fromJS(_data["ids"]) : <any>undefined;
-            this.paginator = _data["paginator"] ? BasePageableQuery.fromJS(_data["paginator"]) : <any>undefined;
+            this.paginator = _data["paginator"] ? Paginator.fromJS(_data["paginator"]) : <any>undefined;
             this.dateRange = _data["dateRange"] ? BaseDateRangeQuery.fromJS(_data["dateRange"]) : <any>undefined;
             this.sort = _data["sort"] ? BaseSortableQuery.fromJS(_data["sort"]) : <any>undefined;
         }
@@ -3142,7 +3146,7 @@ export class BaseFilterQuery implements IBaseFilterQuery {
 
 export interface IBaseFilterQuery {
     ids?: BaseIdsListQuery | undefined;
-    paginator?: BasePageableQuery | undefined;
+    paginator?: Paginator | undefined;
     dateRange?: BaseDateRangeQuery | undefined;
     sort?: BaseSortableQuery | undefined;
 }
@@ -3219,50 +3223,6 @@ export class BaseIdsListQuery implements IBaseIdsListQuery {
 
 export interface IBaseIdsListQuery {
     ids: string[];
-}
-
-export class BasePageableQuery implements IBasePageableQuery {
-    pageNumber!: number;
-    pageSize!: number;
-    isFull!: boolean;
-
-    constructor(data?: IBasePageableQuery) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.pageNumber = _data["pageNumber"];
-            this.pageSize = _data["pageSize"];
-            this.isFull = _data["isFull"];
-        }
-    }
-
-    static fromJS(data: any): BasePageableQuery {
-        data = typeof data === 'object' ? data : {};
-        let result = new BasePageableQuery();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["pageNumber"] = this.pageNumber;
-        data["pageSize"] = this.pageSize;
-        data["isFull"] = this.isFull;
-        return data;
-    }
-}
-
-export interface IBasePageableQuery {
-    pageNumber: number;
-    pageSize: number;
-    isFull: boolean;
 }
 
 export class BaseDateRangeQuery implements IBaseDateRangeQuery {
