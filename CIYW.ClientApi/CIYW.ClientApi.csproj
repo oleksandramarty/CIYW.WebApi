@@ -53,4 +53,10 @@
       <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="CIYW.Kernel">
+        <HintPath>..\CIYW.Kernel\bin\Debug\net8.0\CIYW.Kernel.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

@@ -203,7 +203,7 @@ public class Program
 
         app.UseRouting();
 
-        //app.ConfigureApplicationLocalization();
+        app.ConfigureApplicationLocalization();
 
         app.UseCors("CorsPolicy");
 

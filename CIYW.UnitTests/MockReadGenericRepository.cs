@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 using CIYW.Const.Errors;
-using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
-using CIYW.Models.Helpers;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 
@@ -94,7 +89,7 @@ public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : 
     {
         if (entity == null)
         {
-            throw new LoggerException($"{typeof(T).Name} {ErrorMessages.NotFound}", 404, null);
+            throw new LoggerException($"{typeof(T).Name} {ErrorMessages.NotFound}", 404, null, null);
         }
     }
 }

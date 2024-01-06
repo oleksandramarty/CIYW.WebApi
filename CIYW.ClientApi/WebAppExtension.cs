@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -6,12 +7,11 @@ using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
-using CIYW.ClientApi.GraphQL;
 using CIYW.ClientApi.Middleware;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
-using CIYW.GraphQL.Schemas.Invoice;
+using CIYW.GraphQL;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Kernel.Utils;
@@ -32,6 +32,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Namotion.Reflection;
 using ZymLabs.NSwag.FluentValidation.AspNetCore;
+using Int32Converter = CIYW.Kernel.Utils.Int32Converter;
 
 namespace CIYW.Kernel.Extensions;
 
@@ -82,29 +83,20 @@ namespace CIYW.Kernel.Extensions;
 
         public static void ConfigureApplicationLocalization(this IApplicationBuilder app)
         {
-            //var english = "en-US";
-            const string defCult = "en-US";
-            var defaultRequestCulture = new RequestCulture(defCult, defCult);
-            var supportedCultures = new List<CultureInfo>
-            {
-                new("en-US"),
-                new("ru-RU")
-            };
-
             var options = new RequestLocalizationOptions
             {
-                DefaultRequestCulture = defaultRequestCulture,
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
+                DefaultRequestCulture = new RequestCulture(CultureInfo.InvariantCulture),
+                SupportedCultures = new[] { CultureInfo.InvariantCulture },
+                SupportedUICultures = new[] { CultureInfo.InvariantCulture }
             };
 
-            //RequestCultureProvider requestProvider = options.RequestCultureProviders.OfType<AcceptLanguageHeaderRequestCultureProvider>().First();
-            //requestProvider.Options.DefaultRequestCulture = englishRequestCulture;
+            // Remove any existing culture providers to avoid conflicts
+            options.RequestCultureProviders.Clear();
 
-            RequestCultureProvider requestProvider =
-                options.RequestCultureProviders.OfType<CookieRequestCultureProvider>().First();
-            options.RequestCultureProviders.Remove(requestProvider);
+            // Add your preferred culture provider (e.g., AcceptLanguageHeaderRequestCultureProvider or CookieRequestCultureProvider)
+            options.RequestCultureProviders.Add(new AcceptLanguageHeaderRequestCultureProvider());
 
+            // UseRequestLocalization with the configured options
             app.UseRequestLocalization(options);
         }
 
@@ -294,8 +286,10 @@ namespace CIYW.Kernel.Extensions;
         public static void AddGraphQL(this WebApplicationBuilder builder)
         {
             //builder.Services.AddSingleton<ISchema, NotesSchema>(services => new NotesSchema(new SelfActivatingServiceProvider(services)));
-            builder.Services.AddSingleton<ISchema, InvoiceSchema>(services => new InvoiceSchema(new SelfActivatingServiceProvider(services)));
-           
+            //builder.Services.AddSingleton<ISchema, CurrencySchema>(services => new CurrencySchema(new SelfActivatingServiceProvider(services)));
+            //builder.Services.AddSingleton<ISchema, InvoiceSchema>(services => new InvoiceSchema(new SelfActivatingServiceProvider(services)));
+            builder.Services.AddSingleton<ISchema, GraphQLSchema>(services => new GraphQLSchema(new SelfActivatingServiceProvider(services)));
+            
             builder.Services.AddGraphQL(options =>
                 options.ConfigureExecution((opt, next) =>
                 {
