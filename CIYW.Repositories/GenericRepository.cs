@@ -7,6 +7,7 @@ using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
+using CIYW.Models.Responses.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Repositories;
@@ -88,7 +89,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return new ListWithIncludeHelper<T>
         {
             Entities = entities,
-            Total = total
+            Paginator = filter.Paginator,
+            TotalCount = total
         };
     }
    

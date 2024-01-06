@@ -58,7 +58,7 @@ public class UserInvoicesQueryHandler: IRequestHandler<UserInvoicesQuery, Balanc
             Invoices = invoiceHelper.Entities.Select(e => this.mapper.Map<Domain.Models.Invoice.Invoice, BalanceInvoiceResponse>(e)).ToList(),
             PageNumber = query.Paginator.PageNumber,
             PageSize = query.Paginator.PageSize,
-            TotalCount = invoiceHelper.Total,
+            TotalCount = invoiceHelper.TotalCount,
             Balance = user.UserBalance.Amount,
             Currency = this.mapper.Map<Domain.Models.Currency.Currency, CurrencyResponse>(user.Currency)
         };

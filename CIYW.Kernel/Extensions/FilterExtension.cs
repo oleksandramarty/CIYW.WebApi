@@ -10,7 +10,7 @@ public static class FilterExtension
         {
             Ids = null,
 
-            Paginator = new BasePageableQuery
+            Paginator = new Paginator
             {
                 PageNumber = 1,
                 PageSize = 10,

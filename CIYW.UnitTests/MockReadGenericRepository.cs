@@ -6,6 +6,7 @@ using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
+using CIYW.Models.Responses.Base;
 
 public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : class
 {
@@ -61,7 +62,8 @@ public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : 
         var result = new ListWithIncludeHelper<T>
         {
             Entities = filteredData.ToList(),
-            Total = filteredData.Count()
+            Paginator = filter.Paginator,
+            TotalCount = filteredData.Count()
         };
 
         return Task.FromResult(result);

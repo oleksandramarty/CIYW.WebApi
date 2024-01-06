@@ -13,6 +13,7 @@ using CIYW.Mediator.Mediator.Note.Request;
 using CIYW.Mediator.Mediator.Tariff.Requests;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Requests.Common;
+using CIYW.Models.Responses.Base;
 using CIYW.Models.Responses.Category;
 using CIYW.Models.Responses.Currency;
 using CIYW.Models.Responses.Dictionary;

@@ -4,12 +4,9 @@ using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
 using CIYW.GraphQL.Types;
 using CIYW.Interfaces;
-using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Models.Requests.Common;
-using CIYW.Models.Responses.Invoice;
 using GraphQL;
 using GraphQL.Types;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -109,7 +106,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
     }
     public void GetInvoiceHistory()
     {
-        Field<ListGraphType<InvoiceType>>("invoices")
+        Field<ListWithIncludeHelperType<Invoice, InvoiceType>>("invoices")
             .Arguments(new QueryArguments(new QueryArguments(new QueryArgument<BooleanGraphType> { Name = "isFull" },
                 new QueryArgument<IntGraphType> { Name = "pageNumber" },
                 new QueryArgument<IntGraphType> { Name = "pageSize" },
@@ -119,35 +116,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                 new QueryArgument<StringGraphType> { Name = "direction" })))
             .ResolveAsync(async context =>
             {
-                BaseFilterQuery query = new BaseFilterQuery();
-                query.Ids = null;
-                query.Paginator = new BasePageableQuery
-                {
-                    IsFull = context.GetArgument<bool?>("isFull") ?? false,
-                    PageNumber = context.GetArgument<int?>("pageNumber") ?? 1,
-                    PageSize = context.GetArgument<int?>("pageSize") ?? 5,
-                };
-                query.Sort = new BaseSortableQuery
-                {
-                    Column = context.GetArgument<string?>("column") ?? "Date",
-                    Direction = context.GetArgument<string?>("direction") ?? "desc"
-                };
-                
-                var dateFrom = context.GetArgument<DateTime?>("dateFrom");
-                var dateTo = context.GetArgument<DateTime?>("dateTo");
-
-                if (dateFrom.HasValue || dateTo.HasValue)
-                {
-                    query.DateRange = new BaseDateRangeQuery
-                    {
-                        DateFrom = dateFrom,
-                        DateTo = dateTo
-                    };
-                }
-                else
-                {
-                    query.DateRange = null;
-                }
+                BaseFilterQuery query = this.GetBaseFilterQuery(context);
                 
                 var cancellationToken = context.CancellationToken;
 
@@ -163,7 +132,42 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                     q => q.Include(u => u.Category),
                     q => q.Include(u => u.Currency),
                     q => q.Include(u => u.Note));
-                return result.Entities;
+                return result;
             });
+    }
+
+    private BaseFilterQuery GetBaseFilterQuery(IResolveFieldContext<object?> context)
+    {
+        BaseFilterQuery query = new BaseFilterQuery();
+        query.Ids = null;
+        query.Paginator = new Paginator()
+        {
+            IsFull = context.GetArgument<bool?>("isFull") ?? false,
+            PageNumber = context.GetArgument<int?>("pageNumber") ?? 1,
+            PageSize = context.GetArgument<int?>("pageSize") ?? 5,
+        };
+        query.Sort = new BaseSortableQuery
+        {
+            Column = context.GetArgument<string?>("column") ?? "Date",
+            Direction = context.GetArgument<string?>("direction") ?? "desc"
+        };
+                
+        var dateFrom = context.GetArgument<DateTime?>("dateFrom");
+        var dateTo = context.GetArgument<DateTime?>("dateTo");
+
+        if (dateFrom.HasValue || dateTo.HasValue)
+        {
+            query.DateRange = new BaseDateRangeQuery
+            {
+                DateFrom = dateFrom,
+                DateTo = dateTo
+            };
+        }
+        else
+        {
+            query.DateRange = null;
+        }
+
+        return query;
     }
 }

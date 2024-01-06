@@ -3,7 +3,7 @@
 public class BaseFilterQuery
 {
     public BaseIdsListQuery? Ids { get; set; }
-    public BasePageableQuery? Paginator { get; set; }
+    public Paginator? Paginator { get; set; }
     public BaseDateRangeQuery? DateRange { get; set; }
     public BaseSortableQuery? Sort { get; set; }
 }
@@ -14,7 +14,7 @@ public class BaseSortableQuery
     public string Direction { get; set; }
 }
 
-public class BasePageableQuery
+public class Paginator
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;

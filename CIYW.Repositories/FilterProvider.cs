@@ -20,7 +20,7 @@ public class FilterProvider<T>: IFilterProvider<T> where T : class
     }
     
     
-    private IQueryable<T> ApplyPagination(IQueryable<T> query, BasePageableQuery filter)
+    private IQueryable<T> ApplyPagination(IQueryable<T> query, Paginator filter)
     {
         if (filter == null)
         {
