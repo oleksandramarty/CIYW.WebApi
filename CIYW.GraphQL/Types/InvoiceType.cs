@@ -20,7 +20,7 @@ public class InvoiceType: ObjectGraphType<Domain.Models.Invoice.Invoice>
         // Field(x => x.Note, true);
         Field(x => x.Type);
         Field<StringGraphType>("modified", resolve: context => context.Source.HumanizeModified());
-        Field<StringGraphType>("date", resolve: context => (context.Source.Date).HumanizeIt());
+        Field<StringGraphType>("date", resolve: context => (context.Source.Date).Humanize());
         //Field<IntGraphType>("applicantCount", resolve: context => context.Source.JobApplicants.Count);
     }
 }

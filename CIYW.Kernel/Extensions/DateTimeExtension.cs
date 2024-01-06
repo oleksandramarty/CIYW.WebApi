@@ -25,14 +25,19 @@ public static class DateTimeExtension
         DateTime currentDate = DateTime.Today;
         return new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month), 23, 59, 59);
     }
-
-    public static string HumanizeIt(this DateTime dateToHumanize)
-    {
-        return dateToHumanize.Humanize();
-    }
     public static string HumanizeModified(this BaseWithDateEntity entity)
     {
-        return (entity.Updated ?? entity.Created).HumanizeIt();
+        return (entity.Updated ?? entity.Created).Humanize();
+    }
+
+    public static string Humanize(this DateTime? dateTime)
+    {
+        if (!dateTime.HasValue)
+        {
+            return string.Empty;
+        }
+
+        return dateTime.Value.Humanize();
     }
     
     public static string Humanize(this DateTime dateTime)

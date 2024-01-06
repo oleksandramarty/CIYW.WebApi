@@ -9,5 +9,8 @@ public class RootQuery: GraphQLQueryResolver
         this.GetCurrencyById();
         this.GetInvoiceById();
         this.GetCategoryById();
+        this.GetUserById();
+        this.GetUserBalanceByUserId();
+        this.GetInvoiceHistory();
     }
 }  
