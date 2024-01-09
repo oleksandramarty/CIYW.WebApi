@@ -1,4 +1,5 @@
 using CIYW.Const.Errors;
+using CIYW.Domain.Models.Note;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Mediator.Note.Request;
 using CIYW.Mediator.Validators.Notes;
@@ -38,7 +39,7 @@ public class CreateOrUpdateNoteCommandValidatorTest
         command.Body = body;
         
         // Act
-        TestUtilities.Validate_Command<CreateOrUpdateNoteCommand, Guid>(
+        TestUtilities.Validate_Command<CreateOrUpdateNoteCommand, Note>(
             command, () => new CreateOrUpdateNoteCommandValidator(isNew), expectedErrors);
     }
 }

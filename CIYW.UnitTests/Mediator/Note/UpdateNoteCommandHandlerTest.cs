@@ -68,7 +68,7 @@ public class UpdateNoteCommandHandlerTest
         
         // Assert
         Assert.IsNotNull(result);
-        result.Should<Guid>().BeEquivalentTo(this.note.Id);
+        result.Id.Should<Guid>().BeEquivalentTo(this.note.Id);
         this.noteRepositoryMock.Verify(um => um.UpdateAsync(
             It.Is<Domain.Models.Note.Note>(n => n.Name == this.note.Name &&
                                                 n.Body == this.note.Body), It.IsAny<CancellationToken>()), Times.Once);

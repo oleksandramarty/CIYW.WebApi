@@ -1,7 +1,9 @@
 ﻿using CIYW.Domain.Models.Invoice;
+using CIYW.Domain.Models.Note;
 using CIYW.GraphQL.Types;
 using CIYW.GraphQL.Types.InputTypes;
 using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Mediator.Mediator.Note.Request;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
@@ -11,43 +13,52 @@ namespace CIYW.GraphQL.MutationResolver;
 
 public class GraphQLMutationResolver: ObjectGraphType, IGraphQLMutationResolver
 {
-    public void CreateInvoice()
+    public void CreateEntity<TType, TInputType, TCommand, TResult>(string name) 
+        where TCommand: IRequest<TResult> 
+        where TInputType: InputObjectGraphType
+        where TType: ObjectGraphType<TResult>
     {
-        Field<InvoiceType>("createInvoice")
+        Field<TType>(name)
             .Arguments(new QueryArguments(
-                new QueryArgument<NonNullGraphType<InvoiceInputType>> { Name = "input" }
+                new QueryArgument<NonNullGraphType<TInputType>> { Name = "input" }
             ))
             .ResolveAsync(async context =>
             {
                 var cancellationToken = context.CancellationToken;
-                return await this.ModifyEntityWithResultAsync<CreateInvoiceCommand, Invoice>(context, cancellationToken);
+                return await this.ModifyEntityWithResultAsync<TCommand, TResult>(context, cancellationToken);
             });
     }
-
-    public void UpdateInvoice()
+    
+    public void UpdateEntity<TType, TInputType, TCommand, TResult, TId>(string name) 
+        where TCommand: IRequest<TResult> 
+        where TInputType: InputObjectGraphType
+        where TId: ScalarGraphType
+        where TType: ObjectGraphType<TResult>
     {
-        Field<InvoiceType>("updateInvoice")
+        Field<TType>(name)
             .Arguments(new QueryArguments(
-                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" },
-                    new QueryArgument<NonNullGraphType<InvoiceInputType>> { Name = "input" }
+                new QueryArgument<NonNullGraphType<TId>> { Name = "id" },
+                new QueryArgument<NonNullGraphType<TInputType>> { Name = "input" }
             ))
             .ResolveAsync(async context =>
             {
                 var cancellationToken = context.CancellationToken;
-                return await this.ModifyEntityWithResultAsync<UpdateInvoiceCommand, Invoice>(context, cancellationToken);
+                return await this.ModifyEntityWithResultAsync<TCommand, TResult>(context, cancellationToken);
             });
     }
-
-    public void DeleteInvoice()
+    
+    public void DeleteEntity<TCommand, TId>(string name) 
+        where TCommand: IRequest
+        where TId: ScalarGraphType
     {
-        Field<BooleanGraphType>("deleteInvoice")
+        Field<BooleanGraphType>(name)
             .Arguments(new QueryArguments(
-                new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }
+                new QueryArgument<NonNullGraphType<TId>> { Name = "id" }
             ))
             .ResolveAsync(async context =>
             {
                 var cancellationToken = context.CancellationToken;
-                await this.ModifyEntityWithoutResultAsync<DeleteInvoiceCommand>(context, cancellationToken);
+                await this.ModifyEntityWithoutResultAsync<TCommand>(context, cancellationToken);
                 return true;
             });
     }

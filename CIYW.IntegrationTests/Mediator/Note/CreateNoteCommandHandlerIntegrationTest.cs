@@ -30,10 +30,10 @@ public class CreateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            Domain.Models.Note.Note note = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            dbContext.Notes.Count(u => u.Id == result).Should().Be(1);
+            dbContext.Notes.Count(u => u.Id == note.Id).Should().Be(1);
         }
     }
 }

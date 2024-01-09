@@ -38,10 +38,10 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            Domain.Models.Note.Note result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            dbContext.Notes.Count(u => u.Id == result && u.Name == command.Name).Should().Be(1);
+            dbContext.Notes.Count(u => u.Id == result.Id && u.Name == command.Name).Should().Be(1);
         }
     }
     
@@ -62,7 +62,7 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, Guid, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, Domain.Models.Note.Note, LoggerException>(
                 handler, 
                 command, 
                 String.Format(ErrorMessages.EntityWithIdNotFound, nameof(Domain.Models.Note.Note), command.Id));
@@ -91,7 +91,7 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, Guid, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, Domain.Models.Note.Note, LoggerException>(
                 handler, 
                 command, 
                 ErrorMessages.Forbidden);

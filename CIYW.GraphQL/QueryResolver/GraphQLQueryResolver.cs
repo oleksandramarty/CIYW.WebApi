@@ -23,7 +23,6 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                 Guid entityId = context.GetArgument<Guid>("id", default);
                 var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.Currency.Currency>>();
                 
-                // Assuming cancellationToken is available in your GraphQL context
                 var cancellationToken = context.CancellationToken;
 
                 Currency result = await repository.GetByIdAsync(entityId, cancellationToken);
@@ -39,11 +38,11 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             {
                 Guid entityId = context.GetArgument<Guid>("id", default);
                 var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.Invoice.Invoice>>();
-                
-                // Assuming cancellationToken is available in your GraphQL context
+
                 var cancellationToken = context.CancellationToken;
 
                 Invoice result = await repository.GetWithIncludeAsync(u => u.Id == entityId, cancellationToken,
+                    query => query.Include(u => u.Note),
                     query => query.Include(u => u.Currency),
                     query => query.Include(u => u.Category));
                 return result;
@@ -58,7 +57,6 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                 Guid entityId = context.GetArgument<Guid>("id", default);
                 var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.Category.Category>>();
                 
-                // Assuming cancellationToken is available in your GraphQL context
                 var cancellationToken = context.CancellationToken;
 
                 Category result = await repository.GetByIdAsync(entityId, cancellationToken);

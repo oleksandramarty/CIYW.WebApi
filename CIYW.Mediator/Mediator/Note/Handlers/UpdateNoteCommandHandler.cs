@@ -7,7 +7,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Note.Handlers;
 
-public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandler<CreateOrUpdateNoteCommand, Guid>
+public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandler<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>
 {
     private readonly IMapper mapper;
     private readonly IGenericRepository<Domain.Models.Note.Note> noteRepository;
@@ -22,7 +22,7 @@ public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandle
         this.noteRepository = noteRepository;
     }
 
-    public async Task<Guid> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
+    public async Task<Domain.Models.Note.Note> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
         Domain.Models.Note.Note note = await this.noteRepository.GetByIdAsync(command.Id.Value, cancellationToken);
 
@@ -36,6 +36,6 @@ public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandle
 
         await this.noteRepository.UpdateAsync(updatedNote, cancellationToken);
 
-        return note.Id;
+        return updatedNote;
     }
 }

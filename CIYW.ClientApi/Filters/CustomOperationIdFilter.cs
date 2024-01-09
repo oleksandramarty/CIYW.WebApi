@@ -14,7 +14,7 @@ public class CustomOperationIdFilter: IOperationFilter
             relativePath = relativePath.Substring("api-ciyw/".Length);
         }
 
-        operation.OperationId = $"TEST_{RemoveParametersFromRoute(relativePath).Replace("/", "_")}";
+        operation.OperationId = $"{RemoveParametersFromRoute(relativePath).Replace("/", "_")}";
     }
     
     private string RemoveParametersFromRoute(string route)

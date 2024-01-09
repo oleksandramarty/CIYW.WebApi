@@ -30,7 +30,8 @@ public class MappingProfile: Profile
     {
         this.CreateMap<User, CurrentUserResponse>();
 
-        this.CreateMap<UpdateInvoiceCommand, Invoice>();
+        this.CreateMap<UpdateInvoiceCommand, Invoice>()
+            .ForMember(dest => dest.Note, opt => opt.Ignore());
 
         this.CreateMap<UserBalance, CurrentUserResponse>()
             .ForMember(dest => dest.BalanceAmount, opt => opt.MapFrom(src => src.Amount))
@@ -57,10 +58,11 @@ public class MappingProfile: Profile
             .ConstructUsing(this.CreateOrUpdateEntity<Note, CreateOrUpdateNoteCommand>);        
         CreateMap<CreateOrUpdateCurrencyCommand, Currency>()
             .ConstructUsing(this.CreateOrUpdateEntity<Currency, CreateOrUpdateCurrencyCommand>);
-        
+
         this.CreateMap<CreateInvoiceCommand, Invoice>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
-            .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow));
+            .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow))
+            .ForMember(dest => dest.Note, opt => opt.Ignore());
 
         this.CreateMap<Tariff, TariffResponse>();
         this.CreateMap<Currency, CurrencyResponse>();

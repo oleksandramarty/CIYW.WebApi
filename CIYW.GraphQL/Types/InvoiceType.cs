@@ -18,7 +18,7 @@ public class InvoiceType: ObjectGraphType<Domain.Models.Invoice.Invoice>
         Field(x => x.CategoryId);
         Field<CategoryType>("category", resolve: context => context.Source.Category);
         Field(x => x.NoteId, true);
-        // Field(x => x.Note, true);
+        Field<NoteType>("note", resolve: context => context.Source.Note);
         Field(x => x.Type);
         Field(x => x.Created);
         Field(x => x.Date);

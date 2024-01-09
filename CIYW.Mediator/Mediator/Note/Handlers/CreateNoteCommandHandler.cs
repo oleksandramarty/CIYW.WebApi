@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Note.Handlers;
 
-public class CreateNoteCommandHandler: IRequestHandler<CreateOrUpdateNoteCommand, Guid>
+public class CreateNoteCommandHandler: IRequestHandler<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>
 {
     private readonly IMapper mapper;
     private readonly IGenericRepository<Domain.Models.Note.Note> noteRepository;
@@ -26,13 +26,13 @@ public class CreateNoteCommandHandler: IRequestHandler<CreateOrUpdateNoteCommand
         this.entityValidator = entityValidator;
     }
 
-    public async Task<Guid> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
+    public async Task<Domain.Models.Note.Note> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
-        this.entityValidator.ValidateRequest<CreateOrUpdateNoteCommand, Guid>(command, () => new CreateOrUpdateNoteCommandValidator(true)); 
+        this.entityValidator.ValidateRequest<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>(command, () => new CreateOrUpdateNoteCommandValidator(true)); 
         Domain.Models.Note.Note note = this.mapper.Map<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>(command, opts => opts.Items["IsUpdate"] = false);
         note.UserId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
         await this.noteRepository.AddAsync(note, cancellationToken);
 
-        return note.Id;
+        return note;
     }
 }

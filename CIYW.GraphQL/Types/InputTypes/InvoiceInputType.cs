@@ -14,6 +14,6 @@ public class InvoiceInputType: InputObjectGraphType
         Field<NonNullGraphType<IdGraphType>>("currencyId");
         Field<NonNullGraphType<DateTimeGraphType>>("date");
         Field<NonNullGraphType<EnumerationGraphType<InvoiceTypeEnum>>>("type");
-        //Field<NoteInputType>("note");
+        Field<NoteInputType>("note");
     }
 }
