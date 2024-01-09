@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Handlers;
 
-public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, Guid>
+public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, Domain.Models.Invoice.Invoice>
 {
     private readonly IMapper mapper;
     private readonly ITransactionRepository transactionRepository;
@@ -22,7 +22,7 @@ public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, 
         this.currentUserProvider = currentUserProvider;
     }
 
-    public async Task<Guid> Handle(CreateInvoiceCommand command, CancellationToken cancellationToken)
+    public async Task<Domain.Models.Invoice.Invoice> Handle(CreateInvoiceCommand command, CancellationToken cancellationToken)
     {
         Domain.Models.Note.Note note = null;
 
@@ -31,9 +31,9 @@ public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, 
         Domain.Models.Invoice.Invoice invoice = this.mapper.Map<CreateInvoiceCommand, Domain.Models.Invoice.Invoice>(command);
         
         invoice.UserId = userId;
-        if (command.NoteCommand != null)
+        if (command.Note != null)
         {
-            note = this.mapper.Map<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>(command.NoteCommand, opts => opts.Items["IsUpdate"] = false);
+            note = this.mapper.Map<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>(command.Note, opts => opts.Items["IsUpdate"] = false);
             note.Id = Guid.NewGuid();
             note.UserId = userId;
             note.InvoiceId = invoice.Id;
@@ -42,6 +42,6 @@ public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, 
 
         await this.transactionRepository.AddInvoiceAsync(userId, invoice, note, cancellationToken);
 
-        return invoice.Id;
+        return invoice;
     }
 }

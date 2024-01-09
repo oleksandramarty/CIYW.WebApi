@@ -1,3 +1,4 @@
+using CIYW.GraphQL.MutationResolver;
 using CIYW.Kernel.Extensions;
 using GraphQL.Types;
 
@@ -24,6 +25,6 @@ public class InvoiceType: ObjectGraphType<Domain.Models.Invoice.Invoice>
         Field(x => x.Updated, true);
         Field<StringGraphType>("modified", resolve: context => context.Source.HumanizeModified());
         Field<StringGraphType>("humanize_date", resolve: context => (context.Source.Date).Humanize());
-        //Field<IntGraphType>("applicantCount", resolve: context => context.Source.JobApplicants.Count);
+        // Field<RootMutation>("createInvoice", resolve: context => new { });
     }
 }

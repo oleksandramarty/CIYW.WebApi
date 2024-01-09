@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Handlers;
 
-public class UpdateInvoiceCommandHandler: IRequestHandler<UpdateInvoiceCommand>
+public class UpdateInvoiceCommandHandler: IRequestHandler<UpdateInvoiceCommand, Domain.Models.Invoice.Invoice>
 {
     private readonly IMapper mapper;
     private readonly ITransactionRepository transactionRepository;
@@ -26,16 +26,18 @@ public class UpdateInvoiceCommandHandler: IRequestHandler<UpdateInvoiceCommand>
         this.entityValidator = entityValidator;
     }
     
-    public async Task Handle(UpdateInvoiceCommand command, CancellationToken cancellationToken)
+    public async Task<Domain.Models.Invoice.Invoice> Handle(UpdateInvoiceCommand command, CancellationToken cancellationToken)
     {
         Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
 
-        Domain.Models.Invoice.Invoice invoice = await this.invoiceRepository.GetByIdAsync(command.Id, cancellationToken);
+        Domain.Models.Invoice.Invoice invoice = await this.invoiceRepository.GetByIdAsync(command.Id.Value, cancellationToken);
         
         this.entityValidator.ValidateExist<Domain.Models.Invoice.Invoice, Guid?>(invoice, command.Id);
         
         Domain.Models.Invoice.Invoice updatedInvoice = this.mapper.Map<UpdateInvoiceCommand, Domain.Models.Invoice.Invoice>(command, invoice);
 
         await this.transactionRepository.UpdateInvoiceAsync(userId, invoice, updatedInvoice, cancellationToken);
+
+        return updatedInvoice;
     }
 }

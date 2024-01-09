@@ -60,15 +60,15 @@ public class CreateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>());
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            Domain.Models.Invoice.Invoice result = await handler.Handle(command, CancellationToken.None);
             
             // Assert
-            dbContext.Invoices.Count(i => i.Id == result && i.UserId == InitConst.MockUserId).Should().Be(1);
+            dbContext.Invoices.Count(i => i.Id == result.Id && i.UserId == InitConst.MockUserId).Should().Be(1);
             dbContext.UserBalances.FirstOrDefault(ub => ub.UserId == InitConst.MockUserId).Amount.Should().Be(expectedBalance.Amount);
 
             if (noteCommand != null)
             {
-                dbContext.Notes.Count(n => n.InvoiceId.HasValue && n.InvoiceId.Value == result).Should().Be(1);
+                dbContext.Notes.Count(n => n.InvoiceId.HasValue && n.InvoiceId.Value == result.Id).Should().Be(1);
             }
         }
     }

@@ -1,3 +1,4 @@
+using CIYW.GraphQL.MutationResolver;
 using CIYW.GraphQL.QueryResolver;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,6 @@ public class GraphQLSchema: Schema
     public GraphQLSchema(IServiceProvider serviceProvider) : base(serviceProvider)
     {
         Query = serviceProvider.GetRequiredService<RootQuery>();
-        //Query = serviceProvider.GetRequiredService<CurrencyType>();
-        // Mutation = serviceProvider.GetRequiredService<NotesMutation>();
+        Mutation = serviceProvider.GetRequiredService<RootMutation>();
     }
 }

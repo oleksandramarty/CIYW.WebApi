@@ -45,7 +45,7 @@ public static class MockCommandQueryHelper
         Guid currencyId,
         DateTime date,
         InvoiceTypeEnum type,
-        CreateOrUpdateNoteCommand? noteCommand = null)
+        CreateOrUpdateNoteCommand? note = null)
     {
         return new CreateInvoiceCommand
         {
@@ -55,7 +55,7 @@ public static class MockCommandQueryHelper
             CurrencyId = currencyId,
             Date = date,
             Type = type,
-            NoteCommand = noteCommand
+            Note = note
         };
     }
     

@@ -1,4 +1,5 @@
-﻿using CIYW.Mediator.Mediator.Invoice.Requests;
+﻿using CIYW.Domain.Models.Invoice;
+using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Models.Responses.Invoice;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -46,8 +47,8 @@ public class InvoicesController: BaseController
     [ProducesResponseType(typeof(Guid), 200)]
     public async Task<IActionResult> V1_CreateInvoiceAsync(CreateInvoiceCommand command, CancellationToken cancellationToken)
     {
-        Guid response = await this.mediator.Send(command, cancellationToken);
-        return Ok(response);
+        Invoice response = await this.mediator.Send(command, cancellationToken);
+        return Ok(response.Id);
     }
     
     [HttpPut("")]

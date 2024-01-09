@@ -91,7 +91,7 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>());
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, Domain.Models.Invoice.Invoice, LoggerException>(
                 handler, 
                 command, 
                 String.Format(ErrorMessages.EntityWithIdNotFound, nameof(Domain.Models.Invoice.Invoice), command.Id));
@@ -121,7 +121,7 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>());
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, Domain.Models.Invoice.Invoice, LoggerException>(
                 handler, 
                 command, 
                 ErrorMessages.Forbidden);

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Requests;
 
-public class CreateInvoiceCommand: IRequest<Guid>
+public class CreateInvoiceCommand: IRequest<Domain.Models.Invoice.Invoice>
 {
     public string Name { get; set; }
     public decimal Amount { get; set; }
@@ -12,5 +12,5 @@ public class CreateInvoiceCommand: IRequest<Guid>
     public Guid CurrencyId { get; set; }
     public DateTime Date { get; set; }
     public InvoiceTypeEnum Type { get; set; }
-    public CreateOrUpdateNoteCommand? NoteCommand { get; set; }
+    public CreateOrUpdateNoteCommand? Note { get; set; }
 }
