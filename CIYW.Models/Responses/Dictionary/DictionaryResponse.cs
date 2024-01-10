@@ -1,10 +1,10 @@
 ﻿namespace CIYW.Models.Responses.Dictionary;
 
-public class DictionaryResponse
+public class DictionaryResponse<TId>
 {
-    public DictionaryResponse(IList<DictionaryItemResponse> items)
+    public DictionaryResponse(IList<DictionaryItemResponse<TId>> items)
     {
         Items = items;
     }
-    public IList<DictionaryItemResponse> Items { get; set; }
+    public IList<DictionaryItemResponse<TId>> Items { get; set; }
 }

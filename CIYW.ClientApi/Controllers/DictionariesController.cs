@@ -28,10 +28,18 @@ public class DictionariesController: BaseController
     }
     
     [HttpGet("{type}")]
-    [ProducesResponseType(typeof(DictionaryResponse), 200)]
+    [ProducesResponseType(typeof(DictionaryResponse<Guid>), 200)]
     public async Task<IActionResult> V1_GetByTypeAsync([FromRoute] EntityTypeEnum type, CancellationToken cancellationToken)
     {
-        DictionaryResponse response = await this.mediator.Send(new DictionaryTypeQuery(type), cancellationToken);
+        DictionaryResponse<Guid> response = await this.mediator.Send(new DictionaryTypeQuery(type), cancellationToken);
+        return Ok(response);
+    }
+    
+    [HttpGet("enum/{type}")]
+    [ProducesResponseType(typeof(DictionaryResponse<string>), 200)]
+    public async Task<IActionResult> V1_GetByEnumTypeAsync([FromRoute] EntityTypeEnum type, CancellationToken cancellationToken)
+    {
+        DictionaryResponse<string> response = await this.mediator.Send(new DictionaryEnumQuery(type), cancellationToken);
         return Ok(response);
     }
 }

@@ -32,7 +32,7 @@ public class DictionaryTypeQueryHandlerIntegrationTest: CommonIntegrationTestSet
                 scope.ServiceProvider.GetRequiredService<IDictionaryRepository>());
 
             // Act
-            DictionaryResponse result = await handler.Handle(query, CancellationToken.None);
+            DictionaryResponse<Guid> result = await handler.Handle(query, CancellationToken.None);
 
             // Assert
             result.Should().NotBeNull();

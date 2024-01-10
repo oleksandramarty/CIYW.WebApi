@@ -2,8 +2,9 @@
 
 public class DictionariesResponse
 {
-    public DictionaryResponse Currencies { get; set; }
-    public DictionaryResponse Categories { get; set; }
-    public DictionaryResponse Roles { get; set; }
-    public DictionaryResponse Tariffs { get; set; }
+    public DictionaryResponse<Guid> Currencies { get; set; }
+    public DictionaryResponse<Guid> Categories { get; set; }
+    public DictionaryResponse<Guid> Roles { get; set; }
+    public DictionaryResponse<Guid> Tariffs { get; set; }
+    public DictionaryResponse<string> InvoiceTypes { get; set; }
 }

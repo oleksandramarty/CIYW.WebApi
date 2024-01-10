@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using CIYW.Kernel.Extensions;
+using GraphQL;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CIYW.ClientApi.Filters;
@@ -7,18 +9,12 @@ public class CustomOperationIdFilter: IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var relativePath = context.ApiDescription.RelativePath;
+        var controllerName = context.ApiDescription.ActionDescriptor.RouteValues["controller"];
+        var actionName = context.ApiDescription.ActionDescriptor.RouteValues["action"];
 
-        if (relativePath.StartsWith("api-ciyw/"))
+        if (!string.IsNullOrEmpty(controllerName) && !string.IsNullOrEmpty(actionName) )
         {
-            relativePath = relativePath.Substring("api-ciyw/".Length);
+            operation.OperationId = $"{char.ToLower(controllerName[0]) + controllerName.Substring(1)}_{actionName}";
         }
-
-        operation.OperationId = $"{RemoveParametersFromRoute(relativePath).Replace("/", "_")}";
-    }
-    
-    private string RemoveParametersFromRoute(string route)
-    {
-        return System.Text.RegularExpressions.Regex.Replace(route, "/{[^}]+}", "");
     }
 }

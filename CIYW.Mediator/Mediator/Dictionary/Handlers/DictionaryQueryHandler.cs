@@ -22,6 +22,7 @@ public class DictionaryQueryHandler: IRequestHandler<DictionaryQuery, Dictionari
         response.Categories = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.Category), cancellationToken);
         response.Roles = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.Role), cancellationToken);
         response.Tariffs = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.Tariff), cancellationToken);
+        response.InvoiceTypes = await this.mediator.Send(new DictionaryEnumQuery(EntityTypeEnum.InvoiceType), cancellationToken);
 
         return response;
     }

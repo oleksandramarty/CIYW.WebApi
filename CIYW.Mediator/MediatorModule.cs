@@ -69,6 +69,7 @@ public class MediatorModule : Autofac.Module
         #region Dictionary
         builder.RegisterAssemblyTypes(typeof(DictionaryTypeQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         builder.RegisterAssemblyTypes(typeof(DictionaryQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(DictionaryEnumQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         #endregion
 
         #region Category

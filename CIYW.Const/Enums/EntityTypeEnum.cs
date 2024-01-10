@@ -8,4 +8,5 @@ public enum EntityTypeEnum
     [Description("Category")]Category = 2,
     [Description("Currency")]Currency = 3,
     [Description("Role")]Role = 4,
+    [Description("InvoiceType")]InvoiceType = 5,
 }

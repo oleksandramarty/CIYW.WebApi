@@ -10,7 +10,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Dictionary.Handlers;
 
-public class DictionaryTypeQueryHandler: IRequestHandler<DictionaryTypeQuery, DictionaryResponse>
+public class DictionaryTypeQueryHandler: IRequestHandler<DictionaryTypeQuery, DictionaryResponse<Guid>>
 {
     private readonly IMapper mapper;
     private readonly IDictionaryRepository dictionaryRepository;
@@ -21,14 +21,14 @@ public class DictionaryTypeQueryHandler: IRequestHandler<DictionaryTypeQuery, Di
         this.dictionaryRepository = dictionaryRepository;
     }
 
-    public async Task<DictionaryResponse> Handle(DictionaryTypeQuery query, CancellationToken cancellationToken)
+    public async Task<DictionaryResponse<Guid>> Handle(DictionaryTypeQuery query, CancellationToken cancellationToken)
     {
 
-        IList<DictionaryItemResponse> items = await this.GetItems(query, cancellationToken);
-        return new DictionaryResponse(items);
+        IList<DictionaryItemResponse<Guid>> items = await this.GetItems(query, cancellationToken);
+        return new DictionaryResponse<Guid>(items);
     }
 
-    private async Task<IList<DictionaryItemResponse>> GetItems(DictionaryTypeQuery query, CancellationToken cancellationToken)
+    private async Task<IList<DictionaryItemResponse<Guid>>> GetItems(DictionaryTypeQuery query, CancellationToken cancellationToken)
     {
         switch (query.Type)
         {
@@ -45,27 +45,27 @@ public class DictionaryTypeQueryHandler: IRequestHandler<DictionaryTypeQuery, Di
         }
     }
 
-    private async Task<IList<DictionaryItemResponse>> GetCurrencies(CancellationToken cancellationToken)
+    private async Task<IList<DictionaryItemResponse<Guid>>> GetCurrencies(CancellationToken cancellationToken)
     {
         IList<Domain.Models.Currency.Currency> items = await this.dictionaryRepository.GetAllAsync<Domain.Models.Currency.Currency>(cancellationToken);
-        return items.Select(x => this.mapper.Map<Domain.Models.Currency.Currency, DictionaryItemResponse>(x)).ToList();
+        return items.Select(x => this.mapper.Map<Domain.Models.Currency.Currency, DictionaryItemResponse<Guid>>(x)).ToList();
     }
     
-    private async Task<IList<DictionaryItemResponse>> GetRoles(CancellationToken cancellationToken)
+    private async Task<IList<DictionaryItemResponse<Guid>>> GetRoles(CancellationToken cancellationToken)
     {
         IList<Role> items = await this.dictionaryRepository.GetAllAsync<Role>(cancellationToken);
-        return items.Select(x => this.mapper.Map<Role, DictionaryItemResponse>(x)).ToList();
+        return items.Select(x => this.mapper.Map<Role, DictionaryItemResponse<Guid>>(x)).ToList();
     }
     
-    private async Task<IList<DictionaryItemResponse>> GetTariffs(CancellationToken cancellationToken)
+    private async Task<IList<DictionaryItemResponse<Guid>>> GetTariffs(CancellationToken cancellationToken)
     {
         IList<Domain.Models.Tariff.Tariff> items = await this.dictionaryRepository.GetAllAsync<Domain.Models.Tariff.Tariff>(cancellationToken);
-        return items.Select(x => this.mapper.Map<Domain.Models.Tariff.Tariff, DictionaryItemResponse>(x)).ToList();
+        return items.Select(x => this.mapper.Map<Domain.Models.Tariff.Tariff, DictionaryItemResponse<Guid>>(x)).ToList();
     }
     
-    private async Task<IList<DictionaryItemResponse>> GetCategories(CancellationToken cancellationToken)
+    private async Task<IList<DictionaryItemResponse<Guid>>> GetCategories(CancellationToken cancellationToken)
     {
         IList<Domain.Models.Category.Category> items = await this.dictionaryRepository.GetAllAsync<Domain.Models.Category.Category>(cancellationToken);
-        return items.Select(x => this.mapper.Map<Domain.Models.Category.Category, DictionaryItemResponse>(x)).ToList();
+        return items.Select(x => this.mapper.Map<Domain.Models.Category.Category, DictionaryItemResponse<Guid>>(x)).ToList();
     }
 }

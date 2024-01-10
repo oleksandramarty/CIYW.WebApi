@@ -4,9 +4,9 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Dictionary.Requests;
 
-public class DictionaryTypeQuery: IRequest<DictionaryResponse<Guid>>
+public class DictionaryEnumQuery: IRequest<DictionaryResponse<string>>
 {
-    public DictionaryTypeQuery(EntityTypeEnum type)
+    public DictionaryEnumQuery(EntityTypeEnum type)
     {
         Type = type;
     }

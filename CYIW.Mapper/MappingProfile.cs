@@ -75,13 +75,13 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
             .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency));
 
-        this.CreateMap<Category, DictionaryItemResponse>()
+        this.CreateMap<Category, DictionaryItemResponse<Guid>>()
             .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Description));
-        this.CreateMap<Currency, DictionaryItemResponse>()
+        this.CreateMap<Currency, DictionaryItemResponse<Guid>>()
             .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Symbol));
-        this.CreateMap<Tariff, DictionaryItemResponse>()
+        this.CreateMap<Tariff, DictionaryItemResponse<Guid>>()
             .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Description));
-        this.CreateMap<Role, DictionaryItemResponse>()
+        this.CreateMap<Role, DictionaryItemResponse<Guid>>()
             .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.NormalizedName));
     }
     
