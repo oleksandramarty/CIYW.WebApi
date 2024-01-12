@@ -2,7 +2,6 @@
 using CIYW.Auth;
 using CIYW.Domain;
 using CIYW.Domain.Models.User;
-using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

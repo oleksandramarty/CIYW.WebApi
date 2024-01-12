@@ -164,6 +164,8 @@ public class Program
         
         builder.AddDependencyInjection();
         
+        builder.Services.AddElasticsearch(builder.Configuration);
+        
         builder.AddGraphQL();
 
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 
