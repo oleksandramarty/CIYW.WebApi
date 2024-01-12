@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIYW.TestHelper", "CIYW.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIYW.GraphQL", "CIYW.GraphQL\CIYW.GraphQL.csproj", "{CA7D3EC8-CA2A-4DA9-A1F1-9E5E39B16A74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIYW.Jobs", "CIYW.Jobs\CIYW.Jobs.csproj", "{52272D5A-2FCC-4E78-9C57-1F2C6F01A24A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,6 +108,10 @@ Global
 		{CA7D3EC8-CA2A-4DA9-A1F1-9E5E39B16A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7D3EC8-CA2A-4DA9-A1F1-9E5E39B16A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7D3EC8-CA2A-4DA9-A1F1-9E5E39B16A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52272D5A-2FCC-4E78-9C57-1F2C6F01A24A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52272D5A-2FCC-4E78-9C57-1F2C6F01A24A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52272D5A-2FCC-4E78-9C57-1F2C6F01A24A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52272D5A-2FCC-4E78-9C57-1F2C6F01A24A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FDF0948B-9A0A-46D2-A286-CD3EE4C183A9} = {06D86C16-803E-4AF0-A0E2-5B7B1A0B53E4}

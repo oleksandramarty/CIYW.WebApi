@@ -258,6 +258,8 @@ namespace CIYW.Kernel.Extensions;
             builder.Services.AddScoped(typeof(IReadGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             
+            builder.Services.AddScoped<IJobService, JobService>();
+            
             builder.Services.AddScoped<ContextServiceLocator>();
         }
 
