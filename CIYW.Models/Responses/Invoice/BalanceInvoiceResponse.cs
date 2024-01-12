@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Models.Responses.Base;
 using CIYW.Models.Responses.Category;
 using CIYW.Models.Responses.Currency;
@@ -10,8 +10,9 @@ public class BalanceInvoiceResponse: BaseWithDateEntityResponse
 {
     public string Name { get; set; }
     public decimal Amount { get; set; }
-    
+    public Guid CategoryId { get; set; }
     public CategoryResponse Category { get; set; }
+    public Guid CurrencyId { get; set; }
     public CurrencyResponse Currency { get; set; }
     
     public DateTime Date { get; set; }

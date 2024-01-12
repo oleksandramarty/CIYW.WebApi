@@ -1,5 +1,5 @@
 using AutoMapper;
-using CIYW.Const.Enum;
+using CIYW.Const.Enums;
 using CIYW.Domain;
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Dictionary.Handlers;
@@ -14,10 +14,10 @@ namespace CIYW.IntegrationTests.Mediator.Dictionary;
 [TestFixture]
 public class DictionaryTypeQueryHandlerIntegrationTest: CommonIntegrationTestSetup
 {
-    [TestCase(EntityTypeEnum.Tariff)]
-    [TestCase(EntityTypeEnum.Category)]
-    [TestCase(EntityTypeEnum.Currency)]
-    [TestCase(EntityTypeEnum.Role)]
+    [TestCase(EntityTypeEnum.TARIFF)]
+    [TestCase(EntityTypeEnum.CATEGORY)]
+    [TestCase(EntityTypeEnum.CURRENCY)]
+    [TestCase(EntityTypeEnum.ROLE)]
     public async Task Handle_ValidDictionaryTypeQuery_ReturnsDictionaries(EntityTypeEnum entityType)
     {
         // Arrange
@@ -38,16 +38,16 @@ public class DictionaryTypeQueryHandlerIntegrationTest: CommonIntegrationTestSet
             result.Should().NotBeNull();
             switch (entityType)
             {
-                case EntityTypeEnum.Currency:
+                case EntityTypeEnum.CURRENCY:
                     dbContext.Currencies.Count().Should().Be(result.Items.Count);
                     return;
-                case EntityTypeEnum.Category:
+                case EntityTypeEnum.CATEGORY:
                     dbContext.Categories.Count().Should().Be(result.Items.Count);
                     return;
-                case EntityTypeEnum.Tariff:
+                case EntityTypeEnum.TARIFF:
                     dbContext.Tariffs.Count().Should().Be(result.Items.Count);
                     return;
-                case EntityTypeEnum.Role:
+                case EntityTypeEnum.ROLE:
                     dbContext.Roles.Count().Should().Be(result.Items.Count);
                     return;
             }

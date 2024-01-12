@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using CIYW.Const.Enum;
 using CIYW.Const.Errors;
 using CIYW.Domain;
 using CIYW.Domain.Models.User;

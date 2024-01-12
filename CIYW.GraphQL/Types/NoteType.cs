@@ -9,7 +9,7 @@ public class NoteType: ObjectGraphType<Note>
     {
         Field(x => x.Id);
         Field(x => x.Name);
-        Field(x => x.Body);
+        Field(x => x.Body, true);
         Field(x => x.InvoiceId, true);
         Field(x => x.Created);
         Field(x => x.Updated, true);

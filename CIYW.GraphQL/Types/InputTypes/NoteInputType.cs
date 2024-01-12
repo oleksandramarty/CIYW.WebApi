@@ -1,5 +1,4 @@
-﻿using CIYW.Const.Enum;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types.InputTypes;
 
@@ -10,5 +9,6 @@ public class NoteInputType: InputObjectGraphType
         Name = "NoteInput";
         Field<NonNullGraphType<StringGraphType>>("name");
         Field<NonNullGraphType<StringGraphType>>("body");
+        Field<IdGraphType>("invoiceId");
     }
 }

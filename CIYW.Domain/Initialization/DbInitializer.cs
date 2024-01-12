@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Const.Providers;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
@@ -79,8 +79,88 @@ namespace CIYW.Domain.Initialization;
           AddTestNotes(context, InitConst.MockUserId);
           AddTestNotes(context, InitConst.MockAuthUserId);
         }
-        
         // AddTestInvoices(context, new Guid("f406bb8b-db38-47f8-a199-0191a56e93b1"));
+      }
+
+      public static void AddRandomUsers(
+        DataContext context,
+        UserManager<User> userManager,
+        int count
+      )
+      {
+            List<string> names = new List<string> { "Ethan", "Sophia", "Liam", "Isabella", "Noah", "Mia", "Mason", "Ava", "Aiden", "Amelia", "Lucas", "Harper", "Jackson", "Evelyn", "Logan", "Abigail", "Caleb", "Ella", "Jack", "Scarlett", "Benjamin", "Grace", "Oliver", "Lily", "Samuel", "Chloe", "Henry", "Aria", "Gabriel", "Sofia", "Carter", "Victoria", "Owen", "Madison", "Leo", "Penelope", "Wyatt", "Riley", "Isaac", "Zoe", "Lincoln", "Layla", "Anthony", "Nora", "Sebastian", "Aurora", "Julian", "Stella", "Elijah", "Hazel", "Dylan", "Lucy", "Caleb", "Hannah", "Nicholas", "Lillian", "Connor", "Grace", "Matthew", "Savannah", "David", "Eliana", "Joseph", "Addison", "Andrew", "Brooklyn", "Nathan", "Scarlett", "Christopher", "Natalie", "Joshua", "Lily", "Colton", "Samantha", "Zachary", "Leah", "Dominic", "Zoe", "Landon", "Aubrey", "Christian", "Emily", "Jonathan", "Sarah", "Aaron", "Claire", "Cameron", "Elizabeth", "Isaiah", "Layla", "Thomas", "Amelia", "Charles", "Audrey", "Eli", "Maya", "Hunter", "Anna", "Evan", "Paisley" };
+            List<string> surnames = new List<string> { "Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez", "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker", "Hall", "Allen", "Young", "Hernandez", "King", "Wright", "Lopez", "Hill", "Scott", "Green", "Adams", "Baker", "Gonzalez", "Nelson", "Carter", "Mitchell", "Perez", "Roberts", "Turner", "Phillips", "Campbell", "Parker", "Evans", "Edwards", "Collins", "Stewart", "Sanchez", "Morris", "Rogers", "Reed", "Cook", "Morgan", "Bell", "Murphy", "Bailey", "Rivera", "Cooper", "Richardson", "Cox", "Howard", "Ward", "Torres", "Peterson", "Gray", "Ramirez", "James", "Watson", "Brooks", "Kelly", "Sanders", "Price", "Bennett", "Wood", "Barnes", "Ross", "Henderson", "Coleman", "Jenkins", "Perry", "Powell", "Long", "Patterson", "Hughes", "Flores", "Washington", "Butler", "Simmons", "Foster", "Gonzales" };
+            List<string> patronymics = new List<string> { "Johnson", "Robertson", "Williamson", "Anderson", "Davis", "Smithson", "Brown", "Miller", "Taylorson", "Jones", "Robinson", "Thomasson", "Harris", "Jackson", "Martinson", "Thompson", "Garcia", "Martinez", "Wilson", "Davisson", "Lewis", "Leeson", "Walkerson", "Hallson", "Allenson", "Young", "Hernandez", "Kingson", "Wrightson", "Lopezzon", "Scottson", "Greenson", "Adamsson", "Bakerson", "Gonzalez", "Nelson", "Carter", "Mitchellson", "Perez", "Robertsson", "Turnerson", "Phillipsson", "Campbell", "Parkerson", "Evanson", "Edwardsson", "Collinson", "Stewartsen", "Sanchezzon", "Morrison", "Rogersson", "Reedsen", "Cookson", "Morganson", "Bellson", "Murphy", "Baileysen", "Riverason", "Cooperson", "Richardsen", "Coxson", "Howardson", "Wardson", "Torresson", "Peterson", "Graysen", "Ramirezzon", "Jamesson", "Watsonson", "Brooksson", "Kellyson", "Sandersson", "Priceson", "Bennettson", "Woodson", "Bernesson", "Rossson", "Henderson", "Coleson", "Jenkinsson", "Perryson", "Powellson", "Longson", "Patterson", "Hughesson", "Floresson", "Washington", "Butlerson", "Simonsson", "Fosterson", "Gonzalez", "Mathewsson", "Josesson", "Tylerson", "Dylanson", "Pettersson", "Grayson", "Samson", "Parkssen", "Hanson" };
+            
+            List<string> randomFullNames = InitializationProvider.GenerateRandomFullNames(names, surnames, patronymics, count);
+
+            List<UserBalance> userBalances = new List<UserBalance>();
+            List<User> users = new List<User>();
+            List<IdentityUserLogin<Guid>> logins = new List<IdentityUserLogin<Guid>>();
+
+            foreach (var item in randomFullNames)
+            {
+              Guid userId = Guid.NewGuid();
+              UserBalance userBalance = InitializationProvider.GetUserBalance(userId, InitConst.CurrencyUsdId, 0.0m);
+              var temp = item.Split(" ");
+              User user = new User
+              {
+                Id = userId,
+                Login = $"{temp[1]}_{GenerateRandomString(6)}",
+                UserName = $"{temp[1]}_{GenerateRandomString(6)}",
+                LastName = temp[1],
+                FirstName = temp[0],
+                Patronymic = temp[2],
+                Salt = "some_salt",
+                Email = $"{temp[0]}.{temp[1]}_{GenerateRandomString(6)}@mail.com",
+                EmailConfirmed = true,
+                PhoneNumber = GenerateRandomString(11, true),
+                PhoneNumberConfirmed = true,
+                IsTemporaryPassword = false,
+                Created = DateTime.UtcNow,
+                Updated = null,
+                LastForgot = null,
+                TariffId = InitConst.FreeTariffId,
+                CurrencyId = InitConst.CurrencyUsdId,
+                UserCategories = new HashSet<UserCategory>(),
+                Invoices = new HashSet<Invoice>(),
+                Notes = new HashSet<Note>(),
+                UserBalanceId = userBalance.Id,
+                UserBalance = userBalance,
+              };
+              users.Add(user);
+              logins.AddRange(new List<IdentityUserLogin<Guid>>
+              {
+                new IdentityUserLogin<Guid> {
+                  UserId = user.Id,
+                  LoginProvider = LoginProvider.CIYWLogin,
+                  ProviderKey = user.Login,
+                  ProviderDisplayName = user.Login
+                },
+                new IdentityUserLogin<Guid> {
+                  UserId = user.Id,
+                  LoginProvider = LoginProvider.CIYWEmail,
+                  ProviderKey = user.Email,
+                  ProviderDisplayName = user.Email
+                },
+                new IdentityUserLogin<Guid> {
+                  UserId = user.Id,
+                  LoginProvider = LoginProvider.CIYWPhone,
+                  ProviderKey = user.PhoneNumber,
+                  ProviderDisplayName = user.PhoneNumber
+                }
+              });
+            }
+
+            foreach (var user in users)
+            {
+              var result = Task.Run(() => userManager.CreateAsync(user, "zcbm13579")).Result;
+              context.SaveChanges();
+              result = Task.Run(() => userManager.AddToRoleAsync(user, RoleProvider.User)).Result;
+              context.SaveChanges();
+            }
+            context.UserLogins.AddRange(logins);
+            context.SaveChanges();
       }
 
       static void AddUserIfNotExist(
@@ -222,7 +302,7 @@ namespace CIYW.Domain.Initialization;
             Id = Guid.NewGuid(),
             Amount = (decimal)(random.NextDouble() * (1500 - 100) + 100),
             CurrencyId = InitConst.CurrencyUsdId,
-            Type = InvoiceTypeEnum.Expense,
+            Type = InvoiceTypeEnum.EXPENSE,
             CategoryId = InitConst.CategoryOtherId,
             Created = DateTime.UtcNow,
             Date = randomDate.ToUniversalTime(),
@@ -231,7 +311,7 @@ namespace CIYW.Domain.Initialization;
           };
           
           userBalance.Amount = userBalance.Amount +
-            (temp.Type == InvoiceTypeEnum.Income ? temp.Amount : (-1) * temp.Amount);
+            (temp.Type == InvoiceTypeEnum.INCOME ? temp.Amount : (-1) * temp.Amount);
 
           invoices.Add(temp);
         }
@@ -245,7 +325,7 @@ namespace CIYW.Domain.Initialization;
             Id = Guid.NewGuid(),
             Amount = (decimal)(random.NextDouble() * (15000 - 100) + 100),
             CurrencyId = InitConst.CurrencyUsdId,
-            Type = InvoiceTypeEnum.Income,
+            Type = InvoiceTypeEnum.INCOME,
             CategoryId = InitConst.CategorySalaryId,
             Created = DateTime.UtcNow,
             Date = randomDate.ToUniversalTime(),
@@ -254,7 +334,7 @@ namespace CIYW.Domain.Initialization;
           };
           
           userBalance.Amount = userBalance.Amount +
-                               (temp.Type == InvoiceTypeEnum.Income ? temp.Amount : (-1) * temp.Amount);
+                               (temp.Type == InvoiceTypeEnum.INCOME ? temp.Amount : (-1) * temp.Amount);
 
           invoices.Add(temp);
         }
@@ -288,6 +368,20 @@ namespace CIYW.Domain.Initialization;
             context.SaveChanges();
           }
         }
+      }
+      
+      private static string GenerateRandomString(int length, bool onlyDigits = false)
+      {
+        string chars = onlyDigits ? "123456789" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+
+        char[] result = new char[length];
+        for (int i = 0; i < length; i++)
+        {
+          result[i] = chars[random.Next(chars.Length)];
+        }
+
+        return new string(result);
       }
     }
     

@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
-namespace CIYW.Const.Enum;
+namespace CIYW.Const.Enums;
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum EntityTypeEnum
 {
-    [Description("Tariff")]Tariff = 1,
-    [Description("Category")]Category = 2,
-    [Description("Currency")]Currency = 3,
-    [Description("Role")]Role = 4,
-    [Description("InvoiceType")]InvoiceType = 5,
+    [Description("Tariff")]TARIFF = 1,
+    [Description("Category")]CATEGORY = 2,
+    [Description("Currency")]CURRENCY = 3,
+    [Description("Role")]ROLE = 4,
+    [Description("InvoiceType")]INVOICE_TYPE = 5,
 }

@@ -1,4 +1,5 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
+using CIYW.Mediator.Mediator.Note.Request;
 using CIYW.Models.Requests.Common;
 using MediatR;
 
@@ -12,4 +13,5 @@ public class UpdateInvoiceCommand : BaseNullableQuery, IRequest<Domain.Models.In
     public Guid CurrencyId { get; set; }
     public DateTime Date { get; set; }
     public InvoiceTypeEnum Type { get; set; }
+    public CreateOrUpdateNoteCommand Note { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Mediator.Mediator.Dictionary.Requests;
 using CIYW.Models.Responses.Dictionary;
 using MediatR;

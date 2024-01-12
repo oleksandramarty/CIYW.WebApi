@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Const.Providers;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
@@ -22,14 +22,14 @@ public class InitializationProvider
     {
         return new Role
         {
-            Id = InitConst.UserRoleId, Name = RoleEnum.User.ToString(), NormalizedName = RoleProvider.User.ToUpper(),
+            Id = InitConst.UserRoleId, Name = RoleEnum.USER.ToString(), NormalizedName = RoleProvider.User.ToUpper(),
             ConcurrencyStamp = InitConst.UserRoleId.ToString()
         };
     }
     
     public static Role GetAdminRole()
     {
-        return new Role { Id = InitConst.AdminUserId, Name = RoleEnum.Admin.ToString(), NormalizedName = RoleProvider.Admin.ToUpper(), ConcurrencyStamp = InitConst.AdminUserId.ToString() };
+        return new Role { Id = InitConst.AdminUserId, Name = RoleEnum.ADMIN.ToString(), NormalizedName = RoleProvider.Admin.ToUpper(), ConcurrencyStamp = InitConst.AdminUserId.ToString() };
     }
     
     public static List<Tariff> GetTariffs()
@@ -96,5 +96,17 @@ public class InitializationProvider
     public static Currency GetUSDCurrency()
     {
         return new Currency() { Id = InitConst.CurrencyUsdId, Name = "US Dollar", Symbol = "$", IsoCode = "USD", IsActive = true};
+    }
+
+    public static List<string> GenerateRandomFullNames(List<string> names, List<string> surnames, List<string> patronymics, int count)
+    {
+        Random random = new Random();
+        List<string> results = new List<string>();
+        for (int i = 0; i < count; i++)
+        {
+            results.Add($"{names[random.Next(names.Count)]} {surnames[random.Next(surnames.Count)]} {patronymics[random.Next(patronymics.Count)]}");
+        }
+
+        return results;
     }
 }

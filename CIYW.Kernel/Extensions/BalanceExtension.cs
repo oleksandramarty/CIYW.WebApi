@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Domain.Models.User;
 
 namespace CIYW.Kernel.Extensions;
@@ -27,7 +27,7 @@ public static class BalanceExtension
     private static void UpdateBalance(this UserBalance balance, InvoiceTypeEnum type, decimal amount, int sign = 1)
     {
         balance.Amount = balance.Amount + (sign) *
-            (type == InvoiceTypeEnum.Income ? amount : (-1) * amount);
+            (type == InvoiceTypeEnum.INCOME ? amount : (-1) * amount);
     }
 
     private static void UpdateBalanceTime(this UserBalance balance)

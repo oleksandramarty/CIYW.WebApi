@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Const.Providers;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.Category;
@@ -58,7 +58,7 @@ public static class MockHelper
             Created = DateTime.UtcNow,
             Name = "Name",
             NoteId = noteId,
-            Type = InvoiceTypeEnum.Expense
+            Type = InvoiceTypeEnum.EXPENSE
         };
     }
     

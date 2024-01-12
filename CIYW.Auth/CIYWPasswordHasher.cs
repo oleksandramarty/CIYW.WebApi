@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using CIYW.Const.Enum;
 using CIYW.Const.Errors;
 using CIYW.Domain.Models.User;
 using CIYW.Kernel.Exceptions;

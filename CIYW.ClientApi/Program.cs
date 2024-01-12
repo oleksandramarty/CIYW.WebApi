@@ -12,13 +12,10 @@ using Microsoft.OpenApi.Models;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.ClientApi.Filters;
-using CIYW.ClientApi.GraphQL;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CYIW.Mapper;
-using GraphQL.MicrosoftDI;
-using GraphQL.Server;
-using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Converters;
 
 public class Program
 {
@@ -102,7 +99,11 @@ public class Program
                 mvcOptions.Filters.Add(new HttpResponseExceptionFilter());
                 mvcOptions.AllowEmptyInputInBodyModelBinding = false;
             }).AddXmlSerializerFormatters()
-            .AddXmlDataContractSerializerFormatters();
+            .AddXmlDataContractSerializerFormatters()
+            .AddNewtonsoftJson(opts =>
+                {
+                    opts.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
 
         builder.Services.AddRouting(option => option.LowercaseUrls = true);
 
@@ -158,6 +159,8 @@ public class Program
             // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             // c.IncludeXmlComments(xmlPath);
         });
+        
+        builder.Services.AddSwaggerGenNewtonsoftSupport();
         
         builder.AddDependencyInjection();
         

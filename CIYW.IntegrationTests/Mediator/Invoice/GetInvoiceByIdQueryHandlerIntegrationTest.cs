@@ -4,6 +4,7 @@ using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Models.Responses.Invoice;
@@ -52,19 +53,19 @@ public class GetInvoiceByIdQueryHandlerIntegrationTest: CommonIntegrationTestSet
             // Act
             if (errorMessage.NotNullOrEmpty())
             {
-                await TestUtilities.Handle_InvalidCommand<GetInvoiceByIdQuery, BalanceInvoiceResponse, LoggerException>(
+                await TestUtilities.Handle_InvalidCommand<GetInvoiceByIdQuery, MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice>, LoggerException>(
                     handler, query, errorMessage);
             }
             else
             {
-                BalanceInvoiceResponse result = await handler.Handle(query, CancellationToken.None);
+                MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(query, CancellationToken.None);
             
                 // Assert
                 dbContext.Invoices.Count(i => i.Id == invoice.Id).Should().Be(1);
-                result.Id.Should().Be(invoice.Id);
-                result.Name.Should().Be(invoice.Name);
-                result.Amount.Should().Be(invoice.Amount);
-                result.Type.Should().Be(invoice.Type);
+                result.MappedEntity.Id.Should().Be(invoice.Id);
+                result.MappedEntity.Name.Should().Be(invoice.Name);
+                result.MappedEntity.Amount.Should().Be(invoice.Amount);
+                result.MappedEntity.Type.Should().Be(invoice.Type);
             }
         }
     }

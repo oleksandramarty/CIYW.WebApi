@@ -17,7 +17,11 @@ public static class DateTimeExtension
     {
         DateTime currentDate = DateTime.Today;
         return new DateTime(currentDate.Year, currentDate.Month, 1);
+    }
 
+    public static DateTime GetLocalTime(this DateTime date, int hours, int minutes)
+    {
+        return date.AddHours(hours).AddMinutes(minutes);
     }
     
     public static DateTime GetEndOfTheMonth()
@@ -37,12 +41,12 @@ public static class DateTimeExtension
             return string.Empty;
         }
 
-        return dateTime.Value.Humanize();
+        return dateTime.Value.GetLocalTime(2, 0).Humanize();
     }
     
     public static string Humanize(this DateTime dateTime)
     {
-        TimeSpan timeAgo = DateTime.Now - dateTime;
+        TimeSpan timeAgo = DateTime.Now - dateTime.GetLocalTime(2, 0);
 
         if (timeAgo.TotalMinutes < 1)
             return "just now";

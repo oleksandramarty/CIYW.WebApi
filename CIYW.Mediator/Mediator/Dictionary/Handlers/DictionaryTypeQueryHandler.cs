@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CIYW.Const.Enum;
+using CIYW.Const.Enums;
 using CIYW.Const.Errors;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
@@ -32,13 +32,13 @@ public class DictionaryTypeQueryHandler: IRequestHandler<DictionaryTypeQuery, Di
     {
         switch (query.Type)
         {
-            case EntityTypeEnum.Currency:
+            case EntityTypeEnum.CURRENCY:
                 return await this.GetCurrencies(cancellationToken);
-            case EntityTypeEnum.Role:
+            case EntityTypeEnum.ROLE:
                 return await this.GetRoles(cancellationToken);
-            case EntityTypeEnum.Tariff:
+            case EntityTypeEnum.TARIFF:
                 return await this.GetTariffs(cancellationToken);
-            case EntityTypeEnum.Category:
+            case EntityTypeEnum.CATEGORY:
                 return await this.GetCategories(cancellationToken);
             default:
                 throw new LoggerException(ErrorMessages.DictionaryNotFound, 404);

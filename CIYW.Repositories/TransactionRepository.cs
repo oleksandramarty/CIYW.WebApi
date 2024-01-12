@@ -50,6 +50,7 @@ public class TransactionRepository: ITransactionRepository
             catch (Exception e)
             {
                 await transaction.RollbackAsync(cancellationToken);
+                throw new LoggerException(e.Message, 409, userId);
             }
         }
     }
@@ -58,6 +59,7 @@ public class TransactionRepository: ITransactionRepository
         Guid userId,
         Invoice invoice,
         Invoice updatedInvoice,
+        Note note,
         CancellationToken cancellationToken)
     {
         if (invoice.UserId != userId)
@@ -77,6 +79,8 @@ public class TransactionRepository: ITransactionRepository
                 this.context.Invoices.Update(updatedInvoice);
 
                 this.context.UserBalances.Update(userBalance);
+
+                this.context.Notes.Update(note);
 
                 await this.context.SaveChangesAsync(cancellationToken);
                 

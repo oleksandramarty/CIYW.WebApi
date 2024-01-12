@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Mediator.Mediator.Dictionary.Requests;
 using CIYW.Models.Responses.Dictionary;
 using MediatR;
@@ -18,11 +18,11 @@ public class DictionaryQueryHandler: IRequestHandler<DictionaryQuery, Dictionari
     {
         DictionariesResponse response = new DictionariesResponse();
 
-        response.Currencies = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.Currency), cancellationToken);
-        response.Categories = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.Category), cancellationToken);
-        response.Roles = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.Role), cancellationToken);
-        response.Tariffs = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.Tariff), cancellationToken);
-        response.InvoiceTypes = await this.mediator.Send(new DictionaryEnumQuery(EntityTypeEnum.InvoiceType), cancellationToken);
+        response.Currencies = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.CURRENCY), cancellationToken);
+        response.Categories = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.CATEGORY), cancellationToken);
+        response.Roles = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.ROLE), cancellationToken);
+        response.Tariffs = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.TARIFF), cancellationToken);
+        response.InvoiceTypes = await this.mediator.Send(new DictionaryEnumQuery(EntityTypeEnum.INVOICE_TYPE), cancellationToken);
 
         return response;
     }

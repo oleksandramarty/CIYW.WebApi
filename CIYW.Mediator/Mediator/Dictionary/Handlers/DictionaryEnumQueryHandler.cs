@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using CIYW.Const.Errors;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
@@ -14,7 +14,7 @@ public class DictionaryEnumQueryHandler: IRequestHandler<DictionaryEnumQuery, Di
     {
         switch (query.Type)
         {
-            case EntityTypeEnum.InvoiceType:
+            case EntityTypeEnum.INVOICE_TYPE:
                 return EnumExtension.ConvertEnumToDictionary<InvoiceTypeEnum>();
             default:
                 throw new LoggerException(ErrorMessages.DictionaryNotFound, 404);

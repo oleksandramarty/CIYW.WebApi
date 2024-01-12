@@ -1,5 +1,5 @@
 using AutoMapper;
-using CIYW.Const.Enum;
+using CIYW.Const.Enums;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
@@ -20,10 +20,10 @@ public class CreateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
 {
     private static IEnumerable<TestCaseData> ValidCreateInvoiceTestCases()
     {
-        yield return new TestCaseData(1000.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Expense, null, null);
-        yield return new TestCaseData(1500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Income, null, null);
-        yield return new TestCaseData(900.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Expense, "TestNoteName", "TestNoteBody");
-        yield return new TestCaseData(2500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Income, "TestNoteName", "TestNoteBody");
+        yield return new TestCaseData(1000.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.EXPENSE, null, null);
+        yield return new TestCaseData(1500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.INCOME, null, null);
+        yield return new TestCaseData(900.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.EXPENSE, "TestNoteName", "TestNoteBody");
+        yield return new TestCaseData(2500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.INCOME, "TestNoteName", "TestNoteBody");
     }
 
     [Test, TestCaseSource(nameof(ValidCreateInvoiceTestCases))]

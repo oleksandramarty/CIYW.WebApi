@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
-namespace CIYW.Const.Enum;
+namespace CIYW.Const.Enums;
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum InvoiceTypeEnum
 {
-    [Description("Приход")]Income = 1,
-    [Description("Расход")]Expense = 2,
+    [Description("Income")]INCOME = 1,
+    [Description("Expense")]EXPENSE = 2,
 }

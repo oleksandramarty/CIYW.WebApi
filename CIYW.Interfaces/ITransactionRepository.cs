@@ -15,6 +15,7 @@ public interface ITransactionRepository
         Guid userId,
         Invoice invoice,
         Invoice updatedInvoice,
+        Note note,
         CancellationToken cancellationToken);
 
     Task DeleteInvoiceAsync(

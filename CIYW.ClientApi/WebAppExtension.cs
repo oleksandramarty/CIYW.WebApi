@@ -79,6 +79,31 @@ namespace CIYW.Kernel.Extensions;
                     DbInitializer.Initialize(context, userManager, isProd, isIntegrationTests);
                 }
             }
+            return;
+            if (!isProd)
+            {
+                for (var j = 0; j < 50; j++)
+                {
+                    List<Task> tasks = new List<Task>();
+                    for (var i = 0; i < 20; i++)
+                    {
+                        tasks.Add(Task.Run(() =>
+                        {
+                            using (var serviceScope = app.ApplicationServices
+                                       .GetRequiredService<IServiceScopeFactory>()
+                                       .CreateScope())
+                            {
+                                using (var context = serviceScope.ServiceProvider.GetService<DataContext>())
+                                {
+                                    var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
+                                    DbInitializer.AddRandomUsers(context, userManager, 150);
+                                }
+                            }
+                        }));
+                    }
+                    Task.WaitAll(tasks.ToArray());                
+                }
+            }
         }
 
         public static void ConfigureApplicationLocalization(this IApplicationBuilder app)

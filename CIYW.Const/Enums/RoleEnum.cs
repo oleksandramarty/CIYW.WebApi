@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
-namespace CIYW.Const.Enum;
+namespace CIYW.Const.Enums;
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum RoleEnum
 {
     [Description("SuperAdministratorNabix")]
-    User = 1,
+    USER = 1,
 
     [Description("AdministratorNabix")]
-    Admin = 2,
+    ADMIN = 2,
 }

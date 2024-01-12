@@ -1,5 +1,5 @@
 using AutoMapper;
-using CIYW.Const.Enum;
+using CIYW.Const.Enums;
 using CIYW.Const.Errors;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
@@ -11,6 +11,7 @@ using CIYW.Mediator.Mediator.Invoice.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.TestHelper;
 using FluentAssertions;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -21,10 +22,10 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
 {
     private static IEnumerable<TestCaseData> ValidUpdateInvoiceTestCases()
     {
-        yield return new TestCaseData(1000.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Expense);
-        yield return new TestCaseData(1500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Income);
-        yield return new TestCaseData(900.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Expense);
-        yield return new TestCaseData(2500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.Income);
+        yield return new TestCaseData(1000.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.EXPENSE);
+        yield return new TestCaseData(1500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.INCOME);
+        yield return new TestCaseData(900.0m, InitConst.CategoryOtherId, InitConst.CurrencyUsdId, InvoiceTypeEnum.EXPENSE);
+        yield return new TestCaseData(2500.0m, InitConst.CategorySalaryId, InitConst.CurrencyUsdId, InvoiceTypeEnum.INCOME);
     }
 
     [Test, TestCaseSource(nameof(ValidUpdateInvoiceTestCases))]
@@ -53,6 +54,7 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
 
             var handler = new UpdateInvoiceCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<IMediator>(),
                 scope.ServiceProvider.GetRequiredService<ITransactionRepository>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Invoice.Invoice>>(),
@@ -78,13 +80,14 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
     {
         // Arrange
         UpdateInvoiceCommand command = MockCommandQueryHelper.CreateUpdateInvoiceCommand(
-            1000.0m, Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, InvoiceTypeEnum.Expense);
+            1000.0m, Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, InvoiceTypeEnum.EXPENSE);
         command.Id = Guid.NewGuid();
         
         using (var scope = this.testApplicationFactory.Services.CreateScope())
         {
             var handler = new UpdateInvoiceCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<IMediator>(),
                 scope.ServiceProvider.GetRequiredService<ITransactionRepository>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Invoice.Invoice>>(),
@@ -103,7 +106,7 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
     {
         // Arrange
         UpdateInvoiceCommand command = MockCommandQueryHelper.CreateUpdateInvoiceCommand(
-            1000.0m, Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, InvoiceTypeEnum.Expense);
+            1000.0m, Guid.NewGuid(), Guid.NewGuid(), DateTime.UtcNow, InvoiceTypeEnum.EXPENSE);
         
         using (var scope = this.testApplicationFactory.Services.CreateScope())
         {
@@ -115,6 +118,7 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
             
             var handler = new UpdateInvoiceCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<IMediator>(),
                 scope.ServiceProvider.GetRequiredService<ITransactionRepository>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Invoice.Invoice>>(),

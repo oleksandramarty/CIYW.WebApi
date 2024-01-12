@@ -4,9 +4,13 @@ using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
 using CIYW.GraphQL.Types;
 using CIYW.Interfaces;
+using CIYW.Mediator;
+using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Models.Requests.Common;
+using CIYW.Models.Responses.Invoice;
 using GraphQL;
 using GraphQL.Types;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +18,7 @@ namespace CIYW.GraphQL.QueryResolver;
 
 public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
 {
+    // TODO refactor for GENERIC
     public void GetCurrencyById()
     {
         Field<CurrencyType>("currency")
@@ -36,16 +41,13 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             .Arguments(new QueryArguments(new QueryArgument<GuidGraphType> { Name = "id" }))
             .ResolveAsync(async context =>
             {
-                Guid entityId = context.GetArgument<Guid>("id", default);
-                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.Invoice.Invoice>>();
-
+                var mediator = context.RequestServices.GetRequiredService<IMediator>();
                 var cancellationToken = context.CancellationToken;
-
-                Invoice result = await repository.GetWithIncludeAsync(u => u.Id == entityId, cancellationToken,
-                    query => query.Include(u => u.Note),
-                    query => query.Include(u => u.Currency),
-                    query => query.Include(u => u.Category));
-                return result;
+                MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice> mapped = 
+                    await mediator.Send(
+                        new GetInvoiceByIdQuery(context.GetArgument<Guid>("id", default)), 
+                        cancellationToken);
+                return mapped.Entity;
             });
     }
     public void GetCategoryById()

@@ -3,7 +3,6 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
-using CIYW.Const.Enum;
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
 using CIYW.Domain.Models.User;

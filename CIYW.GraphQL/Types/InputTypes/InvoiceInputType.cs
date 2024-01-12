@@ -1,4 +1,4 @@
-﻿using CIYW.Const.Enum;
+﻿using CIYW.Const.Enums;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types.InputTypes;
