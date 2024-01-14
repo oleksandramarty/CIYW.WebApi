@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading;
 using CIYW.Auth;
 using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
@@ -14,7 +16,11 @@ using Autofac.Extensions.DependencyInjection;
 using CIYW.ClientApi.Filters;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CYIW.Mapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Converters;
 
 public class Program

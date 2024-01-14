@@ -3,6 +3,7 @@
 public class ErrorMessages
 {
     public const string UserNotFound = "User not found";
+    public const string InvoiceNotFound = "Invoice not found";
     public const string RoleNotFound = "Role not found";
     public const string TariffNotFound = "Tariff not found";
     public const string CurrencyNotFound = "Currency not found";

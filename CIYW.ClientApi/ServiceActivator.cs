@@ -1,4 +1,7 @@
-﻿namespace CIYW.Kernel.Extensions;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace CIYW.Kernel.Extensions;
 
 public class ServiceActivator
 {

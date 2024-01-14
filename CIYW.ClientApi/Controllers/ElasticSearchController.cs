@@ -1,4 +1,9 @@
-﻿using CIYW.Kernel.Extensions;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using CIYW.Domain.Models.User;
+using CIYW.Kernel.Extensions;
+using Elasticsearch.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nest;
@@ -18,7 +23,7 @@ public class ElasticSearchController: BaseController
     }
     
     [HttpGet("GetAllProducts/{keyword}")]
-    public async Task<IActionResult> V1_GetInvoiceByIdAsync([FromRoute] string keyword)
+    public async Task<IActionResult> V1_GetInvoiceByIdAsync([FromRoute] string keyword, CancellationToken cancellationToken)
     {
         var result = await _elasticClient.SearchAsync<Product>(
             s => s.Query(
@@ -26,14 +31,57 @@ public class ElasticSearchController: BaseController
                     d => d.Query('*' + keyword + '*')
                 )).Size(5000));
 
+        
+        return Ok(result.Documents.ToList());
+    }
+    
+    [HttpGet("GetAllUsers/{keyword}")]
+    public async Task<IActionResult> V1_GetUsersyIdAsync([FromRoute] string keyword, CancellationToken cancellationToken)
+    {
+        var result = await _elasticClient.SearchAsync<User>(
+            s => s.Query(
+                q => q.QueryString(
+                    d => d.Query('*' + keyword + '*')
+                )).Size(5000));
+
+        
         return Ok(result.Documents.ToList());
     }
 
-    [HttpPost("AddProduct")]
-    public async Task<IActionResult> Post(Product product)
+    [HttpPost("AddOrUpdateProduct")]
+    public async Task<IActionResult> Post(Product product, CancellationToken cancellationToken)
     {
-        // Index product dto
-        await _elasticClient.IndexDocumentAsync(product);
+        var result = await _elasticClient.SearchAsync<Product>(s => s
+            .Query(q => q
+                .Match(m => m
+                    .Field(f => f.Id)
+                    .Query(product.Id.ToString())
+                )
+            )
+            .Size(1));
+        
+        if (result.Documents.Any())
+        {
+            _elasticClient.DeleteByQuery<Product>(p => p.Query(q1 => q1
+                .Match(m => m
+                    .Field(f => f.Id)
+                    .Query(product.Id.ToString())
+                )));
+        }
+        await _elasticClient.IndexDocumentAsync(product, cancellationToken);
+        
+        return Ok();
+    }
+    
+    [HttpDelete("RemoveProductById/{productId}")]
+    public async Task<IActionResult> RemoveProductById(string productId)
+    {
+        var response22 = _elasticClient.DeleteByQuery<Product>(p => p.Query(q1 => q1
+            .Match(m => m
+                .Field(f => f.Id)
+                .Query(productId)
+            )));
+
         return Ok();
     }
 }

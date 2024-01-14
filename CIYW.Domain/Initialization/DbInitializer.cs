@@ -23,7 +23,7 @@ namespace CIYW.Domain.Initialization;
         AddEntitiesWithExisting<Category, Guid>(context, InitializationProvider.GetCategories(), c => c.Categories);
         AddEntitiesWithExisting<Currency, Guid>(context, InitializationProvider.GetCurrencies(), c => c.Currencies);
 
-        if (isIntegrationTests)
+        if (isIntegrationTests || !isProd)
         {
           AddUserIfNotExist(
             context,

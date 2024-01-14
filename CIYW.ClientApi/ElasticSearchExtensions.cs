@@ -1,5 +1,8 @@
-﻿using CIYW.Domain.Models.Invoice;
+﻿using System;
+using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Nest;
 
 namespace CIYW.Kernel.Extensions;
@@ -19,7 +22,9 @@ public static class ElasticSearchExtensions
 
         var settings = new ConnectionSettings(new Uri(url)).BasicAuthentication(user, pass)
             .PrettyJson()
-            .DefaultIndex(usersIndex);
+            .DefaultIndex(usersIndex)
+            .EnableDebugMode()
+            .EnableApiVersioningHeader();
 
         AddDefaultMappings(settings);
 

@@ -1,10 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
+using System.Threading;
+using System.Threading.Tasks;
 using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
 using CIYW.ClientApi.Middleware;
@@ -25,10 +28,13 @@ using FluentValidation.AspNetCore;
 using GraphQL;
 using GraphQL.MicrosoftDI;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Namotion.Reflection;
 using ZymLabs.NSwag.FluentValidation.AspNetCore;
@@ -259,6 +265,8 @@ namespace CIYW.Kernel.Extensions;
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             
             builder.Services.AddScoped<IJobService, JobService>();
+            
+            builder.Services.AddScoped<IElasticSearchRepository, ElasticSearchRepository>();
             
             builder.Services.AddScoped<ContextServiceLocator>();
         }

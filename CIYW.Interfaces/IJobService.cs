@@ -2,5 +2,6 @@
 
 public interface IJobService
 {
-    Task TestJobAsync(CancellationToken cancellationToken);
+    Task MapUsersAsync(CancellationToken cancellationToken);
+    Task MapInvoicesAsync(CancellationToken cancellationToken);
 }

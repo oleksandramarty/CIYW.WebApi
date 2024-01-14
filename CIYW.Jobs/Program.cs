@@ -9,6 +9,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.Interfaces;
 using CIYW.Jobs.Jobs;
+using CIYW.Kernel.Extensions;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Repositories;
 using CYIW.Mapper;
@@ -84,7 +85,10 @@ public class Program
                 });
 
         builder.Services.AddHttpContextAccessor();
+        
+        builder.Services.AddElasticsearch(builder.Configuration);
            
+        builder.Services.AddScoped<IElasticSearchRepository, ElasticSearchRepository>();
         builder.Services.AddScoped<IJobService, JobService>();
         
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); 

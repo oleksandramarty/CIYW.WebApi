@@ -1,4 +1,5 @@
 ﻿using CIYW.Models.Requests.Common;
+using Nest;
 
 namespace CIYW.Interfaces;
 

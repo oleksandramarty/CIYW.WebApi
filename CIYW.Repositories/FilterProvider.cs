@@ -3,6 +3,7 @@ using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.Models.Requests.Common;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace CIYW.Repositories;
 
@@ -18,7 +19,6 @@ public class FilterProvider<T>: IFilterProvider<T> where T : class
         query = this.ApplySort(query, filter.Sort);
         return this.ApplyPagination(query, filter.Paginator);
     }
-    
     
     private IQueryable<T> ApplyPagination(IQueryable<T> query, Paginator filter)
     {

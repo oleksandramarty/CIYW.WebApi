@@ -17,7 +17,8 @@ public static class JobProvider
         {
             using (var context = serviceScope.ServiceProvider.GetService<DataContext>())
             {
-                RecurringJob.AddOrUpdate<IJobService>(service => service.TestJobAsync(cancellationToken), CronConst.CronEveryMin);
+                RecurringJob.AddOrUpdate<IJobService>(service => service.MapUsersAsync(cancellationToken), CronConst.CronEvery12hours);
+                // RecurringJob.AddOrUpdate<IJobService>(service => service.MapInvoicesAsync(cancellationToken), CronConst.CronEvery12hours);
             }
         }
     }

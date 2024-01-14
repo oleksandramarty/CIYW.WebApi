@@ -16,6 +16,8 @@ public class Invoice: BaseWithDateEntity
     public Guid CurrencyId { get; set; }
     public Currency.Currency Currency { get; set; }
     
+    public DateTime? Mapped { get; set; }
+    
     public DateTime Date { get; set; }
     
     public Guid? NoteId { get; set; }
