@@ -245,7 +245,11 @@ namespace CIYW.Domain.Initialization;
       }
 
       static void AddTestNotes(DataContext context, Guid userId)
-      {
+      {        
+        if (context.Notes.Any(i => i.UserId == userId))
+        {
+          return;
+        }
         User user = context.Users.FirstOrDefault(u => u.Id == userId);
         if (user == null)
         {
@@ -276,6 +280,11 @@ namespace CIYW.Domain.Initialization;
 
       static void AddTestInvoices(DataContext context, Guid userId)
       {
+        if (context.Invoices.Any(i => i.UserId == userId))
+        {
+          return;
+        }
+        
         User user = context.Users.FirstOrDefault(u => u.Id == userId);
         if (user == null)
         {

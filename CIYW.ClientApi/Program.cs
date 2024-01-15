@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CIYW.ClientApi.Filters;
+using CIYW.Elasticsearch;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CYIW.Mapper;
 using Microsoft.AspNetCore.Builder;

@@ -6,6 +6,8 @@ using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.Note;
 using CIYW.Domain.Models.Tariff;
 using CIYW.Domain.Models.User;
+using CIYW.Elasticsearch.Models.Currency;
+using CIYW.Elasticsearch.Models.User;
 using CIYW.Mediator.Mediator.Category.Requests;
 using CIYW.Mediator.Mediator.Currency.Requests;
 using CIYW.Mediator.Mediator.Invoice.Requests;
@@ -29,6 +31,10 @@ public class MappingProfile: Profile
     public MappingProfile()
     {
         this.CreateMap<User, CurrentUserResponse>();
+        
+        this.CreateMap<User, UserSearchModel>();
+        this.CreateMap<UserBalance, UserBalanceSearchModel>();
+        this.CreateMap<Currency, CurrencySearchModel>();
 
         this.CreateMap<UpdateInvoiceCommand, Invoice>()
             .ForMember(dest => dest.Note, opt => opt.Ignore());

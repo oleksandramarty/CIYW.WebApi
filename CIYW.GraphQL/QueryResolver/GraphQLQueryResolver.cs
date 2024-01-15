@@ -120,18 +120,8 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                 
                 var cancellationToken = context.CancellationToken;
 
-                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.Invoice.Invoice>>();
-                
-                var result = await repository.GetListWithIncludeAsync(
-                    query.DateRange != null 
-                        ? q => !query.DateRange.DateFrom.HasValue || query.DateRange.DateFrom.HasValue && q.Date >= query.DateRange.DateFrom.Value &&
-                            !query.DateRange.DateTo.HasValue || query.DateRange.DateTo.HasValue && q.Date <= query.DateRange.DateTo.Value
-                        : null,
-                    query,
-                    cancellationToken,
-                    q => q.Include(u => u.Category),
-                    q => q.Include(u => u.Currency),
-                    q => q.Include(u => u.Note));
+                var mediator = context.RequestServices.GetRequiredService<IMediator>();
+                var result = await mediator.Send((UserInvoicesQuery)query, cancellationToken);
                 return result;
             });
     }

@@ -47,6 +47,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CIYW.Auth\CIYW.Auth.csproj" />
+      <ProjectReference Include="..\CIYW.Elasticsearch\CIYW.Elasticsearch.csproj" />
       <ProjectReference Include="..\CIYW.GraphQL\CIYW.GraphQL.csproj" />
       <ProjectReference Include="..\CIYW.Mediator\CIYW.Mediator.csproj" />
       <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />

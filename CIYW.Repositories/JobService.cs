@@ -1,9 +1,9 @@
-﻿using System.Linq.Expressions;
+﻿using AutoMapper;
 using CIYW.Domain;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
+using CIYW.Elasticsearch.Models.User;
 using CIYW.Interfaces;
-using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -13,6 +13,7 @@ public class JobService: IJobService
 {
     private readonly DataContext context;
     private readonly IElasticSearchRepository elasticSearchRepository;
+    private readonly IMapper mapper;
     private readonly IConfiguration configuration;
     //private static IHttpClientFactory httpClientFactory;
     //private readonly IOptions<EmailConfiguration> options;
@@ -20,6 +21,7 @@ public class JobService: IJobService
     public JobService(
         DataContext context, 
         IElasticSearchRepository elasticSearchRepository, 
+        IMapper mapper,
         IConfiguration configuration
         //IHttpClientFactory httpClientFactory,
         //IOptions<EmailConfiguration> options
@@ -27,6 +29,7 @@ public class JobService: IJobService
     {
         this.context = context;
         this.elasticSearchRepository = elasticSearchRepository;
+        this.mapper = mapper;
         this.configuration = configuration;
     }
     
@@ -34,10 +37,10 @@ public class JobService: IJobService
     {
         DateTime targetDate = DateTime.UtcNow.AddDays(-1);
 
-        var schema = this.configuration["ELKConfiguration:Indexes:Users"];
-
         List<User> entities = await this.context.Users
-            .Where(r => r.Mapped < targetDate || !r.Mapped.HasValue)
+            .Include(u => u.UserBalance)
+            .ThenInclude(u => u.Currency)
+            //.Where(r => r.Mapped < targetDate || !r.Mapped.HasValue)
             .Take(100)
             .ToListAsync(cancellationToken);
 
@@ -45,39 +48,51 @@ public class JobService: IJobService
         {
             return;
         }
-
-        foreach (var entity in entities)
+        
+        bool isNeed = entities.Any();
+        
+        // var schema = this.configuration["ELKConfiguration:Indexes:Users"];
+        
+        while (isNeed)
         {
-            if (entity.Mapped.HasValue)
+            foreach (var entity in entities)
             {
-               this.elasticSearchRepository.DeleteById<User>(t => t.Id == entity.Id, entity.Id);                
-            }
-        }
+                if (entity.Mapped.HasValue)
+                {
+                    this.elasticSearchRepository.DeleteById<User>(t => t.Id == entity.Id, entity.Id);                
+                }
+                var temp22 = this.mapper.Map<User, UserSearchModel>(entity);
+                
+                await this.elasticSearchRepository.AddEntityAsync<UserSearchModel>(temp22, entity.Id, entity.Login, cancellationToken);
 
-        await this.elasticSearchRepository.AddEntitiesAsync<User>(entities, schema, cancellationToken);
+                
+            }
+            
+            // await this.elasticSearchRepository.AddEntitiesAsync<User>(entities, schema, cancellationToken);
         
-        this.context.Users.UpdateRange(entities.Select(x =>
-        {
-            x.Mapped = DateTime.UtcNow;
-            return x;
-        }).ToList());
+            this.context.Users.UpdateRange(entities.Select(x =>
+            {
+                x.Mapped = DateTime.UtcNow;
+                return x;
+            }).ToList());
         
-        await this.context.SaveChangesAsync(cancellationToken);
-        
-        if (await this.context.Users.AnyAsync(r => r.Mapped < targetDate, cancellationToken))
-        {
-            BackgroundJob.Enqueue(() => this.MapUsersAsync(cancellationToken));
+            await this.context.SaveChangesAsync(cancellationToken);
+            
+            entities = await this.context.Users
+                .Where(r => r.Mapped < targetDate || !r.Mapped.HasValue)
+                .Take(100)
+                .ToListAsync(cancellationToken);
+            isNeed = entities.Any();
         }
     }
     
     public async Task MapInvoicesAsync(CancellationToken cancellationToken)
     {
         DateTime targetDate = DateTime.UtcNow.AddDays(-1);
-
-        var schema = this.configuration["ELKConfiguration:Indexes:Invoices"];
+        DateTime monthStart = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1, 0, 0, 0, DateTimeKind.Utc);
 
         List<Invoice> entities = await this.context.Invoices
-            .Where(r => r.Mapped < targetDate || !r.Mapped.HasValue)
+            .Where(r => (r.Mapped < targetDate || !r.Mapped.HasValue) && r.Created >= monthStart)
             .Take(100)
             .ToListAsync(cancellationToken);
 
@@ -86,27 +101,35 @@ public class JobService: IJobService
             return;
         }
 
-        foreach (var entity in entities)
-        {
-            if (entity.Mapped.HasValue)
-            {
-                this.elasticSearchRepository.DeleteById<Invoice>(t => t.Id == entity.Id, entity.Id);                
-            }
-        }
+        bool isNeed = entities.Any();
+        
+        var schema = this.configuration["ELKConfiguration:Indexes:Invoices"];
 
-        await this.elasticSearchRepository.AddEntitiesAsync<Invoice>(entities, schema, cancellationToken);
-        
-        this.context.Invoices.UpdateRange(entities.Select(x =>
+        while (isNeed)
         {
-            x.Mapped = DateTime.UtcNow;
-            return x;
-        }).ToList());
+            foreach (var entity in entities)
+            {
+                if (entity.Mapped.HasValue)
+                {
+                    this.elasticSearchRepository.DeleteById<Invoice>(t => t.Id == entity.Id, entity.Id);                
+                }
+            }
+
+            await this.elasticSearchRepository.AddEntitiesAsync<Invoice>(entities, schema, cancellationToken);
         
-        await this.context.SaveChangesAsync(cancellationToken);
+            this.context.Invoices.UpdateRange(entities.Select(x =>
+            {
+                x.Mapped = DateTime.UtcNow;
+                return x;
+            }).ToList());
         
-        if (await this.context.Invoices.AnyAsync(r => r.Mapped < targetDate, cancellationToken))
-        {
-            BackgroundJob.Enqueue(() => this.MapInvoicesAsync(cancellationToken));
+            await this.context.SaveChangesAsync(cancellationToken);
+            
+            entities = await this.context.Invoices
+                .Where(r => (r.Mapped < targetDate || !r.Mapped.HasValue) && r.Created >= monthStart)
+                .Take(100)
+                .ToListAsync(cancellationToken);
+            isNeed = entities.Any();
         }
     }
 }

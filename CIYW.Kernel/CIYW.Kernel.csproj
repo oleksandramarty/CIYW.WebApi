@@ -17,6 +17,7 @@
       <PackageReference Include="FluentValidation" Version="11.8.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+      <PackageReference Include="NEST" Version="7.17.5" />
     </ItemGroup>
 
 </Project>

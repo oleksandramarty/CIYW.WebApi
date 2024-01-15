@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Invoice;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Handlers;
 
-public class UserMonthlyInvoicesQueryHandler: IRequestHandler<UserMonthlyInvoicesQuery, BalanceInvoicePageableResponse>
+public class UserMonthlyInvoicesQueryHandler: IRequestHandler<UserMonthlyInvoicesQuery, ListWithIncludeHelper<Domain.Models.Invoice.Invoice>>
 {
     private readonly IMapper mapper;
     private readonly IMediator mediator;
@@ -20,11 +21,11 @@ public class UserMonthlyInvoicesQueryHandler: IRequestHandler<UserMonthlyInvoice
         this.mediator = mediator;
     }
 
-    public async Task<BalanceInvoicePageableResponse> Handle(UserMonthlyInvoicesQuery query, CancellationToken cancellationToken)
+    public async Task<ListWithIncludeHelper<Domain.Models.Invoice.Invoice>> Handle(UserMonthlyInvoicesQuery query, CancellationToken cancellationToken)
     {
         UserInvoicesQuery invoicesQuery =
             this.mapper.Map<BaseFilterQuery, UserInvoicesQuery>(FilterExtension.CreateDefaultFilter("Date"));
-        BalanceInvoicePageableResponse response = await this.mediator.Send(invoicesQuery, cancellationToken);
+        ListWithIncludeHelper<Domain.Models.Invoice.Invoice> response = await this.mediator.Send(invoicesQuery, cancellationToken);
         return response;
     }
 }

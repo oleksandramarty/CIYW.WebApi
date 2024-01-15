@@ -9,12 +9,14 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CIYW.Const\CIYW.Const.csproj" />
+      <ProjectReference Include="..\CIYW.Elasticsearch\CIYW.Elasticsearch.csproj" />
       <ProjectReference Include="..\CIYW.Interfaces\CIYW.Interfaces.csproj" />
       <ProjectReference Include="..\CIYW.Kernel\CIYW.Kernel.csproj" />
       <ProjectReference Include="..\CIYW.Mediator\CIYW.Mediator.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.11.0" />
       <PackageReference Include="Hangfire.Core" Version="1.8.7" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
       <PackageReference Include="NEST" Version="7.17.5" />

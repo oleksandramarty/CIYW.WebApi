@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Models.Helpers.Base;
 using CIYW.Models.Responses.Invoice;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,18 +25,18 @@ public class InvoicesController: BaseController
     }
     
     [HttpPost("history")]
-    [ProducesResponseType(typeof(BalanceInvoicePageableResponse), 200)]
+    [ProducesResponseType(typeof(ListWithIncludeHelper<Domain.Models.Invoice.Invoice>), 200)]
     public async Task<IActionResult> V1_GetUserInvoicesAsync(UserInvoicesQuery query, CancellationToken cancellationToken)
     {
-        BalanceInvoicePageableResponse response = await this.mediator.Send(query, cancellationToken);
+        ListWithIncludeHelper<Domain.Models.Invoice.Invoice> response = await this.mediator.Send(query, cancellationToken);
         return Ok(response);
     }
     
     [HttpGet("monthly")]
-    [ProducesResponseType(typeof(BalanceInvoicePageableResponse), 200)]
+    [ProducesResponseType(typeof(ListWithIncludeHelper<Domain.Models.Invoice.Invoice>), 200)]
     public async Task<IActionResult> V1_GetUserInvoicesAsync(CancellationToken cancellationToken)
     {
-        BalanceInvoicePageableResponse response = await this.mediator.Send(new UserMonthlyInvoicesQuery(), cancellationToken);
+        ListWithIncludeHelper<Domain.Models.Invoice.Invoice> response = await this.mediator.Send(new UserMonthlyInvoicesQuery(), cancellationToken);
         return Ok(response);
     }
     

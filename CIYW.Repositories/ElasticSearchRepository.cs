@@ -4,6 +4,7 @@ using CIYW.Const.Errors;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
+using CIYW.Kernel.Utils;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 using Microsoft.EntityFrameworkCore;
@@ -20,14 +21,22 @@ public class ElasticSearchRepository: IElasticSearchRepository
         this.elasticClient = elasticClient;
     }
     
-    public async Task AddEntityAsync<T>(T entity, CancellationToken cancellationToken) where T: class
+    public async Task AddEntityAsync<T>(T entity, Guid id, string routeValue, CancellationToken cancellationToken) where T: class
     {
-        await this.elasticClient.IndexDocumentAsync<T>(entity, cancellationToken);
+        // var response = await this.elasticClient.IndexAsync<T>(entity, x => x.Index("users_index").Id(id), cancellationToken);
+        
+        //var indexResponse = await this.elasticClient.IndexDocumentAsync(entity, cancellationToken); 
+        // var response = await this.elasticClient.IndexDocumentAsync(entity);
+        
+        var response = await this.elasticClient.IndexDocumentAsync(entity, cancellationToken);
+        
+        
+        var test = 3;
     }
     
     public async Task AddEntitiesAsync<T>(List<T> entities, string schemeName, CancellationToken cancellationToken) where T : class
     {
-        await this.elasticClient.IndexManyAsync<T>(entities, schemeName, cancellationToken);
+        var response = await this.elasticClient.IndexManyAsync<T>(entities, schemeName, cancellationToken);
     }
 
     public async Task AddOrUpdateEntityAsync<T>(Expression<Func<T, bool>> predicate, Guid id, T entity,
@@ -37,7 +46,7 @@ public class ElasticSearchRepository: IElasticSearchRepository
 
         if (temp == null)
         {
-            await this.AddEntityAsync<T>(entity, cancellationToken);
+           // await this.AddEntityAsync<T>(entity, cancellationToken);
         }
         else
         {
@@ -48,7 +57,7 @@ public class ElasticSearchRepository: IElasticSearchRepository
     public async Task UpdateEntityAsync<T>(Expression<Func<T, bool>> predicate, Guid id, T entity, CancellationToken cancellationToken) where T: class
     {
         this.DeleteById(predicate, id);
-        await this.AddEntityAsync<T>(entity, cancellationToken);
+      //  await this.AddEntityAsync<T>(entity, cancellationToken);
     }
 
     public void DeleteById<T>(Expression<Func<T, bool>> predicate, Guid id) where T: class

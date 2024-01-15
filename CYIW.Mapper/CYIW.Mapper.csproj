@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />
+      <ProjectReference Include="..\CIYW.Elasticsearch\CIYW.Elasticsearch.csproj" />
       <ProjectReference Include="..\CIYW.Mediator\CIYW.Mediator.csproj" />
       <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
     </ItemGroup>
