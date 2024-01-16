@@ -25,6 +25,8 @@ public class UserType: ObjectGraphType<User>
         Field(x => x.UserBalanceId);
         Field<UserBalanceType>("userBalance", resolve: context => context.Source.UserBalance);
         Field(x => x.Email);
+        Field(x => x.Created);
+        Field(x => x.Updated, true);
         Field(x => x.EmailConfirmed);
         Field(x => x.PhoneNumber);
         Field(x => x.PhoneNumberConfirmed);

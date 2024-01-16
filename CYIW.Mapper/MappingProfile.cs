@@ -40,13 +40,11 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Note, opt => opt.Ignore());
 
         this.CreateMap<UserBalance, CurrentUserResponse>()
-            .ForMember(dest => dest.BalanceAmount, opt => opt.MapFrom(src => src.Amount))
-            .ForAllMembers(opt => opt.Ignore());
+            .ForMember(dest => dest.BalanceAmount, opt => opt.MapFrom(src => src.Amount));
 
         this.CreateMap<Role, CurrentUserResponse>()
             .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Name))
-            .ForAllMembers(opt => opt.Ignore());
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Name));
 
         this.CreateMap<CreateUserCommand, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))

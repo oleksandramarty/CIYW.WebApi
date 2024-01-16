@@ -11,11 +11,11 @@ namespace CIYW.ClientApi.Controllers.Admin;
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]
 [Authorize(Roles = RoleProvider.Admin)]
-public class CategoriesController: BaseController
+public class AdminCategoriesController: BaseController
 {
     private readonly IMediator mediator;
     
-    public CategoriesController(IMediator mediator)
+    public AdminCategoriesController(IMediator mediator)
     {
         this.mediator = mediator;
     }

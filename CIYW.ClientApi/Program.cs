@@ -1,28 +1,24 @@
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Threading;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using CIYW.Auth;
 using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
+using CIYW.ClientApi.Filters;
 using CIYW.Domain;
 using CIYW.Domain.Models.User;
+using CIYW.Elasticsearch;
 using CIYW.Kernel.Extensions;
+using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Mediator;
+using CYIW.Mapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using CIYW.ClientApi.Filters;
-using CIYW.Elasticsearch;
-using CIYW.Kernel.Extensions.ActionFilters;
-using CYIW.Mapper;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Converters;
+
+namespace CIYW.ClientApi;
 
 public class Program
 {
@@ -108,9 +104,9 @@ public class Program
             }).AddXmlSerializerFormatters()
             .AddXmlDataContractSerializerFormatters()
             .AddNewtonsoftJson(opts =>
-                {
-                    opts.SerializerSettings.Converters.Add(new StringEnumConverter());
-                });
+            {
+                opts.SerializerSettings.Converters.Add(new StringEnumConverter());
+            });
 
         builder.Services.AddRouting(option => option.LowercaseUrls = true);
 
@@ -171,7 +167,7 @@ public class Program
         
         builder.AddDependencyInjection();
         
-        builder.Services.AddElasticsearch(builder.Configuration);
+        // builder.Services.AddElasticsearch(builder.Configuration);
         
         builder.AddGraphQL();
 
@@ -226,13 +222,12 @@ public class Program
         
         app.UseGraphQL();
         
-     //   app.UseRouting();
-       // app.UseEndpoints(endpoints =>
+        //   app.UseRouting();
+        // app.UseEndpoints(endpoints =>
         //{
-         //   endpoints.MapGraphQL();s
+        //   endpoints.MapGraphQL();s
         //});
 
         app.Run();
     }
 }
-

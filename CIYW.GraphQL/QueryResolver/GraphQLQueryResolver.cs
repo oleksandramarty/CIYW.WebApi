@@ -3,9 +3,12 @@ using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
 using CIYW.GraphQL.Types;
+using CIYW.GraphQL.Types.ListWithIncludeHelper;
 using CIYW.Interfaces;
 using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Mediator.Mediator.Users.Requests;
+using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Invoice;
 using GraphQL;
@@ -106,24 +109,37 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
     }
     public void GetInvoiceHistory()
     {
-        Field<ListWithIncludeHelperType<Invoice, InvoiceType>>("invoices")
-            .Arguments(new QueryArguments(new QueryArguments(new QueryArgument<BooleanGraphType> { Name = "isFull" },
-                new QueryArgument<IntGraphType> { Name = "pageNumber" },
-                new QueryArgument<IntGraphType> { Name = "pageSize" },
-                new QueryArgument<DateTimeGraphType> { Name = "dateFrom" },
-                new QueryArgument<DateTimeGraphType> { Name = "dateTo" },
-                new QueryArgument<StringGraphType> { Name = "column" },
-                new QueryArgument<StringGraphType> { Name = "direction" })))
-            .ResolveAsync(async context =>
-            {
-                BaseFilterQuery query = this.GetBaseFilterQuery(context);
-                
-                var cancellationToken = context.CancellationToken;
+        Field<ListInvoicesWithIncludeHelperType>("invoices")
+            .Arguments(new QueryArguments(GetPageableQueryArguments()))
+            .ResolveAsync(async context => await this.GetPageableResponse<Invoice, UserInvoicesQuery>(context, new UserInvoicesQuery(this.GetBaseFilterQuery(context))));
+    }
+    
+    public void GetUsers()
+    {
+        Field<ListUsersWithIncludeHelperType>("users")
+            .Arguments(new QueryArguments(GetPageableQueryArguments()))
+            .ResolveAsync(async context => await this.GetPageableResponse<User, UsersQuery>(context, new UsersQuery(this.GetBaseFilterQuery(context))));
+    }
 
-                var mediator = context.RequestServices.GetRequiredService<IMediator>();
-                var result = await mediator.Send((UserInvoicesQuery)query, cancellationToken);
-                return result;
-            });
+    private async Task<ListWithIncludeHelper<T>> GetPageableResponse<T, TQuery>(IResolveFieldContext<object?> context, TQuery query)
+        where TQuery : BaseFilterQuery, IRequest<ListWithIncludeHelper<T>>
+    {
+        var cancellationToken = context.CancellationToken;
+        var mediator = context.RequestServices.GetRequiredService<IMediator>();
+        var result = await mediator.Send(query, cancellationToken);
+        return result;
+    }
+    
+    private IEnumerable<QueryArgument> GetPageableQueryArguments()
+    {
+        return new QueryArguments(new QueryArgument<BooleanGraphType> { Name = "isFull" },
+            new QueryArgument<IntGraphType> { Name = "pageNumber" },
+            new QueryArgument<IntGraphType> { Name = "pageSize" },
+            new QueryArgument<DateTimeGraphType> { Name = "dateFrom" },
+            new QueryArgument<DateTimeGraphType> { Name = "dateTo" },
+            new QueryArgument<StringGraphType> { Name = "parentClass" },
+            new QueryArgument<StringGraphType> { Name = "column" },
+            new QueryArgument<StringGraphType> { Name = "direction" });
     }
 
     private BaseFilterQuery GetBaseFilterQuery(IResolveFieldContext<object?> context)
@@ -138,6 +154,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
         };
         query.Sort = new BaseSortableQuery
         {
+            ParentClass = context.GetArgument<string?>("parentClass") ?? null,
             Column = context.GetArgument<string?>("column") ?? "Date",
             Direction = context.GetArgument<string?>("direction") ?? "desc"
         };

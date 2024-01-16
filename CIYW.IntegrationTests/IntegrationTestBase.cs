@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Autofac;
+using CIYW.ClientApi;
 using CIYW.Const.Providers;
 using CIYW.Domain.Initialization;
 using Microsoft.AspNetCore.Http;

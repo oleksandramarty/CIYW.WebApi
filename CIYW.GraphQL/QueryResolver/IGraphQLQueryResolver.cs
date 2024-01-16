@@ -8,4 +8,5 @@ public interface IGraphQLQueryResolver
     void GetUserById();
     void GetUserBalanceByUserId();
     void GetInvoiceHistory();
+    void GetUsers();
 }

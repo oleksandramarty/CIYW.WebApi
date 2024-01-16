@@ -73,6 +73,22 @@ namespace CIYW.Domain.Initialization;
             RoleProvider.Admin
           );
           
+          AddUserIfNotExist(
+            context,
+            userManager,
+            Guid.NewGuid(), 
+            "Admin",
+            "Admin",
+            "Test",
+            "Adminovich",
+            "admintest123@mail.com",
+            "44332255333",
+            InitConst.FreeTariffId,
+            InitConst.CurrencyUsdId,
+            "725725",
+            RoleProvider.Admin
+          );
+          
           AddTestInvoices(context, InitConst.MockUserId);
           AddTestInvoices(context, InitConst.MockAuthUserId);
           

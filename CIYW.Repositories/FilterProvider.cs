@@ -58,11 +58,15 @@ public class FilterProvider<T>: IFilterProvider<T> where T : class
         {
             if (string.Equals(filter.Direction, "asc", StringComparison.OrdinalIgnoreCase))
             {
-                query = query.OrderBy(x => EF.Property<object>(x, filter.Column));
+                query = string.IsNullOrWhiteSpace(filter.ParentClass) ? 
+                    query.OrderBy(x => EF.Property<object>(x, filter.Column)) :
+                    query.OrderBy(x => EF.Property<object>(EF.Property<object>(x, filter.ParentClass), filter.Column));
             }
             else if (string.Equals(filter.Direction, "desc", StringComparison.OrdinalIgnoreCase))
             {
-                query = query.OrderByDescending(x => EF.Property<object>(x, filter.Column));
+                query = string.IsNullOrWhiteSpace(filter.ParentClass) ? 
+                    query.OrderByDescending(x => EF.Property<object>(x, filter.Column)) :
+                    query.OrderByDescending(x => EF.Property<object>(EF.Property<object>(x, filter.ParentClass), filter.Column));
             }
         }
 
