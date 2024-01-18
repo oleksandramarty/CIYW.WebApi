@@ -1,7 +1,10 @@
 using CIYW.Const.Errors;
+using CIYW.Domain.Models.Category;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Category.Requests;
 using CIYW.Mediator.Validators.Categories;
+using CIYW.Models.Responses.Category;
 using CIYW.TestHelper;
 using NUnit.Framework;
 
@@ -40,7 +43,7 @@ public class CreateOrUpdateCategoryCommandValidatorTest
         };
         
         // Act
-        TestUtilities.Validate_Command<CreateOrUpdateCategoryCommand, Guid>(
+        TestUtilities.Validate_Command<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Category>>(
             command, () => new CreateOrUpdateCategoryCommandValidator(isNew), expectedErrors);
     }
 }

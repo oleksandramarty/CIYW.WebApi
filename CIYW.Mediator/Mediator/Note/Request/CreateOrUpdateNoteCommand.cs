@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Note.Request;
 
-public class CreateOrUpdateNoteCommand: BaseNullableQuery, IRequest<NoteResponse>
+public class CreateOrUpdateNoteCommand: BaseNullableQuery, IRequest<MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>>
 {
     public string Name { get; set; }
     public string Body { get; set; }

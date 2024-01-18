@@ -1,7 +1,10 @@
 using CIYW.Const.Errors;
+using CIYW.Domain.Models.Currency;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Currency.Requests;
 using CIYW.Mediator.Validators.Currencies;
+using CIYW.Models.Responses.Currency;
 using CIYW.TestHelper;
 using NUnit.Framework;
 
@@ -41,7 +44,7 @@ public class CreateOrUpdateCurrencyCommandValidatorTest
         };
         
         // Act
-        TestUtilities.Validate_Command<CreateOrUpdateCurrencyCommand, Guid>(
+        TestUtilities.Validate_Command<CreateOrUpdateCurrencyCommand, MappedHelperResponse<CurrencyResponse, Currency>>(
             command, () => new CreateOrUpdateCurrencyCommandValidator(isNew), expectedErrors);
     }
 }

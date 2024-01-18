@@ -94,7 +94,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
     
     public void GetUserByIdForAdmin()
     {
-        Field<UserType>("userByAdmin")
+        Field<UserType>("userByIdForAdmin")
             .Arguments(new QueryArguments(new QueryArgument<GuidGraphType> { Name = "id" }))
             .ResolveAsync(async context =>
             {
@@ -104,8 +104,8 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                 // Assuming cancellationToken is available in your GraphQL context
                 var cancellationToken = context.CancellationToken;
 
-                UserResponse result = await mediator.Send(new UserByIdQuery(entityId), cancellationToken);
-                return result;
+                MappedHelperResponse<UserResponse, User> result = await mediator.Send(new UserByIdQuery(entityId), cancellationToken);
+                return result.MappedEntity;
             });
     }
     

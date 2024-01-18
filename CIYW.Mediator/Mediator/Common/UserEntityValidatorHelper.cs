@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+using AutoMapper;
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
 using CIYW.Interfaces;
@@ -10,17 +12,24 @@ namespace CIYW.Mediator.Mediator.Common;
 
 public class UserEntityValidatorHelper
 {
+    private IMapper mapper;
     private readonly IEntityValidator entityValidator;
     private readonly ICurrentUserProvider currentUserProvider;
 
     public UserEntityValidatorHelper(
+        IMapper mapper,
         IEntityValidator entityValidator, 
         ICurrentUserProvider currentUserProvider)
     {
+        this.mapper = mapper;
         this.currentUserProvider = currentUserProvider;
         this.entityValidator = entityValidator;
     }
 
+    protected async Task ValidateExistParamAsync<T>(Expression<Func<T, bool>> predicate, string customErrorMessage, CancellationToken cancellationToken) where T : class
+    {
+        await this.entityValidator.ValidateExistParamAsync<T>(predicate, customErrorMessage, cancellationToken); 
+    }
     protected void ValidateRequest<TCommand, TResult>(TCommand command, Func<IValidator<TCommand>> validatorFactory) where TCommand : IRequest<TResult>
     {
         this.entityValidator.ValidateRequest<TCommand, TResult>(command, validatorFactory); 
@@ -69,5 +78,10 @@ public class UserEntityValidatorHelper
     protected void HasAccess<TEntity>(TEntity entity, Guid userId)
     {
         this.entityValidator.HasAccess<TEntity>(entity, userId);
+    }
+
+    protected MappedHelperResponse<TResponse, T> GetMappedHelper<TResponse, T>(T entity)
+    {
+        return new MappedHelperResponse<TResponse, T>(mapper.Map<T, TResponse>(entity), entity);
     }
 }

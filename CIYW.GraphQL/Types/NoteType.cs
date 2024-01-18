@@ -1,4 +1,5 @@
 ﻿using CIYW.Domain.Models.Note;
+using CIYW.Mediator;
 using CIYW.Models.Responses.Note;
 using GraphQL.Types;
 

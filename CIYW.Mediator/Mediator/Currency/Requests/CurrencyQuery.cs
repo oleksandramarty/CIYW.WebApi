@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Currency.Requests;
 
-public class CurrencyQuery: BaseQuery, IRequest<CurrencyResponse>
+public class CurrencyQuery: BaseQuery, IRequest<MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>>
 {
     public CurrencyQuery(Guid id)
     {

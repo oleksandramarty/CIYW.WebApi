@@ -3,8 +3,10 @@ using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Currency.Handlers;
 using CIYW.Mediator.Mediator.Currency.Requests;
+using CIYW.Models.Responses.Currency;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -45,10 +47,10 @@ public class CreateCurrencyCommandHandlerIntegrationTest() : CommonIntegrationTe
             );
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            dbContext.Currencies.Count(c => c.Id == result && c.IsActive == true).Should().Be(1);
+            dbContext.Currencies.Count(c => c.Id == result.Entity.Id && c.IsActive == true).Should().Be(1);
         }
     }
 }

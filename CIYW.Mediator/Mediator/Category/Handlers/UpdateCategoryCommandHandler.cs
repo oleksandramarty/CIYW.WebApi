@@ -3,11 +3,12 @@ using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Category.Requests;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Validators.Categories;
+using CIYW.Models.Responses.Category;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Category.Handlers;
 
-public class UpdateCategoryCommandHandler: UserEntityValidatorHelper, IRequestHandler<CreateOrUpdateCategoryCommand, Guid>
+public class UpdateCategoryCommandHandler: UserEntityValidatorHelper, IRequestHandler<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category>>
 {
     private readonly IMapper mapper;
     private readonly IGenericRepository<Domain.Models.Category.Category> categoryRepository;
@@ -16,16 +17,16 @@ public class UpdateCategoryCommandHandler: UserEntityValidatorHelper, IRequestHa
         IMapper mapper,
         IGenericRepository<Domain.Models.Category.Category> categoryRepository, 
         IEntityValidator entityValidator,
-        ICurrentUserProvider currentUserProvider): base(entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider): base(mapper, entityValidator, currentUserProvider)
     {
         this.mapper = mapper;
         this.categoryRepository = categoryRepository;
     }
 
-    public async Task<Guid> Handle(CreateOrUpdateCategoryCommand command, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category>> Handle(CreateOrUpdateCategoryCommand command, CancellationToken cancellationToken)
     {
         await this.IsUserAdminAsync(cancellationToken);
-        this.ValidateRequest<CreateOrUpdateCategoryCommand, Guid>(command, () => new CreateOrUpdateCategoryCommandValidator(false));
+        this.ValidateRequest<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category>>(command, () => new CreateOrUpdateCategoryCommandValidator(false));
         Domain.Models.Category.Category category = await this.categoryRepository.GetByIdAsync(command.Id.Value, cancellationToken);
 
         this.ValidateExist<Domain.Models.Category.Category, Guid?>(category, command.Id);
@@ -34,6 +35,6 @@ public class UpdateCategoryCommandHandler: UserEntityValidatorHelper, IRequestHa
 
         await this.categoryRepository.UpdateAsync(updatedCategory, cancellationToken);
 
-        return category.Id;
+        return this.GetMappedHelper<CategoryResponse, Domain.Models.Category.Category>(updatedCategory);
     }
 }

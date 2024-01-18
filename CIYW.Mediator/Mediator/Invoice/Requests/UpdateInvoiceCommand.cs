@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Requests;
 
-public class UpdateInvoiceCommand : BaseNullableQuery, IRequest<InvoiceResponse>
+public class UpdateInvoiceCommand : BaseNullableQuery, IRequest<MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>>
 {
     public string Name { get; set; }
     public decimal Amount { get; set; }

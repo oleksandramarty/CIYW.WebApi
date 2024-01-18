@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Currency.Handlers;
 
-public class CurrencyQueryHandler: IRequestHandler<CurrencyQuery, CurrencyResponse>
+public class CurrencyQueryHandler: IRequestHandler<CurrencyQuery, MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>>
 {
     private readonly IMapper mapper;
     private readonly IReadGenericRepository<Domain.Models.Currency.Currency> currencyRepository;
@@ -22,7 +22,7 @@ public class CurrencyQueryHandler: IRequestHandler<CurrencyQuery, CurrencyRespon
         this.entityValidator = entityValidator;
     }
 
-    public async Task<CurrencyResponse> Handle(CurrencyQuery query, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>> Handle(CurrencyQuery query, CancellationToken cancellationToken)
     {
         Domain.Models.Currency.Currency currency = await this.currencyRepository.GetByIdAsync(query.Id, cancellationToken);
 
@@ -30,6 +30,6 @@ public class CurrencyQueryHandler: IRequestHandler<CurrencyQuery, CurrencyRespon
 
         CurrencyResponse response = this.mapper.Map<Domain.Models.Currency.Currency, CurrencyResponse>(currency);
 
-        return response;
+        return new MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>(response, currency);
     }
 }

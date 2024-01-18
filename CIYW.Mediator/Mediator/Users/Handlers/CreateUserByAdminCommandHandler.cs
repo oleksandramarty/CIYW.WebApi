@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Mediator.Mediator.Users.Handlers;
 
-public class CreateUserByAdminCommandHandler: IRequestHandler<CreateUserByAdminCommand, UserResponse>
+public class CreateUserByAdminCommandHandler: IRequestHandler<CreateUserByAdminCommand, MappedHelperResponse<UserResponse, User>>
 {
     private readonly IMapper mapper;
     private readonly IEntityValidator entityValidator;
@@ -33,7 +33,7 @@ public class CreateUserByAdminCommandHandler: IRequestHandler<CreateUserByAdminC
         this.userManager = userManager;
     }
     
-        public async Task<UserResponse> Handle(CreateUserByAdminCommand command, CancellationToken cancellationToken)
+        public async Task<MappedHelperResponse<UserResponse, User>> Handle(CreateUserByAdminCommand command, CancellationToken cancellationToken)
     {
         if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
         {
@@ -88,7 +88,7 @@ public class CreateUserByAdminCommandHandler: IRequestHandler<CreateUserByAdminC
 
         this.entityValidator.ValidateExist<User, Guid?>(user, user?.Id);
 
-        return this.mapper.Map<User, UserResponse>(user);
+        return new MappedHelperResponse<UserResponse, User>(this.mapper.Map<User, UserResponse>(user), user);
     }
     
 }

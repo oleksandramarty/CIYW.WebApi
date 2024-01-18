@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using CIYW.ClientApi.Controllers.Base;
+using CIYW.Domain.Models.User;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
 using MediatR;
@@ -25,7 +27,7 @@ public class UsersController: BaseController
     [ProducesResponseType(typeof(UserResponse), 200)]
     public async Task<IActionResult> V1_CurrentUserAsync(CancellationToken cancellationToken)
     {
-        UserResponse result = await this.mediator.Send(new CurrentUserQuery(), cancellationToken);
-        return Ok(result);
+        MappedHelperResponse<UserResponse, User> result = await this.mediator.Send(new CurrentUserQuery(), cancellationToken);
+        return Ok(result.MappedEntity);
     }
 }

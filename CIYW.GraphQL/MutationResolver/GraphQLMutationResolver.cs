@@ -2,6 +2,7 @@
 using CIYW.Domain.Models.Note;
 using CIYW.GraphQL.Types;
 using CIYW.GraphQL.Types.InputTypes;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Mediator.Mediator.Note.Request;
 using GraphQL;
@@ -13,10 +14,10 @@ namespace CIYW.GraphQL.MutationResolver;
 
 public class GraphQLMutationResolver: ObjectGraphType, IGraphQLMutationResolver
 {
-    public void CreateEntity<TType, TInputType, TCommand, TResult>(string name) 
-        where TCommand: IRequest<TResult> 
+    public void CreateEntity<TType, TInputType, TCommand, TMapped, TEntity>(string name) 
+        where TCommand: IRequest<MappedHelperResponse<TMapped, TEntity>> 
         where TInputType: InputObjectGraphType
-        where TType: ObjectGraphType<TResult>
+        where TType: ObjectGraphType<TMapped>
     {
         Field<TType>(name)
             .Arguments(new QueryArguments(
@@ -25,15 +26,16 @@ public class GraphQLMutationResolver: ObjectGraphType, IGraphQLMutationResolver
             .ResolveAsync(async context =>
             {
                 var cancellationToken = context.CancellationToken;
-                return await this.ModifyEntityWithResultAsync<TCommand, TResult>(context, cancellationToken);
+                MappedHelperResponse<TMapped, TEntity> result = await this.ModifyEntityWithResultAsync<TCommand, MappedHelperResponse<TMapped, TEntity>>(context, cancellationToken);
+                return result.MappedEntity;
             });
     }
     
-    public void UpdateEntity<TType, TInputType, TCommand, TResult, TId>(string name) 
-        where TCommand: IRequest<TResult> 
+    public void UpdateEntity<TType, TInputType, TCommand, TMapped, TEntity, TId>(string name) 
+        where TCommand: IRequest<MappedHelperResponse<TMapped, TEntity>> 
         where TInputType: InputObjectGraphType
         where TId: ScalarGraphType
-        where TType: ObjectGraphType<TResult>
+        where TType: ObjectGraphType<TMapped>
     {
         Field<TType>(name)
             .Arguments(new QueryArguments(
@@ -43,7 +45,8 @@ public class GraphQLMutationResolver: ObjectGraphType, IGraphQLMutationResolver
             .ResolveAsync(async context =>
             {
                 var cancellationToken = context.CancellationToken;
-                return await this.ModifyEntityWithResultAsync<TCommand, TResult>(context, cancellationToken);
+                MappedHelperResponse<TMapped, TEntity> result = await this.ModifyEntityWithResultAsync<TCommand, MappedHelperResponse<TMapped, TEntity>>(context, cancellationToken);
+                return result.MappedEntity;
             });
     }
     

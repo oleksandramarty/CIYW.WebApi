@@ -3,8 +3,10 @@ using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Tariff.Handlers;
 using CIYW.Mediator.Mediator.Tariff.Requests;
+using CIYW.Models.Responses.Tariff;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -48,11 +50,11 @@ public class UpdateTariffCommandHandlerIntegrationTest() : CommonIntegrationTest
             );
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<TariffResponse, Domain.Models.Tariff.Tariff> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
             dbContext.Tariffs.Count(
-                c => c.Id == result &&
+                c => c.Id == result.Entity.Id &&
                      c.Name == name &&
                      c.Description == description &&
                      c.IsActive == isActive).Should().Be(1);

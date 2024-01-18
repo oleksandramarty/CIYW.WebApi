@@ -5,6 +5,7 @@ using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Mediator.Mediator.Note.Request;
@@ -58,18 +59,19 @@ public class CreateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
             var handler = new CreateInvoiceCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
                 scope.ServiceProvider.GetRequiredService<ITransactionRepository>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>());
 
             // Act
-            InvoiceResponse result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(command, CancellationToken.None);
             
             // Assert
-            dbContext.Invoices.Count(i => i.Id == result.Id && i.UserId == InitConst.MockUserId).Should().Be(1);
+            dbContext.Invoices.Count(i => i.Id == result.Entity.Id && i.UserId == InitConst.MockUserId).Should().Be(1);
             dbContext.UserBalances.FirstOrDefault(ub => ub.UserId == InitConst.MockUserId).Amount.Should().Be(expectedBalance.Amount);
 
             if (noteCommand != null)
             {
-                dbContext.Notes.Count(n => n.InvoiceId.HasValue && n.InvoiceId.Value == result.Id).Should().Be(1);
+                dbContext.Notes.Count(n => n.InvoiceId.HasValue && n.InvoiceId.Value == result.Entity.Id).Should().Be(1);
             }
         }
     }

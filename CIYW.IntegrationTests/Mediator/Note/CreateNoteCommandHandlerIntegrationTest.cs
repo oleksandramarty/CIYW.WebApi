@@ -1,6 +1,7 @@
 using AutoMapper;
 using CIYW.Domain;
 using CIYW.Interfaces;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Note.Handlers;
 using CIYW.Models.Responses.Note;
 using CIYW.TestHelper;
@@ -31,10 +32,10 @@ public class CreateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            NoteResponse note = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<NoteResponse, Domain.Models.Note.Note> note = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            dbContext.Notes.Count(u => u.Id == note.Id).Should().Be(1);
+            dbContext.Notes.Count(u => u.Id == note.Entity.Id).Should().Be(1);
         }
     }
 }

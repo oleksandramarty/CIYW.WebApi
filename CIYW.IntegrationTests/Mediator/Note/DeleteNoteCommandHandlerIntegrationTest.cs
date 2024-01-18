@@ -29,6 +29,7 @@ public class DeleteNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             Domain.Models.Note.Note note = dbContext.Notes.FirstOrDefault(i => i.UserId == InitConst.MockUserId);
             
             var handler = new DeleteNoteCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Note.Note>>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>()
@@ -51,6 +52,7 @@ public class DeleteNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
         using (var scope = this.testApplicationFactory.Services.CreateScope())
         {
             var handler = new DeleteNoteCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Note.Note>>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>()
@@ -75,6 +77,7 @@ public class DeleteNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             Domain.Models.Note.Note note = dbContext.Notes.FirstOrDefault(i => i.UserId == InitConst.MockAuthUserId);
             
             var handler = new DeleteNoteCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Note.Note>>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>()

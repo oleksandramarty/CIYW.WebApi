@@ -7,6 +7,7 @@ using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Users.Handlers;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
@@ -26,6 +27,7 @@ namespace CIYW.UnitTests.Mediator.Users
         private readonly Mock<IEntityValidator> entityValidatorMock;
         private readonly Mock<IAuthRepository> authRepositoryMock;
         private readonly Mock<UserManager<User>> userManagerMock;
+        private readonly Mock<ICurrentUserProvider> currentUserProviderMock;
 
         private readonly CreateUserCommandHandler handler;
 
@@ -36,6 +38,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.mapperMock.Setup(m => m.Map<CreateUserCommand, User>(It.IsAny<CreateUserCommand>()))
                 .Returns(new User());
 
+            this.currentUserProviderMock = new Mock<ICurrentUserProvider>();
             this.entityValidatorMock = new Mock<IEntityValidator>();
             this.authRepositoryMock = new Mock<IAuthRepository>();
             this.userManagerMock = new Mock<UserManager<User>>(
@@ -60,9 +63,10 @@ namespace CIYW.UnitTests.Mediator.Users
             
             this.handler = new CreateUserCommandHandler(
                 this.mapperMock.Object,
-                this.entityValidatorMock.Object,
                 this.authRepositoryMock.Object,
-                this.userManagerMock.Object
+                this.userManagerMock.Object,
+                this.entityValidatorMock.Object,
+                this.currentUserProviderMock.Object
             );
 
         }
@@ -76,14 +80,14 @@ namespace CIYW.UnitTests.Mediator.Users
             // Act
             var result = await this.handler.Handle(command, CancellationToken.None);
             
-            List<IdentityUserLogin<Guid>> expectedLogins = result.CreateUserLogins();
+            List<IdentityUserLogin<Guid>> expectedLogins = result.Entity.CreateUserLogins();
             
             // Assert
             Assert.IsNotNull(result);
-            this.userManagerMock.Verify(um => um.CreateAsync(It.Is<User>(u => u.Id == result.Id), command.Password), Times.Once);
-            this.userManagerMock.Verify(um => um.AddToRoleAsync(It.Is<User>(u => u.Id == result.Id), RoleProvider.User), Times.Once);
+            this.userManagerMock.Verify(um => um.CreateAsync(It.Is<User>(u => u.Id == result.Entity.Id), command.Password), Times.Once);
+            this.userManagerMock.Verify(um => um.AddToRoleAsync(It.Is<User>(u => u.Id == result.Entity.Id), RoleProvider.User), Times.Once);
             this.authRepositoryMock.Verify(repo => repo.UpdateUserLoginsAsync(
-                It.Is<Guid>(u => u == result.Id),
+                It.Is<Guid>(u => u == result.Entity.Id),
                 It.Is<List<IdentityUserLogin<Guid>>>(logins => 
                     logins.Count == expectedLogins.Count &&
                     logins.All(login => expectedLogins.Any(expectedLogin =>
@@ -103,7 +107,7 @@ namespace CIYW.UnitTests.Mediator.Users
             command.ConfirmEmail = "123";
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, UserResponse, LoggerException>(this.handler, command, ErrorMessages.EmailsDoesntMatch);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(this.handler, command, ErrorMessages.EmailsDoesntMatch);
         }
         
         [TestMethod]
@@ -114,7 +118,7 @@ namespace CIYW.UnitTests.Mediator.Users
             command.ConfirmPassword = "123";
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, UserResponse, LoggerException>(this.handler, command, ErrorMessages.PasswordsDoesntMatch);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(this.handler, command, ErrorMessages.PasswordsDoesntMatch);
         }
         
         [TestMethod]
@@ -125,7 +129,7 @@ namespace CIYW.UnitTests.Mediator.Users
             command.IsAgree = false;
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, UserResponse, LoggerException>(this.handler, command, ErrorMessages.AgreeBeforeSignIn);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(this.handler, command, ErrorMessages.AgreeBeforeSignIn);
         }
         
         [TestMethod]
@@ -137,7 +141,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.AddEntityValidatorThrow(errorMessage);
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, UserResponse, LoggerException>(this.handler, command, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email));
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(this.handler, command, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email));
         }
         
         [TestMethod]
@@ -149,7 +153,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.AddEntityValidatorThrow(errorMessage);
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, UserResponse, LoggerException>(this.handler, command, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(this.handler, command, errorMessage);
         }
         
         [TestMethod]
@@ -161,7 +165,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.AddEntityValidatorThrow(errorMessage);
             
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, UserResponse, LoggerException>(this.handler, command, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<CreateUserCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(this.handler, command, errorMessage);
         }
 
         private void AddEntityValidatorThrow(string errorMessage)

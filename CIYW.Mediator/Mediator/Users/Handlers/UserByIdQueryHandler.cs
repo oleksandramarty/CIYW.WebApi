@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Mediator.Mediator.Users.Handlers;
 
-public class UserByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<UserByIdQuery, UserResponse>
+public class UserByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<UserByIdQuery, MappedHelperResponse<UserResponse, User>>
 {
     private IReadGenericRepository<User> userRepository;
     private IMapper mapper;
@@ -18,13 +18,13 @@ public class UserByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<Us
         IReadGenericRepository<User> userRepository,
         IMapper mapper,
         ICurrentUserProvider currentUser, 
-        IEntityValidator entityValidator): base(entityValidator, currentUser)
+        IEntityValidator entityValidator): base(mapper, entityValidator, currentUser)
     {
         this.userRepository = userRepository;
         this.mapper = mapper;
     }
 
-    public async Task<UserResponse> Handle(UserByIdQuery query, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<UserResponse, User>> Handle(UserByIdQuery query, CancellationToken cancellationToken)
     {
         await this.IsUserAdminAsync(cancellationToken);
 
@@ -35,8 +35,6 @@ public class UserByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<Us
                 q.Include(t => t.UserBalance)
                     .ThenInclude(t => t.Currency));
 
-        UserResponse response = this.mapper.Map<User, UserResponse>(user);
-
-        return response;
+        return this.GetMappedHelper<UserResponse, User>(user);
     }
 }

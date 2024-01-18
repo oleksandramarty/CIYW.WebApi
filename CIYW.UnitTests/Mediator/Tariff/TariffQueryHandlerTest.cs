@@ -3,6 +3,7 @@ using CIYW.Const.Errors;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Tariff.Handlers;
 using CIYW.Mediator.Mediator.Tariff.Requests;
 using CIYW.Models.Responses.Tariff;
@@ -19,6 +20,7 @@ namespace CIYW.UnitTests.Mediator.Tariff
         private readonly Mock<IMapper> mapperMock;
         private readonly Mock<IReadGenericRepository<Domain.Models.Tariff.Tariff>> tariffReadRepositoryMock;
         private readonly Mock<IEntityValidator> entityValidatorMock;
+        private readonly Mock<ICurrentUserProvider> currentUserProviderMock;
 
         private readonly TariffQueryHandler handler;
 
@@ -37,11 +39,13 @@ namespace CIYW.UnitTests.Mediator.Tariff
             
             this.tariffReadRepositoryMock = new Mock<IReadGenericRepository<Domain.Models.Tariff.Tariff>>();
             this.entityValidatorMock = new Mock<IEntityValidator>();
+            this.currentUserProviderMock = new Mock<ICurrentUserProvider>();
             
             this.handler = new TariffQueryHandler(
                 this.mapperMock.Object,
                 this.tariffReadRepositoryMock.Object,
-                this.entityValidatorMock.Object
+                this.entityValidatorMock.Object,
+                this.currentUserProviderMock.Object
             );
         }
 
@@ -66,7 +70,7 @@ namespace CIYW.UnitTests.Mediator.Tariff
             
             var result = await this.handler.Handle(query, CancellationToken.None);
             Assert.IsNotNull(result);
-            result.Should().BeEquivalentTo(expected, options => options.Excluding(o => o.Created));
+            result.MappedEntity.Should().BeEquivalentTo(expected, options => options.Excluding(o => o.Created));
         }
         
         [TestMethod]
@@ -81,7 +85,7 @@ namespace CIYW.UnitTests.Mediator.Tariff
                     e => e.ValidateExist(It.IsAny<Domain.Models.Tariff.Tariff>(), tariffId))
                 .Throws(new LoggerException(errorMessage, 404));
             
-            await TestUtilities.Handle_InvalidCommand<TariffQuery, TariffResponse, LoggerException>(this.handler, query, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<TariffQuery, MappedHelperResponse<TariffResponse, Domain.Models.Tariff.Tariff>, LoggerException>(this.handler, query, errorMessage);
         }
     }
 }

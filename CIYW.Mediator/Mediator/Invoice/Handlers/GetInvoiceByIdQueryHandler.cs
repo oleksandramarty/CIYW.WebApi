@@ -18,7 +18,7 @@ public class GetInvoiceByIdQueryHandler: UserEntityValidatorHelper, IRequestHand
         IMapper mapper,
         IReadGenericRepository<Domain.Models.Invoice.Invoice> invoiceRepository,
         IEntityValidator entityValidator,
-        ICurrentUserProvider currentUserProvider): base(entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider): base(mapper, entityValidator, currentUserProvider)
     {
         this.mapper = mapper;
         this.invoiceRepository = invoiceRepository;
@@ -43,6 +43,6 @@ public class GetInvoiceByIdQueryHandler: UserEntityValidatorHelper, IRequestHand
         InvoiceResponse mapped =
             this.mapper.Map<Domain.Models.Invoice.Invoice, InvoiceResponse>(invoice);
 
-        return new MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>(mapped, invoice);
+        return this.GetMappedHelper<InvoiceResponse, Domain.Models.Invoice.Invoice>(invoice);
     }
 }

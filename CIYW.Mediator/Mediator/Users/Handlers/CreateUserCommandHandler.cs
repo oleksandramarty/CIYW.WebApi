@@ -7,6 +7,7 @@ using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
 using MediatR;
@@ -14,26 +15,25 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Mediator.Mediator.Users.Handlers;
 
-public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserResponse>
+public class CreateUserCommandHandler: UserEntityValidatorHelper, IRequestHandler<CreateUserCommand, MappedHelperResponse<UserResponse, User>>
 {
     private readonly IMapper mapper;
-    private readonly IEntityValidator entityValidator;
     private readonly IAuthRepository authRepository;
     private readonly UserManager<User> userManager;
 
     public CreateUserCommandHandler(
         IMapper mapper,
-        IEntityValidator entityValidator, 
         IAuthRepository authRepository, 
-        UserManager<User> userManager)
+        UserManager<User> userManager,
+        IEntityValidator entityValidator, 
+        ICurrentUserProvider currentUserProvider): base(mapper, entityValidator, currentUserProvider)
     {
         this.mapper = mapper;
-        this.entityValidator = entityValidator;
         this.authRepository = authRepository;
         this.userManager = userManager;
     }
 
-    public async Task<UserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<UserResponse, User>> Handle(CreateUserCommand command, CancellationToken cancellationToken)
     {
         if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
         {
@@ -50,9 +50,9 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserRe
             throw new LoggerException(ErrorMessages.AgreeBeforeSignIn, 409);
         }
         
-        await this.entityValidator.ValidateExistParamAsync<User>(u => u.Email == command.Email, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email), cancellationToken);
-        await this.entityValidator.ValidateExistParamAsync<User>(u => u.PhoneNumber == command.Phone, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone), cancellationToken);
-        await this.entityValidator.ValidateExistParamAsync<User>(u => u.Login == command.Login, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login), cancellationToken);
+        await this.ValidateExistParamAsync<User>(u => u.Email == command.Email, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email), cancellationToken);
+        await this.ValidateExistParamAsync<User>(u => u.PhoneNumber == command.Phone, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone), cancellationToken);
+        await this.ValidateExistParamAsync<User>(u => u.Login == command.Login, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login), cancellationToken);
         
         User user = this.mapper.Map<CreateUserCommand, User>(command);
         user.TariffId = InitConst.FreeTariffId;
@@ -86,8 +86,8 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserRe
 
         await this.authRepository.UpdateUserLoginsAsync(user.Id, logins, cancellationToken);
 
-        this.entityValidator.ValidateExist<User, Guid?>(user, user?.Id);
+        this.ValidateExist<User, Guid?>(user, user?.Id);
 
-        return this.mapper.Map<User, UserResponse>(user);
+        return this.GetMappedHelper<UserResponse, User>(user);
     }
 }

@@ -9,7 +9,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.FIle.Handlers;
 
-public class UserImageQueryHandler: UserEntityValidatorHelper, IRequestHandler<UserImageQuery, ImageDataResponse>
+public class UserImageQueryHandler: UserEntityValidatorHelper, IRequestHandler<UserImageQuery, MappedHelperResponse<ImageDataResponse, ImageData>>
 {
     private readonly IMongoDbRepository<ImageData> imageRepository;
     private readonly IMapper mapper;
@@ -18,13 +18,13 @@ public class UserImageQueryHandler: UserEntityValidatorHelper, IRequestHandler<U
         IMongoDbRepository<ImageData> imageRepository, 
         IMapper mapper,
         IEntityValidator entityValidator,
-        ICurrentUserProvider currentUserProvider): base(entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider): base(mapper, entityValidator, currentUserProvider)
     {
         this.imageRepository = imageRepository;
         this.mapper = mapper;
     }
     
-    public async Task<ImageDataResponse> Handle(UserImageQuery query, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<ImageDataResponse, ImageData>> Handle(UserImageQuery query, CancellationToken cancellationToken)
     {
         Guid userId = await this.GetUserIdAsync(cancellationToken);
         IEnumerable<ImageData> temp = await this.imageRepository.FindAsync(i => i.UserId == userId && i.Type == FileTypeEnum.USER_IMAGE,
@@ -39,8 +39,6 @@ public class UserImageQueryHandler: UserEntityValidatorHelper, IRequestHandler<U
         
         this.ValidateExist<ImageData, Guid>(imageData, imageData.Id);
 
-        ImageDataResponse result = this.mapper.Map<ImageData, ImageDataResponse>(imageData);
-
-        return result;
+        return this.GetMappedHelper<ImageDataResponse, ImageData>(imageData);
     }
 }

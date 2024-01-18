@@ -7,7 +7,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Note.Handlers;
 
-public class CreateNoteCommandHandler: IRequestHandler<CreateOrUpdateNoteCommand, NoteResponse>
+public class CreateNoteCommandHandler: IRequestHandler<CreateOrUpdateNoteCommand, MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>>
 {
     private readonly IMapper mapper;
     private readonly IGenericRepository<Domain.Models.Note.Note> noteRepository;
@@ -27,21 +27,21 @@ public class CreateNoteCommandHandler: IRequestHandler<CreateOrUpdateNoteCommand
         this.entityValidator = entityValidator;
     }
 
-    public async Task<NoteResponse> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
-        this.entityValidator.ValidateRequest<CreateOrUpdateNoteCommand, NoteResponse>(command, () => new CreateOrUpdateNoteCommandValidator(true)); 
+        this.entityValidator.ValidateRequest<CreateOrUpdateNoteCommand, MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>>(command, () => new CreateOrUpdateNoteCommandValidator(true)); 
         Domain.Models.Note.Note note = this.mapper.Map<CreateOrUpdateNoteCommand, Domain.Models.Note.Note>(command, opts => opts.Items["IsUpdate"] = false);
         note.UserId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
         await this.noteRepository.AddAsync(note, cancellationToken);
 
         NoteResponse result = this.mapper.Map<Domain.Models.Note.Note, NoteResponse>(note);
-        return new NoteResponse
+        return new MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>(new NoteResponse
         {
             Id = note.Id,
             Name = note.Name,
             Body = note.Body,
             UserId = note.UserId,
             InvoiceId = note.InvoiceId,
-        };
+        }, note);
     }
 }

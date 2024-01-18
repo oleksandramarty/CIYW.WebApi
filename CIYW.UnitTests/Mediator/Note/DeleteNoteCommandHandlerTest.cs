@@ -12,6 +12,7 @@ namespace CIYW.UnitTests.Mediator.Note;
 [TestClass]
 public class DeleteNoteCommandHandlerTest
 {
+    private readonly Mock<IMapper> mapperMock;
     private readonly Mock<IGenericRepository<Domain.Models.Note.Note>> noteRepositoryMock;
     private readonly Mock<ICurrentUserProvider> currentUserProviderMock;
     private readonly Mock<IEntityValidator> entityValidatorMock;
@@ -28,6 +29,7 @@ public class DeleteNoteCommandHandlerTest
         this.note = MockHelper.GetMockNote(InitConst.MockUserId, this.invoice.Id);
         this.invoice.Id = this.note.Id;
             
+        this.mapperMock = new Mock<IMapper>();
         this.noteRepositoryMock = new Mock<IGenericRepository<Domain.Models.Note.Note>>();
         this.currentUserProviderMock = new Mock<ICurrentUserProvider>();
         this.entityValidatorMock = new Mock<IEntityValidator>();
@@ -39,6 +41,7 @@ public class DeleteNoteCommandHandlerTest
             .ReturnsAsync(InitConst.MockUserId);
             
         this.handler = new DeleteNoteCommandHandler(
+            this.mapperMock.Object,
             this.noteRepositoryMock.Object,
             this.currentUserProviderMock.Object,
             this.entityValidatorMock.Object

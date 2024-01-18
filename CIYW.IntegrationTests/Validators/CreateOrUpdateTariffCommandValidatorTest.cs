@@ -1,8 +1,11 @@
 using CIYW.Const.Errors;
+using CIYW.Domain.Models.Tariff;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Category.Requests;
 using CIYW.Mediator.Mediator.Tariff.Requests;
 using CIYW.Mediator.Validators.Tariffs;
+using CIYW.Models.Responses.Tariff;
 using CIYW.TestHelper;
 using NUnit.Framework;
 
@@ -40,7 +43,7 @@ public class CreateOrUpdateTariffCommandValidatorTest
         };
         
         // Act
-        TestUtilities.Validate_Command<CreateOrUpdateTariffCommand, Guid>(
+        TestUtilities.Validate_Command<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Tariff>>(
             command, () => new CreateOrUpdateTariffCommandValidator(isNew), expectedErrors);
     }
 }

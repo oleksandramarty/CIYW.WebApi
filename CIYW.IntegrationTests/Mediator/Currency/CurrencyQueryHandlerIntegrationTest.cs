@@ -1,6 +1,7 @@
 using AutoMapper;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Currency.Handlers;
 using CIYW.Mediator.Mediator.Currency.Requests;
 using CIYW.Models.Responses.Currency;
@@ -28,10 +29,10 @@ public class CurrencyQueryHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            CurrencyResponse result = await handler.Handle(query, CancellationToken.None);
+            MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency> result = await handler.Handle(query, CancellationToken.None);
 
             // Assert
-            result.Should().BeEquivalentTo(new { Id = InitConst.CurrencyUsdId });
+            result.Entity.Id.Should().Be(InitConst.CurrencyUsdId);
         }
     }
 }

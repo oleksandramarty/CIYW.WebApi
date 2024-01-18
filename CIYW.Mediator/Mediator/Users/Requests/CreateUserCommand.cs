@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Users.Requests;
 
-public class CreateUserCommand: IRequest<UserResponse>
+public class CreateUserCommand: IRequest<MappedHelperResponse<UserResponse, User>>
 {
     public CreateUserCommand(string lastName, string firstName, string patronymic, string login, string email, string phone, string confirmEmail, bool isAgree, string password,
         string confirmPassword, bool isAgreeDigest)

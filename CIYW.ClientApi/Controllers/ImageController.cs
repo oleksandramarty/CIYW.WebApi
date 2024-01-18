@@ -1,5 +1,6 @@
 ﻿using CIYW.ClientApi.Controllers.Base;
 using CIYW.Const.Enums;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.FIle.Requests;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Responses.Image;
@@ -48,8 +49,8 @@ public class ImageController: BaseController
     [ProducesResponseType(typeof(ImageDataResponse), 200)]
     public async Task<IActionResult> V1_GetUserImageAsync([FromRoute]Guid id, CancellationToken cancellationToken)
     {
-        ImageDataResponse result = await this.mediator.Send(new UserImageQuery(id), cancellationToken);
-        return Ok(result);
+        MappedHelperResponse<ImageDataResponse, ImageData> result = await this.mediator.Send(new UserImageQuery(id), cancellationToken);
+        return Ok(result.MappedEntity);
     }
     
     [HttpPost("users")]

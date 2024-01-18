@@ -1,4 +1,5 @@
-﻿using CIYW.Interfaces;
+﻿using AutoMapper;
+using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Note.Request;
@@ -11,9 +12,10 @@ public class DeleteNoteCommandHandler: UserEntityValidatorHelper, IRequestHandle
     private readonly IGenericRepository<Domain.Models.Note.Note> noteRepository;
 
     public DeleteNoteCommandHandler(
+        IMapper mapper,
         IGenericRepository<Domain.Models.Note.Note> noteRepository, 
         ICurrentUserProvider currentUserProvider, 
-        IEntityValidator entityValidator): base(entityValidator, currentUserProvider)
+        IEntityValidator entityValidator): base(mapper, entityValidator, currentUserProvider)
     {
         this.noteRepository = noteRepository;
     }

@@ -1,20 +1,21 @@
-﻿using GraphQL.Types;
+﻿using CIYW.Mediator;
+using GraphQL.Types;
 using MediatR;
 
 namespace CIYW.GraphQL.MutationResolver;
 
 public interface IGraphQLMutationResolver
 {
-    void CreateEntity<TType, TInputType, TCommand, TResult>(string name)
-        where TCommand : IRequest<TResult>
-        where TInputType : InputObjectGraphType
-        where TType : ObjectGraphType<TResult>;
+    void CreateEntity<TType, TInputType, TCommand, TMapped, TEntity>(string name) 
+        where TCommand: IRequest<MappedHelperResponse<TMapped, TEntity>> 
+        where TInputType: InputObjectGraphType
+        where TType: ObjectGraphType<TMapped>;
 
-    void UpdateEntity<TType, TInputType, TCommand, TResult, TId>(string name)
-        where TCommand : IRequest<TResult>
-        where TInputType : InputObjectGraphType
-        where TId : ScalarGraphType
-        where TType : ObjectGraphType<TResult>;
+    void UpdateEntity<TType, TInputType, TCommand, TMapped, TEntity, TId>(string name) 
+        where TCommand: IRequest<MappedHelperResponse<TMapped, TEntity>> 
+        where TInputType: InputObjectGraphType
+        where TId: ScalarGraphType
+        where TType: ObjectGraphType<TMapped>;
 
     void DeleteEntity<TCommand, TId>(string name)
         where TCommand : IRequest

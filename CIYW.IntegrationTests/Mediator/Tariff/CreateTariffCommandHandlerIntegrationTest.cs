@@ -2,8 +2,10 @@ using AutoMapper;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Tariff.Handlers;
 using CIYW.Mediator.Mediator.Tariff.Requests;
+using CIYW.Models.Responses.Tariff;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -43,10 +45,10 @@ public class CreateTariffCommandHandlerIntegrationTest() : CommonIntegrationTest
             );
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<TariffResponse, Domain.Models.Tariff.Tariff> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            dbContext.Tariffs.Count(c => c.Id == result && c.IsActive == true).Should().Be(1);
+            dbContext.Tariffs.Count(c => c.Id == result.Entity.Id && c.IsActive == true).Should().Be(1);
         }
     }
 }

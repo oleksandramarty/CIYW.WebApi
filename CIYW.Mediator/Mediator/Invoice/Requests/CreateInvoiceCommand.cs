@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Requests;
 
-public class CreateInvoiceCommand: IRequest<InvoiceResponse>
+public class CreateInvoiceCommand: IRequest<MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>>
 {
     public string Name { get; set; }
     public decimal Amount { get; set; }

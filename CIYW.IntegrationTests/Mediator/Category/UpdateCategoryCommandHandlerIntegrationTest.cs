@@ -3,8 +3,10 @@ using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Category.Handlers;
 using CIYW.Mediator.Mediator.Category.Requests;
+using CIYW.Models.Responses.Category;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -49,11 +51,11 @@ public class UpdateCategoryCommandHandlerIntegrationTest() : CommonIntegrationTe
             );
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
             dbContext.Categories.Count(
-                c => c.Id == result &&
+                c => c.Id == result.Entity.Id &&
                      c.Name == name &&
                      c.Description == description &&
                      c.Ico == ico &&

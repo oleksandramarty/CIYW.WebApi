@@ -2,8 +2,10 @@ using AutoMapper;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Category.Handlers;
 using CIYW.Mediator.Mediator.Category.Requests;
+using CIYW.Models.Responses.Category;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -44,10 +46,10 @@ public class CreateCategoryCommandHandlerIntegrationTest() : CommonIntegrationTe
             );
 
             // Act
-            Guid result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            dbContext.Categories.Count(c => c.Id == result && c.IsActive == true).Should().Be(1);
+            dbContext.Categories.Count(c => c.Id == result.Entity.Id && c.IsActive == true).Should().Be(1);
         }
     }
 }

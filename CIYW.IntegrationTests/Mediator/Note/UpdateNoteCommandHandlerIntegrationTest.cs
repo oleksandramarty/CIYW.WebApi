@@ -4,6 +4,7 @@ using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Note.Handlers;
 using CIYW.Mediator.Mediator.Note.Request;
 using CIYW.Models.Responses.Note;
@@ -39,10 +40,10 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            NoteResponse result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<NoteResponse, Domain.Models.Note.Note> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            dbContext.Notes.Count(u => u.Id == result.Id && u.Name == command.Name).Should().Be(1);
+            dbContext.Notes.Count(u => u.Id == result.Entity.Id && u.Name == command.Name).Should().Be(1);
         }
     }
     
@@ -63,7 +64,7 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, NoteResponse, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>, LoggerException>(
                 handler, 
                 command, 
                 String.Format(ErrorMessages.EntityWithIdNotFound, nameof(Domain.Models.Note.Note), command.Id));
@@ -92,7 +93,7 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, NoteResponse, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>, LoggerException>(
                 handler, 
                 command, 
                 ErrorMessages.Forbidden);

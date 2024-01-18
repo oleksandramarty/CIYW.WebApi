@@ -3,6 +3,7 @@ using CIYW.Const.Errors;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Currency.Handlers;
 using CIYW.Mediator.Mediator.Currency.Requests;
 using CIYW.Models.Responses.Currency;
@@ -56,7 +57,7 @@ namespace CIYW.UnitTests.Mediator.Currency
             
             var result = await this.handler.Handle(query, CancellationToken.None);
             Assert.IsNotNull(result);
-            result.Should().BeEquivalentTo(expected);
+            result.MappedEntity.Should().BeEquivalentTo(expected);
         }
         
         [TestMethod]
@@ -71,7 +72,7 @@ namespace CIYW.UnitTests.Mediator.Currency
                     e => e.ValidateExist(It.IsAny<Domain.Models.Currency.Currency>(), currencyId))
                 .Throws(new LoggerException(errorMessage, 404));
             
-            await TestUtilities.Handle_InvalidCommand<CurrencyQuery, CurrencyResponse, LoggerException>(this.handler, query, errorMessage);
+            await TestUtilities.Handle_InvalidCommand<CurrencyQuery, MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>, LoggerException>(this.handler, query, errorMessage);
         }
     }
 }

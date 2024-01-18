@@ -15,7 +15,7 @@ public class BaseFileHelper<T>: UserEntityValidatorHelper
         IMongoDbRepository<T> imageRepository, 
         IMapper mapper,
         IEntityValidator entityValidator, 
-        ICurrentUserProvider currentUserProvider) : base(entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider) : base(mapper, entityValidator, currentUserProvider)
     {
         this.imageRepository = imageRepository;
         this.mapper = mapper;

@@ -50,11 +50,11 @@ public class InvoicesController: BaseController
     }
     
     [HttpPost("")]
-    [ProducesResponseType(typeof(Guid), 200)]
+    [ProducesResponseType(typeof(InvoiceResponse), 200)]
     public async Task<IActionResult> V1_CreateInvoiceAsync(CreateInvoiceCommand command, CancellationToken cancellationToken)
     {
-        InvoiceResponse response = await this.mediator.Send(command, cancellationToken);
-        return Ok(response.Id);
+        MappedHelperResponse<InvoiceResponse, Invoice> response = await this.mediator.Send(command, cancellationToken);
+        return Ok(response.MappedEntity);
     }
     
     [HttpPut("")]

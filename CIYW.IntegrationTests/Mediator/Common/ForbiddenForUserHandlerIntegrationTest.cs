@@ -3,12 +3,16 @@ using CIYW.Const.Errors;
 using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Category.Handlers;
 using CIYW.Mediator.Mediator.Category.Requests;
 using CIYW.Mediator.Mediator.Currency.Handlers;
 using CIYW.Mediator.Mediator.Currency.Requests;
 using CIYW.Mediator.Mediator.Tariff.Handlers;
 using CIYW.Mediator.Mediator.Tariff.Requests;
+using CIYW.Models.Responses.Category;
+using CIYW.Models.Responses.Currency;
+using CIYW.Models.Responses.Tariff;
 using CIYW.TestHelper;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -34,7 +38,7 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, Guid, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -54,7 +58,7 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, Guid, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -74,7 +78,7 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, Guid, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -94,7 +98,7 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, Guid, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -114,7 +118,7 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, Guid, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Domain.Models.Tariff.Tariff>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -134,7 +138,7 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, Guid, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Domain.Models.Tariff.Tariff>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
 }

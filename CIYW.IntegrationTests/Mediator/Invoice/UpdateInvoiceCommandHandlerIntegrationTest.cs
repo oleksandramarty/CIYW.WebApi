@@ -7,6 +7,7 @@ using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Models.Responses.Invoice;
@@ -55,23 +56,22 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
 
             var handler = new UpdateInvoiceCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IMediator>(),
                 scope.ServiceProvider.GetRequiredService<ITransactionRepository>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Invoice.Invoice>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>());
 
             // Act
-            await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(command, CancellationToken.None);
             
             // Assert
             Domain.Models.Invoice.Invoice updatedInvoice = dbContext.Invoices.FirstOrDefault(i => i.Id == invoice.Id && i.UserId == InitConst.MockUserId);
             updatedInvoice.Should().NotBeNull();
 
             updatedInvoice.Amount.Should().Be(amount);
-            updatedInvoice.CategoryId.Should().Be(categoryId);
-            updatedInvoice.CurrencyId.Should().Be(currencyId);
-            updatedInvoice.Type.Should().Be(invoiceType);
+            updatedInvoice.CategoryId.Should().Be(result.Entity.CategoryId);
+            updatedInvoice.CurrencyId.Should().Be(result.Entity.CurrencyId);
+            updatedInvoice.Type.Should().Be(result.Entity.Type);
             dbContext.UserBalances.FirstOrDefault(ub => ub.UserId == InitConst.MockUserId).Amount.Should().Be(expectedBalance.Amount);
         }
     }
@@ -88,14 +88,13 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
         {
             var handler = new UpdateInvoiceCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IMediator>(),
                 scope.ServiceProvider.GetRequiredService<ITransactionRepository>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Invoice.Invoice>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>());
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, InvoiceResponse, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>, LoggerException>(
                 handler, 
                 command, 
                 String.Format(ErrorMessages.EntityWithIdNotFound, nameof(Domain.Models.Invoice.Invoice), command.Id));
@@ -119,14 +118,13 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
             
             var handler = new UpdateInvoiceCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IMediator>(),
                 scope.ServiceProvider.GetRequiredService<ITransactionRepository>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Invoice.Invoice>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>());
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, InvoiceResponse, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>, LoggerException>(
                 handler, 
                 command, 
                 ErrorMessages.Forbidden);

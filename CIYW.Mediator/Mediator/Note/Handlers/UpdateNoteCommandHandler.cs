@@ -8,7 +8,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Note.Handlers;
 
-public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandler<CreateOrUpdateNoteCommand, NoteResponse>
+public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandler<CreateOrUpdateNoteCommand, MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>>
 {
     private readonly IMapper mapper;
     private readonly IGenericRepository<Domain.Models.Note.Note> noteRepository;
@@ -17,13 +17,13 @@ public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandle
         IMapper mapper,
         IGenericRepository<Domain.Models.Note.Note> noteRepository, 
         ICurrentUserProvider currentUserProvider, 
-        IEntityValidator entityValidator): base(entityValidator, currentUserProvider)
+        IEntityValidator entityValidator): base(mapper, entityValidator, currentUserProvider)
     {
         this.mapper = mapper;
         this.noteRepository = noteRepository;
     }
 
-    public async Task<NoteResponse> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>> Handle(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
         Domain.Models.Note.Note note = await this.noteRepository.GetByIdAsync(command.Id.Value, cancellationToken);
 
@@ -39,13 +39,13 @@ public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandle
 
         NoteResponse result = this.mapper.Map<Domain.Models.Note.Note, NoteResponse>(updatedNote);
 
-        return new NoteResponse
+        return new MappedHelperResponse<NoteResponse, Domain.Models.Note.Note>(new NoteResponse
         {
             Id = updatedNote.Id,
             Name = updatedNote.Name,
             Body = updatedNote.Body,
             UserId = updatedNote.UserId,
             InvoiceId = updatedNote.InvoiceId,
-        };
+        }, updatedNote);
     }
 }

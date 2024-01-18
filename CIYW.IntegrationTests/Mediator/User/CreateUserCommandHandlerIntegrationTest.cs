@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CIYW.Domain;
 using CIYW.Interfaces;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Users.Handlers;
 using CIYW.Models.Responses.Users;
 using CIYW.TestHelper;
@@ -25,21 +26,22 @@ public class CreateUserCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             
             var handler = new CreateUserCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<IAuthRepository>(),
-                scope.ServiceProvider.GetRequiredService<UserManager<Domain.Models.User.User>>()
+                scope.ServiceProvider.GetRequiredService<UserManager<Domain.Models.User.User>>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            UserResponse result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<UserResponse, Domain.Models.User.User> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
             result.Should().NotBe(null);
                 
-            dbContext.Users.Count(u => u.Id == result.Id).Should().Be(1);
-            dbContext.UserLogins.Count(ul => ul.UserId == result.Id).Should().Be(3);
-            dbContext.UserBalances.Count(ub => ub.UserId == result.Id).Should().Be(1);
-            dbContext.UserRoles.Count(u => u.UserId == result.Id).Should().Be(1);
+            dbContext.Users.Count(u => u.Id == result.Entity.Id).Should().Be(1);
+            dbContext.UserLogins.Count(ul => ul.UserId == result.Entity.Id).Should().Be(3);
+            dbContext.UserBalances.Count(ub => ub.UserId == result.Entity.Id).Should().Be(1);
+            dbContext.UserRoles.Count(u => u.UserId == result.Entity.Id).Should().Be(1);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CIYW.ClientApi.Controllers.Base;
 using CIYW.Domain.Models.Note;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Note.Request;
 using CIYW.Models.Responses.Note;
 using MediatR;
@@ -24,11 +25,11 @@ public class NotesController: BaseController
     }
     
     [HttpPost("")]
-    [ProducesResponseType(typeof(Guid), 200)]
+    [ProducesResponseType(typeof(NoteResponse), 200)]
     public async Task<IActionResult> V1_CreateNoteAsync(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
-        NoteResponse response = await this.mediator.Send(command, cancellationToken);
-        return Ok(response.Id);
+        MappedHelperResponse<NoteResponse, Note> response = await this.mediator.Send(command, cancellationToken);
+        return Ok(response.MappedEntity);
     }
     
     [HttpPut("")]
