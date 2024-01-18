@@ -13,5 +13,6 @@ public class RootQuery: GraphQLQueryResolver
         this.GetUserBalanceByUserId();
         this.GetInvoiceHistory();
         this.GetUsers();
+        this.GetUserByIdForAdmin();
     }
 }  

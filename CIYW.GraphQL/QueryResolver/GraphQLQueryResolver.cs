@@ -91,6 +91,24 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                 return result;
             });
     }
+    
+    public void GetUserByIdForAdmin()
+    {
+        Field<UserType>("userByAdmin")
+            .Arguments(new QueryArguments(new QueryArgument<GuidGraphType> { Name = "id" }))
+            .ResolveAsync(async context =>
+            {
+                Guid entityId = context.GetArgument<Guid>("id", default);
+                var mediator = context.RequestServices.GetRequiredService<IMediator>();
+                
+                // Assuming cancellationToken is available in your GraphQL context
+                var cancellationToken = context.CancellationToken;
+
+                UserResponse result = await mediator.Send(new UserByIdQuery(entityId), cancellationToken);
+                return result;
+            });
+    }
+    
     public void GetUserBalanceByUserId()
     {
         Field<UserBalanceType>("userBalance")

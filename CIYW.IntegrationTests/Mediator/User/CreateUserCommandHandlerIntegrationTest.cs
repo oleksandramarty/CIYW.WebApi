@@ -2,6 +2,7 @@
 using CIYW.Domain;
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Users.Handlers;
+using CIYW.Models.Responses.Users;
 using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
@@ -30,7 +31,7 @@ public class CreateUserCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            Domain.Models.User.User result = await handler.Handle(command, CancellationToken.None);
+            UserResponse result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
             result.Should().NotBe(null);
