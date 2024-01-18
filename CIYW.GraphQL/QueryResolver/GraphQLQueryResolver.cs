@@ -78,17 +78,13 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             .ResolveAsync(async context =>
             {
                 Guid entityId = context.GetArgument<Guid>("id", default);
-                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.User.User>>();
+                var mediator = context.RequestServices.GetRequiredService<IMediator>();
                 
                 // Assuming cancellationToken is available in your GraphQL context
                 var cancellationToken = context.CancellationToken;
 
-                User result = await repository.GetWithIncludeAsync(u => u.Id == entityId, cancellationToken,
-                    query => query.Include(u => u.Tariff),
-                    query => query.Include(u => u.Currency),
-                    query => query.Include(u => u.Invoices),
-                    query => query.Include(u => u.UserBalance));
-                return result;
+                MappedHelperResponse<UserResponse, User> result = await mediator.Send(new UserByIdQuery(entityId), cancellationToken);
+                return result.MappedEntity;
             });
     }
     

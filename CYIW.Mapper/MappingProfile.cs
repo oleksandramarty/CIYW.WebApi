@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using AutoMapper;
 using CIYW.Domain.Models;
 using CIYW.Domain.Models.Category;
@@ -97,7 +98,17 @@ public class MappingProfile: Profile
         this.CreateMap<Tariff, DictionaryItemResponse<Guid>>()
             .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.Description));
         this.CreateMap<Role, DictionaryItemResponse<Guid>>()
-            .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.NormalizedName));
+            .ForMember(dest => dest.Hint, opt => opt.MapFrom(src => src.NormalizedName))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => this.CapitalizeEachWord(src.Name)));
+    }
+    
+    private string CapitalizeEachWord(string input)
+    {
+        TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+        var result = textInfo.ToTitleCase(input.ToLower());
+
+        return result;
     }
 
     private TEntity CreateOrUpdateEntity<TCommand, TEntity>(TCommand src, ResolutionContext ctx)

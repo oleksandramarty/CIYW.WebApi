@@ -18,6 +18,7 @@ public class UserType: ObjectGraphType<UserResponse>
         Field(x => x.Patronymic);
         Field(x => x.IsTemporaryPassword);
         Field(x => x.IsBlocked);
+        Field(x => x.RoleId);
         Field<StringGraphType>("modified", resolve: context => (context.Source.Updated ?? context.Source.Created).Humanize());
         Field<StringGraphType>("lastForgot", resolve: context => context.Source.LastForgot.Humanize());
         Field(x => x.TariffId);
