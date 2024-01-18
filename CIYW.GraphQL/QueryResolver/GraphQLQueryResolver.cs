@@ -1,3 +1,4 @@
+using AutoMapper;
 using CIYW.Domain.Models.Category;
 using CIYW.Domain.Models.Currency;
 using CIYW.Domain.Models.Invoice;
@@ -11,6 +12,7 @@ using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Invoice;
+using CIYW.Models.Responses.Users;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;
@@ -46,11 +48,11 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             {
                 var mediator = context.RequestServices.GetRequiredService<IMediator>();
                 var cancellationToken = context.CancellationToken;
-                MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice> mapped = 
+                MappedHelperResponse<InvoiceResponse, Invoice> mapped = 
                     await mediator.Send(
                         new GetInvoiceByIdQuery(context.GetArgument<Guid>("id", default)), 
                         cancellationToken);
-                return mapped.Entity;
+                return mapped.MappedEntity;
             });
     }
     public void GetCategoryById()
@@ -97,6 +99,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             {
                 Guid userId = context.GetArgument<Guid>("userId", default);
                 var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.User.UserBalance>>();
+                var mapper = context.RequestServices.GetRequiredService<IMapper>();
                 
                 // Assuming cancellationToken is available in your GraphQL context
                 var cancellationToken = context.CancellationToken;
@@ -104,21 +107,21 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
                 UserBalance result = await repository.GetWithIncludeAsync(u => u.UserId == userId, cancellationToken,
                     query => query.Include(u => u.User),
                     query => query.Include(u => u.Currency));
-                return result;
+                return mapper.Map<UserBalance, UserBalanceResponse>(result);
             });
     }
     public void GetInvoiceHistory()
     {
         Field<ListInvoicesWithIncludeHelperType>("invoices")
             .Arguments(new QueryArguments(GetPageableQueryArguments()))
-            .ResolveAsync(async context => await this.GetPageableResponse<Invoice, UserInvoicesQuery>(context, new UserInvoicesQuery(this.GetBaseFilterQuery(context))));
+            .ResolveAsync(async context => await this.GetPageableResponse<InvoiceResponse, UserInvoicesQuery>(context, new UserInvoicesQuery(this.GetBaseFilterQuery(context))));
     }
     
     public void GetUsers()
     {
         Field<ListUsersWithIncludeHelperType>("users")
             .Arguments(new QueryArguments(GetPageableQueryArguments()))
-            .ResolveAsync(async context => await this.GetPageableResponse<User, UsersQuery>(context, new UsersQuery(this.GetBaseFilterQuery(context))));
+            .ResolveAsync(async context => await this.GetPageableResponse<UserResponse, UsersQuery>(context, new UsersQuery(this.GetBaseFilterQuery(context))));
     }
 
     private async Task<ListWithIncludeHelper<T>> GetPageableResponse<T, TQuery>(IResolveFieldContext<object?> context, TQuery query)

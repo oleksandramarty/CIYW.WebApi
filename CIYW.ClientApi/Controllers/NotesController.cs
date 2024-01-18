@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CIYW.ClientApi.Controllers.Base;
 using CIYW.Domain.Models.Note;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Models.Responses.Note;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,7 @@ public class NotesController: BaseController
     [ProducesResponseType(typeof(Guid), 200)]
     public async Task<IActionResult> V1_CreateNoteAsync(CreateOrUpdateNoteCommand command, CancellationToken cancellationToken)
     {
-        Note response = await this.mediator.Send(command, cancellationToken);
+        NoteResponse response = await this.mediator.Send(command, cancellationToken);
         return Ok(response.Id);
     }
     

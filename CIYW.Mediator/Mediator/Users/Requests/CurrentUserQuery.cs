@@ -3,6 +3,6 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Users.Requests;
 
-public class CurrentUserQuery: IRequest<CurrentUserResponse>
+public class CurrentUserQuery: IRequest<UserResponse>
 {
 }

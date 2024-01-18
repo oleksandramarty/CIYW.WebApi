@@ -53,12 +53,12 @@ public class GetInvoiceByIdQueryHandlerIntegrationTest: CommonIntegrationTestSet
             // Act
             if (errorMessage.NotNullOrEmpty())
             {
-                await TestUtilities.Handle_InvalidCommand<GetInvoiceByIdQuery, MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice>, LoggerException>(
+                await TestUtilities.Handle_InvalidCommand<GetInvoiceByIdQuery, MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>, LoggerException>(
                     handler, query, errorMessage);
             }
             else
             {
-                MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(query, CancellationToken.None);
+                MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(query, CancellationToken.None);
             
                 // Assert
                 dbContext.Invoices.Count(i => i.Id == invoice.Id).Should().Be(1);

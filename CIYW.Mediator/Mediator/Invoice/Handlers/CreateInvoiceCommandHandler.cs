@@ -2,11 +2,12 @@
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Models.Responses.Invoice;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Handlers;
 
-public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, Domain.Models.Invoice.Invoice>
+public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, InvoiceResponse>
 {
     private readonly IMapper mapper;
     private readonly ITransactionRepository transactionRepository;
@@ -22,7 +23,7 @@ public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, 
         this.currentUserProvider = currentUserProvider;
     }
 
-    public async Task<Domain.Models.Invoice.Invoice> Handle(CreateInvoiceCommand command, CancellationToken cancellationToken)
+    public async Task<InvoiceResponse> Handle(CreateInvoiceCommand command, CancellationToken cancellationToken)
     {
         Domain.Models.Note.Note note = null;
 
@@ -42,6 +43,6 @@ public class CreateInvoiceCommandHandler: IRequestHandler<CreateInvoiceCommand, 
 
         await this.transactionRepository.AddInvoiceAsync(userId, invoice, note, cancellationToken);
 
-        return invoice;
+        return this.mapper.Map<Domain.Models.Invoice.Invoice, InvoiceResponse>(invoice);
     }
 }

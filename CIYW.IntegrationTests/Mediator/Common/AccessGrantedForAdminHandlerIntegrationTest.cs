@@ -49,7 +49,7 @@ public class AccessGrantedForAdminHandlerIntegrationTest(): CommonIntegrationTes
             GetInvoiceByIdQuery query = new GetInvoiceByIdQuery(invoice.Id);
             
             // Act
-            MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(query, CancellationToken.None);
+            MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(query, CancellationToken.None);
             
             // Assert
             dbContext.Invoices.Count(i => i.Id == invoice.Id).Should().Be(1);

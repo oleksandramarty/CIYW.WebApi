@@ -9,6 +9,7 @@ using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Mediator.Invoice.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Models.Responses.Invoice;
 using CIYW.TestHelper;
 using FluentAssertions;
 using MediatR;
@@ -94,7 +95,7 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>());
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, Domain.Models.Invoice.Invoice, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, InvoiceResponse, LoggerException>(
                 handler, 
                 command, 
                 String.Format(ErrorMessages.EntityWithIdNotFound, nameof(Domain.Models.Invoice.Invoice), command.Id));
@@ -125,7 +126,7 @@ public class UpdateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>());
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, Domain.Models.Invoice.Invoice, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<UpdateInvoiceCommand, InvoiceResponse, LoggerException>(
                 handler, 
                 command, 
                 ErrorMessages.Forbidden);

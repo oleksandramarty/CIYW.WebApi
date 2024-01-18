@@ -1,9 +1,10 @@
 using CIYW.Kernel.Extensions;
+using CIYW.Models.Responses.Category;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;
 
-public class CategoryType: ObjectGraphType<Domain.Models.Category.Category>
+public class CategoryType: ObjectGraphType<CategoryResponse>
 {
     public CategoryType()
     {

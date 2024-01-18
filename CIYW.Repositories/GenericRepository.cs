@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using AutoMapper;
 using CIYW.Const.Const;
 using CIYW.Const.Errors;
 using CIYW.Domain;
@@ -17,16 +18,19 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     private readonly DbSet<T> dbSet;
     private readonly ICurrentUserProvider currentUserProvider;
     private readonly IFilterProvider<T> filterProvider;
+    private readonly IMapper mapper;
 
     public GenericRepository(
         DataContext context, 
         ICurrentUserProvider currentUserProvider,
-        IFilterProvider<T> filterProvider)
+        IFilterProvider<T> filterProvider, 
+        IMapper mapper)
     {
         this.currentUserProvider = currentUserProvider;
         this.context = context ?? throw new ArgumentNullException(nameof(context));
         this.dbSet = this.context.Set<T>();
         this.filterProvider = filterProvider;
+        this.mapper = mapper;
     }
 
     public async Task<IList<T>> GetAllAsync(CancellationToken cancellationToken)
@@ -62,8 +66,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return entity;
     }
     
-    public async Task<ListWithIncludeHelper<T>> GetListWithIncludeAsync(
-        Func<T, bool> condition,
+    public async Task<ListWithIncludeHelper<TResponse>> GetListWithIncludeAsync<TResponse>(
+        Expression<Func<T, bool>> condition,
         BaseFilterQuery filter,
         CancellationToken cancellationToken,
         params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs)
@@ -75,9 +79,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             query = includeFunc(query);
         }
 
-        // IEnumerable<T> queryResult = null;
-
-        var queryResult = condition != null ? query.Where(condition).AsQueryable() : query;       
+        var queryResult = condition != null ? query.Where(condition) : query;       
         
         int total = await query.CountAsync(cancellationToken);
         
@@ -85,9 +87,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
 
         List<T> entities = await queryResult.ToListAsync(cancellationToken);
 
-        return new ListWithIncludeHelper<T>
+        return new ListWithIncludeHelper<TResponse>
         {
-            Entities = entities,
+            Entities = entities.Select(x => this.mapper.Map<T, TResponse>(x)).ToList(),
             Paginator = filter.Paginator,
             TotalCount = total
         };

@@ -22,6 +22,7 @@
       <ProjectReference Include="..\CIYW.Interfaces\CIYW.Interfaces.csproj" />
       <ProjectReference Include="..\CIYW.Kernel\CIYW.Kernel.csproj" />
       <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
+      <ProjectReference Include="..\CIYW.MongoDB\CIYW.MongoDB.csproj" />
     </ItemGroup>
 
 </Project>

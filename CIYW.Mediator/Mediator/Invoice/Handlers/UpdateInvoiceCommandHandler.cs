@@ -2,11 +2,12 @@
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Models.Responses.Invoice;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Handlers;
 
-public class UpdateInvoiceCommandHandler: IRequestHandler<UpdateInvoiceCommand, Domain.Models.Invoice.Invoice>
+public class UpdateInvoiceCommandHandler: IRequestHandler<UpdateInvoiceCommand, InvoiceResponse>
 {
     private readonly IMapper mapper;
     private readonly IMediator mediator;
@@ -30,7 +31,7 @@ public class UpdateInvoiceCommandHandler: IRequestHandler<UpdateInvoiceCommand, 
         this.mediator = mediator;
     }
     
-    public async Task<Domain.Models.Invoice.Invoice> Handle(UpdateInvoiceCommand command, CancellationToken cancellationToken)
+    public async Task<InvoiceResponse> Handle(UpdateInvoiceCommand command, CancellationToken cancellationToken)
     {
         Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
 
@@ -52,9 +53,7 @@ public class UpdateInvoiceCommandHandler: IRequestHandler<UpdateInvoiceCommand, 
         }
 
         await this.transactionRepository.UpdateInvoiceAsync(userId, invoice, updatedInvoice, note, cancellationToken);
-        
-        
 
-        return updatedInvoice;
+        return this.mapper.Map<Domain.Models.Invoice.Invoice, InvoiceResponse>(updatedInvoice);
     }
 }

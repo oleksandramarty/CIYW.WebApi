@@ -51,7 +51,7 @@ public class JobService: IJobService
         
         bool isNeed = entities.Any();
         
-        // var schema = this.configuration["ELKConfiguration:Indexes:Users"];
+        // var schema = this.configuration["ELKConfiguration:Indexes:User"];
         
         while (isNeed)
         {

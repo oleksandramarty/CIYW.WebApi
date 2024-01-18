@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Runtime.CompilerServices;
 using CIYW.Domain.Models;
+using CIYW.Models.Responses.Base;
 
 namespace CIYW.Kernel.Extensions;
 
@@ -30,6 +31,10 @@ public static class DateTimeExtension
         return new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month), 23, 59, 59);
     }
     public static string HumanizeModified(this BaseWithDateEntity entity)
+    {
+        return (entity.Updated ?? entity.Created).Humanize();
+    }
+    public static string HumanizeModified(this BaseWithDateEntityResponse entity)
     {
         return (entity.Updated ?? entity.Created).Humanize();
     }

@@ -31,6 +31,8 @@ public class Program
 
         builder.Services.AddDbContext<DataContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("CIYWConnection")));
+        
+        builder.AddMongoDb();
 
         builder.Services.AddTokenGenerator(options =>
         {

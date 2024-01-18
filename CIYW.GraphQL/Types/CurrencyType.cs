@@ -1,8 +1,9 @@
+using CIYW.Models.Responses.Currency;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;
 
-public class CurrencyType: ObjectGraphType<Domain.Models.Currency.Currency>
+public class CurrencyType: ObjectGraphType<CurrencyResponse>
 {
     public CurrencyType()
     {

@@ -47,23 +47,17 @@ public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : 
         return Task.FromResult(result);
     }
 
-    public Task<ListWithIncludeHelper<T>> GetListWithIncludeAsync(
-        Func<T, bool> condition,
+    public Task<ListWithIncludeHelper<TResponse>> GetListWithIncludeAsync<TResponse>(
+        Expression<Func<T, bool>> condition,
         BaseFilterQuery filter,
         CancellationToken cancellationToken,
         params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs)
     {
-        var filteredData = _data.Where(condition).AsQueryable();
-        foreach (var includeFunc in includeFuncs)
+        var result = new ListWithIncludeHelper<TResponse>
         {
-            filteredData = includeFunc(filteredData);
-        }
-
-        var result = new ListWithIncludeHelper<T>
-        {
-            Entities = filteredData.ToList(),
+            Entities = new List<TResponse>(),
             Paginator = filter.Paginator,
-            TotalCount = filteredData.Count()
+            TotalCount = 100
         };
 
         return Task.FromResult(result);

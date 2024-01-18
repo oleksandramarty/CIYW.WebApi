@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Mediator.Mediator.Users.Handlers;
 
-public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentUserResponse>
+public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, UserResponse>
 {
     private readonly IMapper mapper;
     private readonly IMediator mediator;
@@ -42,7 +42,7 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
         this.entityValidator = entityValidator;
     }
 
-    public async Task<CurrentUserResponse> Handle(CurrentUserQuery query, CancellationToken cancellationToken)
+    public async Task<UserResponse> Handle(CurrentUserQuery query, CancellationToken cancellationToken)
     {
         Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
         User user = await this.userRepository.GetWithIncludeAsync(u => u.Id == userId, cancellationToken,
@@ -60,9 +60,10 @@ public class CurrentUserQueryHandler: IRequestHandler<CurrentUserQuery, CurrentU
         Role role =
             await this.roleRepository.GetByPropertyAsync(r => r.Id == roleId, cancellationToken);
         
-        CurrentUserResponse response = this.mapper.Map<User, CurrentUserResponse>(user);
-        this.mapper.Map<Role, CurrentUserResponse>(role, response);
-        this.mapper.Map<UserBalance, CurrentUserResponse>(user.UserBalance, response);
+        UserResponse response = this.mapper.Map<User, UserResponse>(user);
+        response.RoleId = role.Id;
+        response.Role = role.Name;
+        response.UserBalance = this.mapper.Map<UserBalance, UserBalanceResponse>(user.UserBalance);
         response.BalanceAmount = user.UserBalance.Amount;
 
         response.Tariff = await this.mediator.Send(new TariffQuery(user.TariffId), cancellationToken);

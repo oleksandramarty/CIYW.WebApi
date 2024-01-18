@@ -11,18 +11,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Mediator.Mediator.Invoice.Handlers;
 
-public class UserInvoicesQueryHandler(IReadGenericRepository<Domain.Models.Invoice.Invoice> invoiceRepository)
-    : BasePageableHelper<Domain.Models.Invoice.Invoice>(invoiceRepository),
-        IRequestHandler<UserInvoicesQuery, ListWithIncludeHelper<Domain.Models.Invoice.Invoice>>
+public class UserInvoicesQueryHandler : BasePageableHelper<Domain.Models.Invoice.Invoice>, IRequestHandler<UserInvoicesQuery, ListWithIncludeHelper<InvoiceResponse>>
 {
-    public async Task<ListWithIncludeHelper<Domain.Models.Invoice.Invoice>> Handle(UserInvoicesQuery query, CancellationToken cancellationToken)
+    private ICurrentUserProvider currentUserProvider;
+    public UserInvoicesQueryHandler(
+        ICurrentUserProvider currentUserProvider,
+        IReadGenericRepository<Domain.Models.Invoice.Invoice> invoiceRepository): base(invoiceRepository)
     {
-        return await this.GetPageableResponseAsync(query.DateRange != null
+        this.currentUserProvider = currentUserProvider;
+    }
+    public async Task<ListWithIncludeHelper<InvoiceResponse>> Handle(UserInvoicesQuery query, CancellationToken cancellationToken)
+    {
+        Guid userId = await this.currentUserProvider.GetUserIdAsync(cancellationToken);
+        
+        return await this.GetPageableResponseAsync<InvoiceResponse>(query.DateRange != null
                 ? q => !query.DateRange.DateFrom.HasValue || query.DateRange.DateFrom.HasValue &&
                        q.Date >= query.DateRange.DateFrom.Value &&
                        !query.DateRange.DateTo.HasValue ||
-                       query.DateRange.DateTo.HasValue && q.Date <= query.DateRange.DateTo.Value
-                : null,
+                       query.DateRange.DateTo.HasValue && q.Date <= query.DateRange.DateTo.Value &&
+                       q.UserId == userId
+                : q => q.UserId == userId,
             query,
             cancellationToken,
             q => q.Include(u => u.Category),

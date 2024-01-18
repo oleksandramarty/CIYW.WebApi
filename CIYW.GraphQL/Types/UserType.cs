@@ -1,11 +1,12 @@
 using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
 using CIYW.Kernel.Extensions;
+using CIYW.Models.Responses.Users;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;
 
-public class UserType: ObjectGraphType<User>
+public class UserType: ObjectGraphType<UserResponse>
 {
     public UserType()
     {
@@ -30,6 +31,5 @@ public class UserType: ObjectGraphType<User>
         Field(x => x.EmailConfirmed);
         Field(x => x.PhoneNumber);
         Field(x => x.PhoneNumberConfirmed);
-        Field<ListGraphType<InvoiceType>>("invoices", resolve: context => context.Source.Invoices);
     }
 }

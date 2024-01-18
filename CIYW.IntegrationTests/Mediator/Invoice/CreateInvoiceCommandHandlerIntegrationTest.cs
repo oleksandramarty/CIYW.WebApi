@@ -8,6 +8,7 @@ using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Mediator.Invoice.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Models.Responses.Invoice;
 using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,7 +61,7 @@ public class CreateInvoiceCommandHandlerIntegrationTest: CommonIntegrationTestSe
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>());
 
             // Act
-            Domain.Models.Invoice.Invoice result = await handler.Handle(command, CancellationToken.None);
+            InvoiceResponse result = await handler.Handle(command, CancellationToken.None);
             
             // Assert
             dbContext.Invoices.Count(i => i.Id == result.Id && i.UserId == InitConst.MockUserId).Should().Be(1);

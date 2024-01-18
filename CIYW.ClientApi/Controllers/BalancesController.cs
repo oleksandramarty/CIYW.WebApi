@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CIYW.ClientApi.Controllers.Base;
 using CIYW.Mediator.Mediator.Balance.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

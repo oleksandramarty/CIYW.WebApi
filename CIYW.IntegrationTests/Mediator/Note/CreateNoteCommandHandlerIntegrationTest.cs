@@ -2,6 +2,7 @@ using AutoMapper;
 using CIYW.Domain;
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Note.Handlers;
+using CIYW.Models.Responses.Note;
 using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,7 @@ public class CreateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            Domain.Models.Note.Note note = await handler.Handle(command, CancellationToken.None);
+            NoteResponse note = await handler.Handle(command, CancellationToken.None);
 
             // Assert
             dbContext.Notes.Count(u => u.Id == note.Id).Should().Be(1);

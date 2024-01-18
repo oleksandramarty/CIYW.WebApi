@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CIYW.ClientApi.Controllers.Base;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
 using MediatR;
@@ -21,10 +22,10 @@ public class UsersController: BaseController
     }
     
     [HttpGet("Current")]
-    [ProducesResponseType(typeof(CurrentUserResponse), 200)]
+    [ProducesResponseType(typeof(UserResponse), 200)]
     public async Task<IActionResult> V1_CurrentUserAsync(CancellationToken cancellationToken)
     {
-        CurrentUserResponse result = await this.mediator.Send(new CurrentUserQuery(), cancellationToken);
+        UserResponse result = await this.mediator.Send(new CurrentUserQuery(), cancellationToken);
         return Ok(result);
     }
 }

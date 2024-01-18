@@ -541,13 +541,13 @@ namespace CIYW.Domain.Migrations
             modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
                 {
                     b.HasOne("CIYW.Domain.Models.Currency.Currency", "Currency")
-                        .WithMany("Users")
+                        .WithMany("User")
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CIYW.Domain.Models.Tariff.Tariff", "Tariff")
-                        .WithMany("Users")
+                        .WithMany("User")
                         .HasForeignKey("TariffId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -659,7 +659,7 @@ namespace CIYW.Domain.Migrations
 
                     b.Navigation("UserBalances");
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CIYW.Domain.Models.Invoice.Invoice", b =>
@@ -670,7 +670,7 @@ namespace CIYW.Domain.Migrations
 
             modelBuilder.Entity("CIYW.Domain.Models.Tariff.Tariff", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>

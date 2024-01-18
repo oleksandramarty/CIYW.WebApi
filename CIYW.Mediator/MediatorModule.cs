@@ -5,6 +5,7 @@ using CIYW.Mediator.Mediator.Balance.Requests;
 using CIYW.Mediator.Mediator.Category.Handlers;
 using CIYW.Mediator.Mediator.Currency.Handlers;
 using CIYW.Mediator.Mediator.Dictionary.Handlers;
+using CIYW.Mediator.Mediator.FIle.Handlers;
 using CIYW.Mediator.Mediator.Invoice.Handlers;
 using CIYW.Mediator.Mediator.Note.Handlers;
 using CIYW.Mediator.Mediator.Tariff.Handlers;
@@ -76,6 +77,14 @@ public class MediatorModule : Autofac.Module
         #region Category
         builder.RegisterAssemblyTypes(typeof(CreateCategoryCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
         builder.RegisterAssemblyTypes(typeof(UpdateCategoryCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        #endregion
+
+        #region Image
+        builder.RegisterAssemblyTypes(typeof(UserImageQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(UsersImagesQueryHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(CreateImageCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<,>));
+        builder.RegisterAssemblyTypes(typeof(UpdateImageCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<>));
+        builder.RegisterAssemblyTypes(typeof(DeleteImageCommandHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRequestHandler<>));
         #endregion
     }
 }

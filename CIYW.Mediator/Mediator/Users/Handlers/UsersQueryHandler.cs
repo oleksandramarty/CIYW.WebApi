@@ -3,18 +3,21 @@ using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Helpers.Base;
+using CIYW.Models.Responses.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Mediator.Mediator.Users.Handlers;
 
-public class UsersQueryHandler(IReadGenericRepository<Domain.Models.User.User> userRepository)
-    : BasePageableHelper<User>(userRepository),
-        IRequestHandler<UsersQuery, ListWithIncludeHelper<Domain.Models.User.User>>
+public class UsersQueryHandler : BasePageableHelper<User>, IRequestHandler<UsersQuery, ListWithIncludeHelper<UserResponse>>
 {
-    public async Task<ListWithIncludeHelper<Domain.Models.User.User>> Handle(UsersQuery query, CancellationToken cancellationToken)
+    public UsersQueryHandler(IReadGenericRepository<User> userRepository): base(userRepository)
     {
-        return await this.GetPageableResponseAsync(query.DateRange != null
+    }
+    
+    public async Task<ListWithIncludeHelper<UserResponse>> Handle(UsersQuery query, CancellationToken cancellationToken)
+    {
+        return await this.GetPageableResponseAsync<UserResponse>(query.DateRange != null
                 ? q => !query.DateRange.DateFrom.HasValue || query.DateRange.DateFrom.HasValue &&
                        q.Created >= query.DateRange.DateFrom.Value &&
                        !query.DateRange.DateTo.HasValue ||

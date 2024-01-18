@@ -4,7 +4,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Requests;
 
-public class GetInvoiceByIdQuery: BaseQuery, IRequest<MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice>>
+public class GetInvoiceByIdQuery: BaseQuery, IRequest<MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>>
 {
     public GetInvoiceByIdQuery(Guid id)
     {

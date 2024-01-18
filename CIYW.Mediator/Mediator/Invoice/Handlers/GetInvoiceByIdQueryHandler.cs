@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Mediator.Mediator.Invoice.Handlers;
 
-public class GetInvoiceByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<GetInvoiceByIdQuery, MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice>>
+public class GetInvoiceByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<GetInvoiceByIdQuery, MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>>
 {
     private readonly IMapper mapper;
     private readonly IReadGenericRepository<Domain.Models.Invoice.Invoice> invoiceRepository;
@@ -24,7 +24,7 @@ public class GetInvoiceByIdQueryHandler: UserEntityValidatorHelper, IRequestHand
         this.invoiceRepository = invoiceRepository;
     }
     
-    public async Task<MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice>> Handle(GetInvoiceByIdQuery query, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>> Handle(GetInvoiceByIdQuery query, CancellationToken cancellationToken)
     {
         Domain.Models.Invoice.Invoice invoice = await this.invoiceRepository.GetWithIncludeAsync(u => u.Id == query.Id, cancellationToken,
             query => query.Include(u => u.Note),
@@ -40,9 +40,9 @@ public class GetInvoiceByIdQueryHandler: UserEntityValidatorHelper, IRequestHand
             this.HasAccess(invoice, userId);          
         }
         
-        BalanceInvoiceResponse mapped =
-            this.mapper.Map<Domain.Models.Invoice.Invoice, BalanceInvoiceResponse>(invoice);
+        InvoiceResponse mapped =
+            this.mapper.Map<Domain.Models.Invoice.Invoice, InvoiceResponse>(invoice);
 
-        return new MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice>(mapped, invoice);
+        return new MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice>(mapped, invoice);
     }
 }

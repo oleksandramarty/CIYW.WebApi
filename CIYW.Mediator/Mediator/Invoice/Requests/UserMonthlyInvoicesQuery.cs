@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Requests;
 
-public class UserMonthlyInvoicesQuery: BaseFilterQuery, IRequest<ListWithIncludeHelper<Domain.Models.Invoice.Invoice>>
+public class UserMonthlyInvoicesQuery: BaseFilterQuery, IRequest<ListWithIncludeHelper<InvoiceResponse>>
 {
     
 }

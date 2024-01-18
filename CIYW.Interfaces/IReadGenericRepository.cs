@@ -12,8 +12,7 @@ public interface IReadGenericRepository<T> where T : class
 
     Task<T> GetWithIncludeAsync(Func<T, bool> condition, CancellationToken cancellationToken, params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs);
 
-    Task<ListWithIncludeHelper<T>> GetListWithIncludeAsync(
-        Func<T, bool> condition,
+    Task<ListWithIncludeHelper<TResponse>> GetListWithIncludeAsync<TResponse>(Expression<Func<T, bool>> condition,
         BaseFilterQuery filter,
         CancellationToken cancellationToken,
         params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs);

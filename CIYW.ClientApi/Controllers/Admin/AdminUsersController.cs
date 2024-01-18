@@ -1,7 +1,9 @@
-﻿using CIYW.Const.Providers;
+﻿using CIYW.ClientApi.Controllers.Base;
+using CIYW.Const.Providers;
 using CIYW.Domain.Models.User;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Helpers.Base;
+using CIYW.Models.Responses.Users;
 using GraphQL;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +23,10 @@ public class AdminUsersController: BaseController
     }
     
     [HttpPost("filter")]
-    [ProducesResponseType(typeof(ListWithIncludeHelper<User>), 200)]
+    [ProducesResponseType(typeof(ListWithIncludeHelper<UserResponse>), 200)]
     public async Task<IActionResult> V1_GetUsersAsync(UsersQuery query, CancellationToken cancellationToken)
     {
-        ListWithIncludeHelper<User> response = await this.mediator.Send(query, cancellationToken);
+        ListWithIncludeHelper<UserResponse> response = await this.mediator.Send(query, cancellationToken);
         return Ok(response);
     }
 }

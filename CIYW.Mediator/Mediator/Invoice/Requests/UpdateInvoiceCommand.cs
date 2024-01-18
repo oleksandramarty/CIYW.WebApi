@@ -1,11 +1,12 @@
 ﻿using CIYW.Const.Enums;
 using CIYW.Mediator.Mediator.Note.Request;
 using CIYW.Models.Requests.Common;
+using CIYW.Models.Responses.Invoice;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Invoice.Requests;
 
-public class UpdateInvoiceCommand : BaseNullableQuery, IRequest<Domain.Models.Invoice.Invoice>
+public class UpdateInvoiceCommand : BaseNullableQuery, IRequest<InvoiceResponse>
 {
     public string Name { get; set; }
     public decimal Amount { get; set; }

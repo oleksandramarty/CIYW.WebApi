@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CIYW.ClientApi.Controllers.Base;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Requests;
@@ -25,26 +26,26 @@ public class InvoicesController: BaseController
     }
     
     [HttpPost("history")]
-    [ProducesResponseType(typeof(ListWithIncludeHelper<Domain.Models.Invoice.Invoice>), 200)]
+    [ProducesResponseType(typeof(ListWithIncludeHelper<InvoiceResponse>), 200)]
     public async Task<IActionResult> V1_GetUserInvoicesAsync(UserInvoicesQuery query, CancellationToken cancellationToken)
     {
-        ListWithIncludeHelper<Domain.Models.Invoice.Invoice> response = await this.mediator.Send(query, cancellationToken);
+        ListWithIncludeHelper<InvoiceResponse> response = await this.mediator.Send(query, cancellationToken);
         return Ok(response);
     }
     
     [HttpGet("monthly")]
-    [ProducesResponseType(typeof(ListWithIncludeHelper<Domain.Models.Invoice.Invoice>), 200)]
+    [ProducesResponseType(typeof(ListWithIncludeHelper<InvoiceResponse>), 200)]
     public async Task<IActionResult> V1_GetUserInvoicesAsync(CancellationToken cancellationToken)
     {
-        ListWithIncludeHelper<Domain.Models.Invoice.Invoice> response = await this.mediator.Send(new UserMonthlyInvoicesQuery(), cancellationToken);
+        ListWithIncludeHelper<InvoiceResponse> response = await this.mediator.Send(new UserMonthlyInvoicesQuery(), cancellationToken);
         return Ok(response);
     }
     
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(BalanceInvoiceResponse), 200)]
+    [ProducesResponseType(typeof(InvoiceResponse), 200)]
     public async Task<IActionResult> V1_GetInvoiceByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        MappedHelperResponse<BalanceInvoiceResponse, Domain.Models.Invoice.Invoice> response = await this.mediator.Send(new GetInvoiceByIdQuery(id), cancellationToken);
+        MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice> response = await this.mediator.Send(new GetInvoiceByIdQuery(id), cancellationToken);
         return Ok(response.MappedEntity);
     }
     
@@ -52,7 +53,7 @@ public class InvoicesController: BaseController
     [ProducesResponseType(typeof(Guid), 200)]
     public async Task<IActionResult> V1_CreateInvoiceAsync(CreateInvoiceCommand command, CancellationToken cancellationToken)
     {
-        Invoice response = await this.mediator.Send(command, cancellationToken);
+        InvoiceResponse response = await this.mediator.Send(command, cancellationToken);
         return Ok(response.Id);
     }
     

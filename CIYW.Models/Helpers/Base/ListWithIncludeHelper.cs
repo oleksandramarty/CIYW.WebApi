@@ -7,5 +7,5 @@ public class ListWithIncludeHelper<T>
 {
     public IList<T> Entities { get; set; }
     public Paginator Paginator { get; set; }
-    public int TotalCount { get; set; }
+    public long TotalCount { get; set; }
 }

@@ -1,11 +1,12 @@
 ﻿using CIYW.Domain.Models.User;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
+using CIYW.Models.Responses.Users;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Users.Requests;
 
-public class UsersQuery: BaseFilterQuery, IRequest<ListWithIncludeHelper<User>>
+public class UsersQuery: BaseFilterQuery, IRequest<ListWithIncludeHelper<UserResponse>>
 {
     public UsersQuery(BaseFilterQuery query)
     {

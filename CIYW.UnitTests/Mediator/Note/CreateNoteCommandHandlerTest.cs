@@ -62,7 +62,7 @@ public class CreateNoteCommandHandlerTest
         
         // Assert
         Assert.IsNotNull(result);
-        result.Id.Should<Guid>().BeEquivalentTo(this.note.Id);
+        result.Id.Should().Be(this.note.Id);
         this.noteRepositoryMock.Verify(um => um.AddAsync(
             It.Is<Domain.Models.Note.Note>(n => n.Name == this.note.Name &&
                                                 n.Body == this.note.Body), It.IsAny<CancellationToken>()), Times.Once);

@@ -1,10 +1,10 @@
-using CIYW.GraphQL.MutationResolver;
 using CIYW.Kernel.Extensions;
+using CIYW.Models.Responses.Invoice;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;
 
-public class InvoiceType: ObjectGraphType<Domain.Models.Invoice.Invoice>
+public class InvoiceType: ObjectGraphType<InvoiceResponse>
 {
     public InvoiceType()
     {

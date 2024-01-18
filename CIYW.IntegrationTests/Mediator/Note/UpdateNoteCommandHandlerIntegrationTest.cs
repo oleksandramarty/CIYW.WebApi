@@ -6,6 +6,7 @@ using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Mediator.Mediator.Note.Handlers;
 using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Models.Responses.Note;
 using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,7 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            Domain.Models.Note.Note result = await handler.Handle(command, CancellationToken.None);
+            NoteResponse result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
             dbContext.Notes.Count(u => u.Id == result.Id && u.Name == command.Name).Should().Be(1);
@@ -62,7 +63,7 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, Domain.Models.Note.Note, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, NoteResponse, LoggerException>(
                 handler, 
                 command, 
                 String.Format(ErrorMessages.EntityWithIdNotFound, nameof(Domain.Models.Note.Note), command.Id));
@@ -91,7 +92,7 @@ public class UpdateNoteCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, Domain.Models.Note.Note, LoggerException>(
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateNoteCommand, NoteResponse, LoggerException>(
                 handler, 
                 command, 
                 ErrorMessages.Forbidden);

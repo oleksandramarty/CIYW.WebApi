@@ -1,9 +1,10 @@
 ﻿using CIYW.Domain.Models.Note;
+using CIYW.Models.Responses.Note;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;
 
-public class NoteType: ObjectGraphType<Note>
+public class NoteType: ObjectGraphType<NoteResponse>
 {
     public NoteType()
     {

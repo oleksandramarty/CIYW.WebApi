@@ -22,12 +22,12 @@ namespace CIYW.UnitTests.Mediator.Users
             var userId = Guid.NewGuid();
             var cancellationToken = new CancellationToken();
             var mapperMock = new Mock<IMapper>();
-            mapperMock.Setup(m => m.Map<User, CurrentUserResponse>(It.IsAny<User>()))
-                .Returns(new CurrentUserResponse());
-            mapperMock.Setup(m => m.Map<Role, CurrentUserResponse>(It.IsAny<Role>(), It.IsAny<CurrentUserResponse>()))
-                .Returns(new CurrentUserResponse());
-            mapperMock.Setup(m => m.Map<UserBalance, CurrentUserResponse>(It.IsAny<UserBalance>(), It.IsAny<CurrentUserResponse>()))
-                .Returns(new CurrentUserResponse());
+            mapperMock.Setup(m => m.Map<User, UserResponse>(It.IsAny<User>()))
+                .Returns(new UserResponse());
+            mapperMock.Setup(m => m.Map<Role, UserResponse>(It.IsAny<Role>(), It.IsAny<UserResponse>()))
+                .Returns(new UserResponse());
+            mapperMock.Setup(m => m.Map<UserBalance, UserResponse>(It.IsAny<UserBalance>(), It.IsAny<UserResponse>()))
+                .Returns(new UserResponse());
             
             var mediatorMock = new Mock<IMediator>();
             var userRepositoryMock = new Mock<IReadGenericRepository<User>>();

@@ -37,7 +37,7 @@ public class CurrentUserQueryHandlerIntegrationTest: CommonIntegrationTestSetup
                 );
 
                 // Act
-                CurrentUserResponse result = await handler.Handle(query, CancellationToken.None);
+                UserResponse result = await handler.Handle(query, CancellationToken.None);
 
                 // Assert
                 result.Should().NotBe(null);

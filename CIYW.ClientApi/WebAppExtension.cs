@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Encodings.Web;
@@ -22,6 +23,7 @@ using CIYW.Mediator.Validators.Categories;
 using CIYW.Mediator.Validators.Currencies;
 using CIYW.Mediator.Validators.Notes;
 using CIYW.Mediator.Validators.Tariffs;
+using CIYW.MongoDB;
 using CIYW.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -35,7 +37,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using Namotion.Reflection;
 using ZymLabs.NSwag.FluentValidation.AspNetCore;
 using Int32Converter = CIYW.Kernel.Utils.Int32Converter;
@@ -268,6 +272,8 @@ namespace CIYW.Kernel.Extensions;
             
             builder.Services.AddScoped<IElasticSearchRepository, ElasticSearchRepository>();
             
+            builder.Services.AddSingleton(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
+            
             builder.Services.AddScoped<ContextServiceLocator>();
         }
 
@@ -332,6 +338,23 @@ namespace CIYW.Kernel.Extensions;
                     opt.ThrowOnUnhandledException = true;
                     return next(opt);
                 }).AddSystemTextJson()
+            );
+        }
+
+        public static void AddMongoDb(this WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<MongoDbSettings>(
+                builder.Configuration.GetSection(nameof(MongoDbSettings))
+            );
+
+            builder.Services.AddSingleton<IMongoDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoDbSettings>>().Value
+            );
+
+            MongoDbSettings temp = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
+
+            builder.Services.AddSingleton<IMongoClient>(sp =>
+                new MongoClient(temp.ConnectionString)
             );
         }
     }
