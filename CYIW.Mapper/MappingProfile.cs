@@ -33,7 +33,8 @@ public class MappingProfile: Profile
 {
     public MappingProfile()
     {
-        this.CreateMap<User, UserResponse>();
+        this.CreateMap<User, UserResponse>()
+            .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.UserName));
         this.CreateMap<UserBalance, UserBalanceResponse>();
 
         this.CreateMap<BaseEntity, BaseEntityResponse>();
@@ -53,6 +54,11 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow))
             .ForMember(dest => dest.IsBlocked, opt => opt.MapFrom(src => false))
             .ForMember(dest => dest.IsTemporaryPassword, opt => opt.MapFrom(src => true));
+        this.CreateMap<CreateUserByAdminCommand, User>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Login))
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Phone))
+            .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.UtcNow));
 
         CreateMap<CreateOrUpdateCategoryCommand, Category>()
             .ConstructUsing(this.CreateOrUpdateEntity<CreateOrUpdateCategoryCommand, Category>);

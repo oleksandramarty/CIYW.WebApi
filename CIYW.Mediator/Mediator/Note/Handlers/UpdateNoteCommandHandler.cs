@@ -37,6 +37,15 @@ public class UpdateNoteCommandHandler: UserEntityValidatorHelper, IRequestHandle
 
         await this.noteRepository.UpdateAsync(updatedNote, cancellationToken);
 
-        return this.mapper.Map<Domain.Models.Note.Note, NoteResponse>(updatedNote);
+        NoteResponse result = this.mapper.Map<Domain.Models.Note.Note, NoteResponse>(updatedNote);
+
+        return new NoteResponse
+        {
+            Id = updatedNote.Id,
+            Name = updatedNote.Name,
+            Body = updatedNote.Body,
+            UserId = updatedNote.UserId,
+            InvoiceId = updatedNote.InvoiceId,
+        };
     }
 }

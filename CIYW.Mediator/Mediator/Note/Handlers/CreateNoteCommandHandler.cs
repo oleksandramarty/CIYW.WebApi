@@ -35,6 +35,13 @@ public class CreateNoteCommandHandler: IRequestHandler<CreateOrUpdateNoteCommand
         await this.noteRepository.AddAsync(note, cancellationToken);
 
         NoteResponse result = this.mapper.Map<Domain.Models.Note.Note, NoteResponse>(note);
-        return result;
+        return new NoteResponse
+        {
+            Id = note.Id,
+            Name = note.Name,
+            Body = note.Body,
+            UserId = note.UserId,
+            InvoiceId = note.InvoiceId,
+        };
     }
 }

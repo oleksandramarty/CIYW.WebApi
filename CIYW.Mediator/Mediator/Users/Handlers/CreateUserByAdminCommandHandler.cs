@@ -14,14 +14,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Mediator.Mediator.Users.Handlers;
 
-public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserResponse>
+public class CreateUserByAdminCommandHandler: IRequestHandler<CreateUserByAdminCommand, UserResponse>
 {
     private readonly IMapper mapper;
     private readonly IEntityValidator entityValidator;
     private readonly IAuthRepository authRepository;
     private readonly UserManager<User> userManager;
 
-    public CreateUserCommandHandler(
+    public CreateUserByAdminCommandHandler(
         IMapper mapper,
         IEntityValidator entityValidator, 
         IAuthRepository authRepository, 
@@ -32,8 +32,8 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserRe
         this.authRepository = authRepository;
         this.userManager = userManager;
     }
-
-    public async Task<UserResponse> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+    
+        public async Task<UserResponse> Handle(CreateUserByAdminCommand command, CancellationToken cancellationToken)
     {
         if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
         {
@@ -54,7 +54,7 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserRe
         await this.entityValidator.ValidateExistParamAsync<User>(u => u.PhoneNumber == command.Phone, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone), cancellationToken);
         await this.entityValidator.ValidateExistParamAsync<User>(u => u.Login == command.Login, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login), cancellationToken);
         
-        User user = this.mapper.Map<CreateUserCommand, User>(command);
+        User user = this.mapper.Map<CreateUserByAdminCommand, User>(command);
         user.TariffId = InitConst.FreeTariffId;
         user.CurrencyId = InitConst.CurrencyUsdId;
 
@@ -90,4 +90,5 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserRe
 
         return this.mapper.Map<User, UserResponse>(user);
     }
+    
 }

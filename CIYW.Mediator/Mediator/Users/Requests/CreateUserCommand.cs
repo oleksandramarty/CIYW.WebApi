@@ -1,9 +1,10 @@
 ﻿using CIYW.Domain.Models.User;
+using CIYW.Models.Responses.Users;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Users.Requests;
 
-public class CreateUserCommand: IRequest<User>
+public class CreateUserCommand: IRequest<UserResponse>
 {
     public CreateUserCommand(string lastName, string firstName, string patronymic, string login, string email, string phone, string confirmEmail, bool isAgree, string password,
         string confirmPassword, bool isAgreeDigest)
