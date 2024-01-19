@@ -1,5 +1,6 @@
 ﻿using CIYW.Models.Responses.Base;
 using CIYW.Models.Responses.Currency;
+using CIYW.Models.Responses.Image;
 using CIYW.Models.Responses.Tariff;
 
 namespace CIYW.Models.Responses.Users;
@@ -29,4 +30,5 @@ public class UserResponse: BaseWithDateEntityResponse
     public bool PhoneNumberConfirmed { get; set; }
     
     public decimal BalanceAmount { get; set; }
+    public ImageDataResponse Avatar { get; set; }
 }

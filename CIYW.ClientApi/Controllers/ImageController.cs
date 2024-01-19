@@ -21,11 +21,11 @@ public class ImageController: BaseController
         this.mediator = mediator;
     }
     
-    [HttpPost("{type}")]
+    [HttpPost("{type}/{userId}")]
     [ProducesResponseType(typeof(Guid), 200)]
-    public async Task<IActionResult> V1_CreateImageAsync([FromRoute]FileTypeEnum type, IFormFile file, CancellationToken cancellationToken)
+    public async Task<IActionResult> V1_CreateImageAsync([FromRoute]FileTypeEnum type, [FromRoute]Guid? userId, IFormFile file, CancellationToken cancellationToken)
     {
-        Guid id = await this.mediator.Send(new CreateImageCommand(type, file), cancellationToken);
+        Guid id = await this.mediator.Send(new CreateImageCommand(type, file, userId), cancellationToken);
         return Ok(id);
     }
     
@@ -43,21 +43,5 @@ public class ImageController: BaseController
     {
         await this.mediator.Send(new DeleteImageCommand(id), cancellationToken);
         return Ok(id);
-    }
-    
-    [HttpGet("users/{id}")]
-    [ProducesResponseType(typeof(ImageDataResponse), 200)]
-    public async Task<IActionResult> V1_GetUserImageAsync([FromRoute]Guid id, CancellationToken cancellationToken)
-    {
-        MappedHelperResponse<ImageDataResponse, ImageData> result = await this.mediator.Send(new UserImageQuery(id), cancellationToken);
-        return Ok(result.MappedEntity);
-    }
-    
-    [HttpPost("users")]
-    [ProducesResponseType(typeof(ListWithIncludeHelper<ImageDataResponse>), 200)]
-    public async Task<IActionResult> V1_GetUsersImagesAsync(UsersImagesQuery query, CancellationToken cancellationToken)
-    {
-        ListWithIncludeHelper<ImageDataResponse> result = await this.mediator.Send(query, cancellationToken);
-        return Ok(result);
     }
 }

@@ -9,25 +9,24 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.FIle.Handlers;
 
-public class UserImageQueryHandler: BaseFileHelper<ImageData>, IRequestHandler<UserImageQuery, MappedHelperResponse<ImageDataResponse, ImageData>>
-{
+public class CurrentUserImageQueryHandler: UserEntityValidatorHelper, IRequestHandler<CurrentUserImageQuery, MappedHelperResponse<ImageDataResponse, ImageData>>
+{    
     private readonly IMongoDbRepository<ImageData> imageRepository;
     private readonly IMapper mapper;
     
-    public UserImageQueryHandler(
+    public CurrentUserImageQueryHandler(
         IMongoDbRepository<ImageData> imageRepository, 
         IMapper mapper,
         IEntityValidator entityValidator,
-        ICurrentUserProvider currentUserProvider): base(imageRepository, mapper, entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider): base(mapper, entityValidator, currentUserProvider)
     {
         this.imageRepository = imageRepository;
         this.mapper = mapper;
     }
     
-    public async Task<MappedHelperResponse<ImageDataResponse, ImageData>> Handle(UserImageQuery query, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<ImageDataResponse, ImageData>> Handle(CurrentUserImageQuery request, CancellationToken cancellationToken)
     {
-        Guid userId = await this.GetTargetUserIdAsync(query.UserId, cancellationToken);
-        
+        Guid userId = await this.GetUserIdAsync(cancellationToken);
         IEnumerable<ImageData> temp = await this.imageRepository.FindAsync(i => i.UserId == userId && i.Type == FileTypeEnum.USER_IMAGE,
             cancellationToken);
 

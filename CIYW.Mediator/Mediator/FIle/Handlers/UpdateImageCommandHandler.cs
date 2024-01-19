@@ -29,7 +29,7 @@ public class UpdateImageCommandHandler: BaseFileHelper<ImageData>, IRequestHandl
         
         Guid userId = await this.GetUserIdAsync(cancellationToken);
         
-        this.HasAccess(imageData, userId);
+        await this.HasAccess(imageData, userId, cancellationToken);
     
         imageData.Data = await this.ConvertIFormFileToByteArrayAsync(command.File, cancellationToken);
         

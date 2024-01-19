@@ -75,8 +75,15 @@ public class UserEntityValidatorHelper
         this.entityValidator.ValidateExist<T, TId>(entity, entityId);
     }
     
-    protected void HasAccess<TEntity>(TEntity entity, Guid userId)
+    protected async Task HasAccess<TEntity>(TEntity entity, Guid userId, CancellationToken cancellationToken)
     {
+        bool isAdmin = await this.HasUserInRoleAsync(RoleProvider.Admin, cancellationToken);
+        
+        if (isAdmin)
+        {
+            return;
+        }
+        
         this.entityValidator.HasAccess<TEntity>(entity, userId);
     }
 

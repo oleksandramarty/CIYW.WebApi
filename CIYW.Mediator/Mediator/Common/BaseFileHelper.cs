@@ -37,4 +37,15 @@ public class BaseFileHelper<T>: UserEntityValidatorHelper
     {
         return await this.imageRepository.GetPageableListAsync<TResponse>(filter, cancellationToken);
     }
+    
+    protected async Task<Guid> GetTargetUserIdAsync(Guid? userId, CancellationToken cancellationToken)
+    {
+        if (userId.HasValue)
+        {
+            await this.IsUserAdminAsync(cancellationToken);
+            return userId.Value;
+        }
+        
+        return await this.GetUserIdAsync(cancellationToken);
+    }
 }

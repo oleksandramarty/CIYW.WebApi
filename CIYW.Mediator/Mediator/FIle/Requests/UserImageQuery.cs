@@ -5,10 +5,12 @@ using MediatR;
 
 namespace CIYW.Mediator.Mediator.FIle.Requests;
 
-public class UserImageQuery: BaseQuery, IRequest<MappedHelperResponse<ImageDataResponse, ImageData>>
+public class UserImageQuery: BaseNullableQuery, IRequest<MappedHelperResponse<ImageDataResponse, ImageData>>
 {
-    public UserImageQuery(Guid id)
+    public UserImageQuery(Guid? id)
     {
         Id = id;
     }
+    
+    public Guid? UserId { get; set; }
 }

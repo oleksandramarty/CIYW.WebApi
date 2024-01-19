@@ -33,12 +33,7 @@ public class GetInvoiceByIdQueryHandler: UserEntityValidatorHelper, IRequestHand
         this.ValidateExist<Domain.Models.Invoice.Invoice, Guid>(invoice, query.Id);
         Guid userId = await this.GetUserIdAsync(cancellationToken);
 
-        bool isAdmin = await this.HasUserAdminAsync(cancellationToken);
-
-        if (!isAdmin)
-        {
-            this.HasAccess(invoice, userId);          
-        }
+        await this.HasAccess(invoice, userId, cancellationToken);  
         
         InvoiceResponse mapped =
             this.mapper.Map<Domain.Models.Invoice.Invoice, InvoiceResponse>(invoice);

@@ -28,7 +28,7 @@ public class DeleteNoteCommandHandler: UserEntityValidatorHelper, IRequestHandle
 
         Guid userId = await this.GetUserIdAsync(cancellationToken);
         
-        this.HasAccess(note, userId);
+        await this.HasAccess(note, userId, cancellationToken);
 
         await this.noteRepository.DeleteAsync(command.Id, cancellationToken);
     }
