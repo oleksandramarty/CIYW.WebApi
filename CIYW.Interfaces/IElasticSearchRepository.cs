@@ -1,6 +1,9 @@
 ﻿using System.Linq.Expressions;
 using CIYW.Domain.Models.Invoice;
 using CIYW.Domain.Models.User;
+using CIYW.Models.Helpers.Base;
+using CIYW.Models.Requests.Common;
+using Nest;
 
 namespace CIYW.Interfaces;
 
@@ -16,4 +19,10 @@ public interface IElasticSearchRepository
         CancellationToken cancellationToken) where T : class;
     void DeleteById<T>(Expression<Func<T, bool>> predicate, Guid id) where T : class;
     Task<T?> GetByIdAsync<T>(Expression<Func<T, bool>> predicate, Guid id, CancellationToken cancellationToken) where T: class;
+
+    Task<ListWithIncludeHelper<TMapped>> GetPageableResponseAsync<T, TMapped>(Expression<Func<T, bool>> userIdPredicate,
+        Guid? userId,
+        SortDescriptor<T> sort,
+        BaseFilterQuery filter,
+        CancellationToken cancellationToken) where T : class;
 }

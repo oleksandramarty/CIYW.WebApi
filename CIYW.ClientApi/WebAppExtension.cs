@@ -106,7 +106,7 @@ namespace CIYW.Kernel.Extensions;
                                 using (var context = serviceScope.ServiceProvider.GetService<DataContext>())
                                 {
                                     var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
-                                    DbInitializer.AddRandomUsers(context, userManager, 150);
+                                    DbInitializer.AddRandomUsers(context, userManager, 50);
                                 }
                             }
                         }));

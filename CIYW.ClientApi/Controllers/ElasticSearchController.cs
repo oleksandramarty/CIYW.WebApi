@@ -65,6 +65,7 @@ public class ElasticSearchController: BaseController
         var result = await _elasticClient.SearchAsync<UserSearchModel>(
             s => s
                 .Query(q => q.MatchAll())
+                .Sort(sort => sort.Descending(s => s.Created))
                 .Size(5000));
         
         return Ok(result.Documents.ToList());

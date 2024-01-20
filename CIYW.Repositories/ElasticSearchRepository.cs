@@ -4,6 +4,7 @@ using AutoMapper;
 using CIYW.Const.Errors;
 using CIYW.Domain;
 using CIYW.Domain.Models.User;
+using CIYW.Elasticsearch.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Utils;
@@ -105,36 +106,29 @@ public class ElasticSearchRepository: IElasticSearchRepository
         return response.Documents.FirstOrDefault();
     }
     
-    public async Task<ListWithIncludeHelper<T>> GetPaginatedResultsAsync<T>(Expression<Func<T, bool>> userIdPredicate,
-        Guid userId,
+    public async Task<ListWithIncludeHelper<TMapped>> GetPageableResponseAsync<T, TMapped>(Expression<Func<T, bool>> userIdPredicate,
+        Guid? userId,
+        SortDescriptor<T> sort,
         BaseFilterQuery filter,
         CancellationToken cancellationToken) where T : class
     {
         int skip = (filter.Paginator.PageNumber - 1) * filter.Paginator.PageSize;
         var result = await this.elasticClient.SearchAsync<T>(s => s
-                .Query(q => q
-                    .Match(m => m
+                .Query(q => userIdPredicate == null ?
+                    q.MatchAll() :
+                    q.Match(m => m
                             .Field(userIdPredicate)
                             .Query(userId.ToString())
                     )
-                ).Sort(sort =>
-                {
-                    if (sort != null)
-                    {
-                        return filter.Sort.Direction == "asc" ?
-                            sort.Ascending(t => EF.Property<object>(t, filter.Sort.Column)) :
-                            sort.Descending(t => EF.Property<object>(t, filter.Sort.Column));
-                    }
-                    return null;
-                })
+                ).Sort(s => sort)
                 .From(skip).Size(filter.Paginator.PageSize)
         );
 
         if (!result.IsValid)
         {
-            return new ListWithIncludeHelper<T>
+            return new ListWithIncludeHelper<TMapped>
             {
-                Entities = new List<T>(),
+                Entities = new List<TMapped>(),
                 Paginator = filter.Paginator,
                 TotalCount = 0
             };
@@ -144,9 +138,9 @@ public class ElasticSearchRepository: IElasticSearchRepository
 
         List<T> entities = result.Documents.ToList();
 
-        return new ListWithIncludeHelper<T>
+        return new ListWithIncludeHelper<TMapped>
         {
-            Entities = entities,
+            Entities = entities.Select(x => this.mapper.Map<T, TMapped>(x)).ToList(),
             Paginator = filter.Paginator,
             TotalCount = (int)total.Count
         };

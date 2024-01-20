@@ -38,6 +38,10 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.UserName));
         this.CreateMap<UserBalance, UserBalanceResponse>();
 
+        this.CreateMap<UserSearchModel, UserResponse>();
+        this.CreateMap<UserBalanceSearchModel, UserBalanceResponse>();
+        this.CreateMap<CurrencySearchModel, CurrencyResponse>();
+
         this.CreateMap<BaseEntity, BaseEntityResponse>();
         this.CreateMap<BaseWithDateEntity, BaseWithDateEntityResponse>();
 

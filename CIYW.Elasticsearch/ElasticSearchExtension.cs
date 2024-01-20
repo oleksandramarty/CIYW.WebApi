@@ -36,8 +36,29 @@ public static class ElasticSearchExtension
     
     private static void CreateIndex(IElasticClient client, string indexName)
     {
-        var createIndexResponse = client.Indices.Create(indexName,
-            index => index.Map<UserSearchModel>(x => x.AutoMap()).Settings(s => s.NumberOfShards(1).NumberOfReplicas(1))
+        var createIndexResponse = client.Indices.Create(indexName, index => index
+            .Settings(s => s
+                .NumberOfShards(1)
+                .NumberOfReplicas(1)
+            )
+            .Map<UserSearchModel>(x => x
+                .AutoMap()
+                .Properties(p => p
+                    .Date(k => k
+                            .Name("Created")
+                    )
+                    .Object<UserBalanceSearchModel>(ob => ob
+                        .Name("UserBalance")
+                        .AutoMap()
+                        .Properties(pb => pb
+                            .Number(n => n
+                                    .Name("Amount")
+                                    .Type(NumberType.Double)
+                            )
+                        )
+                    )
+                )
+            )
         );
     }
 }
