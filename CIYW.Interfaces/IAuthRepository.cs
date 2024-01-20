@@ -9,6 +9,8 @@ public interface IAuthRepository
     Task<string> GetAuthenticationTokenAsync(User user, string loginProvider, string tokenName);
     Task<User> FindUserByIdAsync(string userId);
     Task UpdateUserLoginsAsync(Guid userId, IList<IdentityUserLogin<Guid>> entity, CancellationToken cancellationToken);
+
+    Task UpdateUserLoginsAsync(User user, CancellationToken cancellationToken);
     Task LogOutUserAsync(Guid userId, CancellationToken cancellationToken);
     Task<User> FindUserByLoginAsync(string loginProvider, string providerKey);
     Task<IList<string>> GetRolesAsync(User user);

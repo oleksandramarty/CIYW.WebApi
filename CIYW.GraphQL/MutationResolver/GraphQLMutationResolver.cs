@@ -2,6 +2,7 @@
 using CIYW.Domain.Models.Note;
 using CIYW.GraphQL.Types;
 using CIYW.GraphQL.Types.InputTypes;
+using CIYW.Kernel.Utils;
 using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Invoice.Requests;
 using CIYW.Mediator.Mediator.Note.Request;
@@ -45,7 +46,7 @@ public class GraphQLMutationResolver: ObjectGraphType, IGraphQLMutationResolver
             .ResolveAsync(async context =>
             {
                 var cancellationToken = context.CancellationToken;
-                MappedHelperResponse<TMapped, TEntity> result = await this.ModifyEntityWithResultAsync<TCommand, MappedHelperResponse<TMapped, TEntity>>(context, cancellationToken);
+                MappedHelperResponse<TMapped, TEntity> result = await this.ModifyEntityWithResultAsync<TCommand, MappedHelperResponse<TMapped, TEntity>>(context, cancellationToken, true);
                 return result.MappedEntity;
             });
     }
@@ -66,9 +67,13 @@ public class GraphQLMutationResolver: ObjectGraphType, IGraphQLMutationResolver
             });
     }
 
-    private async Task<TResult> ModifyEntityWithResultAsync<TCommand, TResult>(IResolveFieldContext<object?> context, CancellationToken cancellationToken) where TCommand: IRequest<TResult>
+    private async Task<TResult> ModifyEntityWithResultAsync<TCommand, TResult>(IResolveFieldContext<object?> context, CancellationToken cancellationToken, bool isUpdate = false) where TCommand: IRequest<TResult>
     {
         TCommand command = context.GetArgument<TCommand>("input");
+        if (isUpdate)
+        {
+            ReflectionUtils.SetValue<TCommand, Guid>(command, "Id", context.GetArgument<Guid>("id"));
+        }
         var mediator = context.RequestServices.GetRequiredService<IMediator>();
         TResult result = await mediator.Send(command, cancellationToken);
         return result;

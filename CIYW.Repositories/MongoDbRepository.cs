@@ -61,7 +61,9 @@ public class MongoDbRepository<T>: IMongoDbRepository<T>
     
     public async Task<ListWithIncludeHelper<TResponse>> GetPageableListAsync<TResponse>(BaseFilterQuery filter, CancellationToken cancellationToken)
     {
-        var query = this.imagesCollection.Find(_ => true);
+        var query = filter.Ids != null && filter.Ids.Ids.Any() ?
+            this.imagesCollection.Find(Builders<T>.Filter.In("_id", filter.Ids.Ids)) : 
+            this.imagesCollection.Find(_ => true);
 
         long total = await query.CountDocumentsAsync(cancellationToken);
         

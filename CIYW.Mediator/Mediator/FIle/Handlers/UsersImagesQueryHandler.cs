@@ -26,6 +26,11 @@ public class UsersImagesQueryHandler: BaseFileHelper<ImageData>, IRequestHandler
 
     public async Task<ListWithIncludeHelper<ImageDataResponse>> Handle(UsersImagesQuery query, CancellationToken cancellationToken)
     {
+        IList<Guid> userIds = query.Ids.Ids;
+
+        query.Ids.Ids = (await this.imageRepository.FindAsync(i => userIds.Any(x => x == i.UserId), cancellationToken))
+            .Select(x => x.Id).ToList();
+        
         return await this.GetPageableResponseAsync<ImageDataResponse>(query, cancellationToken);
     }
 }

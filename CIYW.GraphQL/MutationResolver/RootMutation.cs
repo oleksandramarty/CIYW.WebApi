@@ -29,5 +29,6 @@ public class RootMutation: GraphQLMutationResolver
         this.DeleteEntity<DeleteNoteCommand, GuidGraphType>("deleteNote");
         
         this.CreateEntity<UserType, UserInputType, CreateUserByAdminCommand, UserResponse, User>("createUserByAdmin");
+        this.UpdateEntity<UserType, UserInputType, UpdateUserByAdminCommand, UserResponse, User, GuidGraphType>("updateUserByAdmin");
     }
 }

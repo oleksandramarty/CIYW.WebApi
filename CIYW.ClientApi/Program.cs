@@ -7,6 +7,7 @@ using CIYW.Auth.Tokens;
 using CIYW.ClientApi.Filters;
 using CIYW.Domain;
 using CIYW.Domain.Models.User;
+using CIYW.Elasticsearch;
 using CIYW.Kernel.Extensions;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Mediator;
@@ -168,7 +169,7 @@ public class Program
         
         builder.AddDependencyInjection();
         
-        // builder.Services.AddElasticsearch(builder.Configuration);
+        builder.Services.AddElasticsearch(builder.Configuration);
         
         builder.AddGraphQL();
 

@@ -28,6 +28,7 @@ public class CreateUserCommandHandlerIntegrationTest: CommonIntegrationTestSetup
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
                 scope.ServiceProvider.GetRequiredService<IAuthRepository>(),
                 scope.ServiceProvider.GetRequiredService<UserManager<Domain.Models.User.User>>(),
+                scope.ServiceProvider.GetRequiredService<IElasticSearchRepository>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );

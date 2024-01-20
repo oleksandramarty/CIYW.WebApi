@@ -25,5 +25,6 @@ public class ErrorMessages
     public const string FieldIsRequired = "{0} is required";
     public const string FieldMaxLengthError = "{0} cannot exceed {1} characters";
     public const string FieldExactLengthError = "{0} must be exactly {1} characters.";
+    public const string ElasticSearchError = "Elastic search error - {0}";
     
 }

@@ -28,6 +28,7 @@ namespace CIYW.UnitTests.Mediator.Users
         private readonly Mock<IAuthRepository> authRepositoryMock;
         private readonly Mock<UserManager<User>> userManagerMock;
         private readonly Mock<ICurrentUserProvider> currentUserProviderMock;
+        private readonly Mock<IElasticSearchRepository> elasticMock;
 
         private readonly CreateUserCommandHandler handler;
 
@@ -38,6 +39,7 @@ namespace CIYW.UnitTests.Mediator.Users
             this.mapperMock.Setup(m => m.Map<CreateUserCommand, User>(It.IsAny<CreateUserCommand>()))
                 .Returns(new User());
 
+            this.elasticMock = new Mock<IElasticSearchRepository>();
             this.currentUserProviderMock = new Mock<ICurrentUserProvider>();
             this.entityValidatorMock = new Mock<IEntityValidator>();
             this.authRepositoryMock = new Mock<IAuthRepository>();
@@ -65,6 +67,7 @@ namespace CIYW.UnitTests.Mediator.Users
                 this.mapperMock.Object,
                 this.authRepositoryMock.Object,
                 this.userManagerMock.Object,
+                this.elasticMock.Object,
                 this.entityValidatorMock.Object,
                 this.currentUserProviderMock.Object
             );

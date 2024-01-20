@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
+using AutoMapper;
 using CIYW.Const.Errors;
+using CIYW.Domain;
 using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
@@ -15,28 +17,45 @@ namespace CIYW.Repositories;
 public class ElasticSearchRepository: IElasticSearchRepository
 {
     private readonly IElasticClient elasticClient;
+    private readonly IMapper mapper;
+    private readonly DataContext context;
 
-    public ElasticSearchRepository(IElasticClient elasticClient)
+    public ElasticSearchRepository(
+        IElasticClient elasticClient, 
+        IMapper mapper,
+        DataContext context)
     {
         this.elasticClient = elasticClient;
+        this.mapper = mapper;
+        this.context = context;
+    }
+
+    public async Task MapEntityAsync<T, TMapped>(T entity, CancellationToken cancellationToken)
+        where T: class
+        where TMapped: class
+    {
+        Guid entityId = ReflectionUtils.GetValue<T, Guid>(entity, "Id");
+
+        TMapped mappedEntity = this.mapper.Map<T, TMapped>(entity);
+
+        await this.AddOrUpdateEntityAsync<TMapped>(e => ReflectionUtils.GetValue<TMapped, Guid>(e, "Id") == entityId, entityId, mappedEntity, cancellationToken);
+        
+        ReflectionUtils.SetValue<T, DateTime?>(entity, "Mapped", DateTime.UtcNow);
+
+        this.context.Set<T>().Update(entity);
+        await this.context.SaveChangesAsync(cancellationToken);
     }
     
-    public async Task AddEntityAsync<T>(T entity, Guid id, string routeValue, CancellationToken cancellationToken) where T: class
+    public async Task AddEntityAsync<T>(T entity, CancellationToken cancellationToken) where T: class
     {
-        // var response = await this.elasticClient.IndexAsync<T>(entity, x => x.Index("users_index").Id(id), cancellationToken);
-        
-        //var indexResponse = await this.elasticClient.IndexDocumentAsync(entity, cancellationToken); 
-        // var response = await this.elasticClient.IndexDocumentAsync(entity);
-        
         var response = await this.elasticClient.IndexDocumentAsync(entity, cancellationToken);
-        
-        
-        var test = 3;
+        this.CheckResponse(response.IsValid, response.DebugInformation);
     }
     
     public async Task AddEntitiesAsync<T>(List<T> entities, string schemeName, CancellationToken cancellationToken) where T : class
     {
         var response = await this.elasticClient.IndexManyAsync<T>(entities, schemeName, cancellationToken);
+        this.CheckResponse(response.IsValid, response.DebugInformation);
     }
 
     public async Task AddOrUpdateEntityAsync<T>(Expression<Func<T, bool>> predicate, Guid id, T entity,
@@ -46,7 +65,7 @@ public class ElasticSearchRepository: IElasticSearchRepository
 
         if (temp == null)
         {
-           // await this.AddEntityAsync<T>(entity, cancellationToken);
+           await this.AddEntityAsync<T>(entity, cancellationToken);
         }
         else
         {
@@ -57,21 +76,22 @@ public class ElasticSearchRepository: IElasticSearchRepository
     public async Task UpdateEntityAsync<T>(Expression<Func<T, bool>> predicate, Guid id, T entity, CancellationToken cancellationToken) where T: class
     {
         this.DeleteById(predicate, id);
-      //  await this.AddEntityAsync<T>(entity, cancellationToken);
+        await this.AddEntityAsync<T>(entity, cancellationToken);
     }
 
     public void DeleteById<T>(Expression<Func<T, bool>> predicate, Guid id) where T: class
     {
-        this.elasticClient.DeleteByQuery<T>(p => p.Query(q1 => q1
+        var response = this.elasticClient.DeleteByQuery<T>(p => p.Query(q1 => q1
             .Match(m => m
                 .Field(predicate)
                 .Query(id.ToString())
             )));
+        this.CheckResponse(response.IsValid, response.DebugInformation);
     }
     
     public async Task<T?> GetByIdAsync<T>(Expression<Func<T, bool>> predicate, Guid id, CancellationToken cancellationToken) where T: class
     {
-        var result = await this.elasticClient.SearchAsync<T>(s => s
+        var response = await this.elasticClient.SearchAsync<T>(s => s
             .Query(q => q
                 .Match(m => m
                     .Field(predicate)
@@ -79,13 +99,10 @@ public class ElasticSearchRepository: IElasticSearchRepository
                 )
             )
             .Size(1), cancellationToken);
-
-        if (!result.IsValid || !result.Documents.Any())
-        {
-            throw new LoggerException(ErrorMessages.NotFound, 404);
-        }
         
-        return result.Documents.First();
+        this.CheckResponse(response.IsValid, response.DebugInformation);
+        
+        return response.Documents.FirstOrDefault();
     }
     
     public async Task<ListWithIncludeHelper<T>> GetPaginatedResultsAsync<T>(Expression<Func<T, bool>> userIdPredicate,
@@ -133,5 +150,13 @@ public class ElasticSearchRepository: IElasticSearchRepository
             Paginator = filter.Paginator,
             TotalCount = (int)total.Count
         };
+    }
+
+    private void CheckResponse(bool isValid, string info)
+    {
+        if (!isValid)
+        {
+            throw new LoggerException(String.Format(ErrorMessages.ElasticSearchError, info), 409);            
+        }
     }
 }

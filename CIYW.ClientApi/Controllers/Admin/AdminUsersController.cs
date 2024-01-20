@@ -26,6 +26,22 @@ public class AdminUsersController: BaseController
         this.mediator = mediator;
     }
     
+    [HttpPost()]
+    [ProducesResponseType(typeof(MappedHelperResponse<UserResponse, User>), 200)]
+    public async Task<IActionResult> V1_CreateUserByAdminAsync(CreateUserByAdminCommand command, CancellationToken cancellationToken)
+    {
+        MappedHelperResponse<UserResponse, User> response = await this.mediator.Send(command, cancellationToken);
+        return Ok(response);
+    }
+    
+    [HttpPut()]
+    [ProducesResponseType(typeof(MappedHelperResponse<UserResponse, User>), 200)]
+    public async Task<IActionResult> V1_UpdateUserByAdminAsync(UpdateUserByAdminCommand command, CancellationToken cancellationToken)
+    {
+        MappedHelperResponse<UserResponse, User> response = await this.mediator.Send(command, cancellationToken);
+        return Ok(response);
+    }
+    
     [HttpPost("filter")]
     [ProducesResponseType(typeof(ListWithIncludeHelper<UserResponse>), 200)]
     public async Task<IActionResult> V1_GetUsersAsync(UsersQuery query, CancellationToken cancellationToken)

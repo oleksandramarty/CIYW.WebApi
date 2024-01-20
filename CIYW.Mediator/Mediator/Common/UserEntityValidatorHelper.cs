@@ -1,10 +1,13 @@
 using System.Linq.Expressions;
 using AutoMapper;
+using CIYW.Const.Const;
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
+using CIYW.Domain.Models.User;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
+using CIYW.Mediator.Mediator.Users.Requests;
 using FluentValidation;
 using MediatR;
 
@@ -90,5 +93,27 @@ public class UserEntityValidatorHelper
     protected MappedHelperResponse<TResponse, T> GetMappedHelper<TResponse, T>(T entity)
     {
         return new MappedHelperResponse<TResponse, T>(mapper.Map<T, TResponse>(entity), entity);
+    }
+
+    protected async Task CheckUserCommandAsync(Guid? userId, CreateUserCommand command, CancellationToken cancellationToken)
+    {
+        if (!command.Email.TrimWhiteSpaces().Equals(command.ConfirmEmail.TrimWhiteSpaces()))
+        {
+            throw new LoggerException(ErrorMessages.EmailsDoesntMatch, 409);
+        }
+        
+        if (!command.Password.TrimWhiteSpaces().Equals(command.ConfirmPassword.TrimWhiteSpaces()))
+        {
+            throw new LoggerException(ErrorMessages.PasswordsDoesntMatch, 409);
+        }
+        
+        if (!command.IsAgree)
+        {
+            throw new LoggerException(ErrorMessages.AgreeBeforeSignIn, 409);
+        }
+        
+        await this.ValidateExistParamAsync<User>(u => (userId.HasValue && u.Id != userId.Value || !userId.HasValue) && u.Email == command.Email, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Email), cancellationToken);
+        await this.ValidateExistParamAsync<User>(u => (userId.HasValue && u.Id != userId.Value || !userId.HasValue) && u.PhoneNumber == command.Phone, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Phone), cancellationToken);
+        await this.ValidateExistParamAsync<User>(u => (userId.HasValue && u.Id != userId.Value || !userId.HasValue) && u.Login == command.Login, String.Format(ErrorMessages.UserWithParamExist, DefaultConst.Login), cancellationToken);
     }
 }

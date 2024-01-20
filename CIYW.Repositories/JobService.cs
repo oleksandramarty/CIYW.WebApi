@@ -51,7 +51,9 @@ public class JobService: IJobService
         
         bool isNeed = entities.Any();
         
-        // var schema = this.configuration["ELKConfiguration:Indexes:User"];
+        var schema = this.configuration["ELKConfiguration:Indexes:User"];
+
+        List<UserSearchModel> mappedEntities = new List<UserSearchModel>();
         
         while (isNeed)
         {
@@ -59,16 +61,14 @@ public class JobService: IJobService
             {
                 if (entity.Mapped.HasValue)
                 {
-                    this.elasticSearchRepository.DeleteById<User>(t => t.Id == entity.Id, entity.Id);                
+                    this.elasticSearchRepository.DeleteById<UserSearchModel>(t => t.Id == entity.Id, entity.Id);                
                 }
-                var temp22 = this.mapper.Map<User, UserSearchModel>(entity);
+                mappedEntities.Add(this.mapper.Map<User, UserSearchModel>(entity));
                 
-                await this.elasticSearchRepository.AddEntityAsync<UserSearchModel>(temp22, entity.Id, entity.Login, cancellationToken);
-
-                
+                // await this.elasticSearchRepository.MapEntityAsync<User, UserSearchModel>(entity, cancellationToken);
             }
             
-            // await this.elasticSearchRepository.AddEntitiesAsync<User>(entities, schema, cancellationToken);
+            await this.elasticSearchRepository.AddEntitiesAsync<UserSearchModel>(mappedEntities, schema, cancellationToken);
         
             this.context.Users.UpdateRange(entities.Select(x =>
             {

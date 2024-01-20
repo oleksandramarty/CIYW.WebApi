@@ -48,6 +48,10 @@ public class MappingProfile: Profile
         this.CreateMap<UpdateInvoiceCommand, Invoice>()
             .ForMember(dest => dest.Note, opt => opt.Ignore());
 
+        this.CreateMap<UpdateUserByAdminCommand, User>()
+            .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => DateTime.UtcNow));
+        this.CreateMap<UpdateUserCommand, User>()
+            .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => DateTime.UtcNow));
         this.CreateMap<CreateUserCommand, User>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Login))
