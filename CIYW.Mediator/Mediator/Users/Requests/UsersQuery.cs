@@ -23,4 +23,17 @@ public class UsersQuery: BaseFilterQuery, IRequest<ListWithIncludeHelper<UserRes
         DateRange = dateRange;
         Sort = sort;
     }
+    
+    
+    public bool? IsBlocked { get; set; }
+    public string Phone { get; set; }
+    public string Email { get; set; }
+    public string Login { get; set; }
+    public string Name { get; set; }
+    
+    public BaseDateRangeQuery? CreatedRange { get; set; }
+    public BaseDateRangeQuery? UpdatedRange { get; set; }
+    public BaseIdsListQuery CurrencyIds { get; set; }
+    public BaseIdsListQuery RoleIds { get; set; }
+    public BaseIdsListQuery TariffIds { get; set; }
 }

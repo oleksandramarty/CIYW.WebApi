@@ -75,7 +75,9 @@ public class CreateUserCommandHandler: UserEntityValidatorHelper, IRequestHandle
 
         this.ValidateExist<User, Guid?>(user, user?.Id);
 
-        await this.elastic.MapEntityAsync<User, UserSearchModel>(user, cancellationToken);
+        UserSearchModel temp = this.mapper.Map<User, UserSearchModel>(user);
+        temp.RoleId = InitConst.UserRoleId;    
+        await this.elastic.MapEntityAsync<User, UserSearchModel>(user, temp, cancellationToken);
 
         return this.GetMappedHelper<UserResponse, User>(user);
     }

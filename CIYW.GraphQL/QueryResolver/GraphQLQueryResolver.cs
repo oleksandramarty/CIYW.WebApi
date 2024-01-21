@@ -134,8 +134,26 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
     public void GetUsers()
     {
         Field<ListUsersWithIncludeHelperType>("users")
-            .Arguments(new QueryArguments(GetPageableQueryArguments()))
-            .ResolveAsync(async context => await this.GetPageableResponse<UserResponse, UsersQuery>(context, new UsersQuery(this.GetBaseFilterQuery(context))));
+            .Arguments(new QueryArguments(GetPageableUsersQueryArguments()))
+            .ResolveAsync(async context =>
+            {
+                var query = new UsersQuery(this.GetBaseFilterQuery(context));
+
+                query.IsBlocked = context.GetArgument<bool?>("isBlocked") ?? false;
+                query.Phone = context.GetArgument<string?>("phone") ?? null;
+                query.Email = context.GetArgument<string?>("email") ?? null;
+                query.Login = context.GetArgument<string?>("login") ?? null;
+                query.Name = context.GetArgument<string?>("name") ?? null;
+
+                query.CreatedRange = this.GetDateRangeModel(context, "createdRange");
+                query.UpdatedRange = this.GetDateRangeModel(context, "updatedRange");
+
+                query.CurrencyIds = this.GetIdsModel(context, "currencyIds");
+                query.RoleIds = this.GetIdsModel(context, "roleIds");
+                query.TariffIds = this.GetIdsModel(context, "tariffIds");
+                
+                return await this.GetPageableResponse<UserResponse, UsersQuery>(context, query);
+            });
     }
 
     private async Task<ListWithIncludeHelper<T>> GetPageableResponse<T, TQuery>(IResolveFieldContext<object?> context, TQuery query)
@@ -157,6 +175,23 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             new QueryArgument<StringGraphType> { Name = "parentClass" },
             new QueryArgument<StringGraphType> { Name = "column" },
             new QueryArgument<StringGraphType> { Name = "direction" });
+    }
+
+    private IEnumerable<QueryArgument> GetPageableUsersQueryArguments()
+    {
+        return this.GetPageableQueryArguments().Concat(
+            new QueryArguments(new QueryArgument<BooleanGraphType> { Name = "isBlocked" },
+                new QueryArgument<StringGraphType> { Name = "phone" },
+                new QueryArgument<StringGraphType> { Name = "email" },
+                new QueryArgument<StringGraphType> { Name = "login" },
+                new QueryArgument<StringGraphType> { Name = "name" },
+                new QueryArgument<DateTimeGraphType> { Name = "createdRangeFrom" },
+                new QueryArgument<DateTimeGraphType> { Name = "createdRangeTo" },
+                new QueryArgument<DateTimeGraphType> { Name = "updatedRangeFrom" },
+                new QueryArgument<DateTimeGraphType> { Name = "updatedRangeTo" },
+                new QueryArgument<ListGraphType<GuidGraphType>> { Name = "currencyIds" },
+                new QueryArgument<ListGraphType<GuidGraphType>> { Name = "roleIds" },
+                new QueryArgument<ListGraphType<GuidGraphType>> { Name = "tariffIds" }));
     }
 
     private BaseFilterQuery GetBaseFilterQuery(IResolveFieldContext<object?> context)
@@ -193,5 +228,22 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
         }
 
         return query;
+    }
+
+    private BaseDateRangeQuery GetDateRangeModel(IResolveFieldContext<object?> context, string name)
+    {
+        return new BaseDateRangeQuery
+        {
+            DateFrom = context.GetArgument<DateTime?>($"{name}From"),
+            DateTo = context.GetArgument<DateTime?>($"{name}To")
+        };
+    }
+    private BaseIdsListQuery GetIdsModel(IResolveFieldContext<object?> context, string name)
+    {
+        List<Guid?> ids = context.GetArgument<List<Guid?>>(name);
+        return ids != null && ids.Any(x => x.HasValue) ? new BaseIdsListQuery
+        {
+            Ids = ids.Where(x => x.HasValue).Select(x => x.Value).ToList()
+        } : null;
     }
 }

@@ -31,13 +31,16 @@ public class ElasticSearchRepository: IElasticSearchRepository
         this.context = context;
     }
 
-    public async Task MapEntityAsync<T, TMapped>(T entity, CancellationToken cancellationToken)
+    public async Task MapEntityAsync<T, TMapped>(T entity, TMapped mappedEntity, CancellationToken cancellationToken)
         where T: class
         where TMapped: class
     {
         Guid entityId = ReflectionUtils.GetValue<T, Guid>(entity, "Id");
 
-        TMapped mappedEntity = this.mapper.Map<T, TMapped>(entity);
+        if (mappedEntity == null)
+        {
+            mappedEntity = this.mapper.Map<T, TMapped>(entity);
+        }
 
         await this.AddOrUpdateEntityAsync<TMapped>(e => ReflectionUtils.GetValue<TMapped, Guid>(e, "Id") == entityId, entityId, mappedEntity, cancellationToken);
         
@@ -106,21 +109,16 @@ public class ElasticSearchRepository: IElasticSearchRepository
         return response.Documents.FirstOrDefault();
     }
     
-    public async Task<ListWithIncludeHelper<TMapped>> GetPageableResponseAsync<T, TMapped>(Expression<Func<T, bool>> userIdPredicate,
-        Guid? userId,
+    public async Task<ListWithIncludeHelper<TMapped>> GetPageableResponseAsync<T, TMapped>(
+        QueryContainerDescriptor<T> query,
         SortDescriptor<T> sort,
         BaseFilterQuery filter,
         CancellationToken cancellationToken) where T : class
     {
         int skip = (filter.Paginator.PageNumber - 1) * filter.Paginator.PageSize;
         var result = await this.elasticClient.SearchAsync<T>(s => s
-                .Query(q => userIdPredicate == null ?
-                    q.MatchAll() :
-                    q.Match(m => m
-                            .Field(userIdPredicate)
-                            .Query(userId.ToString())
-                    )
-                ).Sort(s => sort)
+                .Query(q => q.MatchAll())
+                .Sort(s => sort)
                 .From(skip).Size(filter.Paginator.PageSize)
         );
 

@@ -1,10 +1,6 @@
 ﻿using CIYW.ClientApi.Controllers.Base;
 using CIYW.Const.Enums;
-using CIYW.Mediator;
 using CIYW.Mediator.Mediator.FIle.Requests;
-using CIYW.Models.Helpers.Base;
-using CIYW.Models.Responses.Image;
-using CIYW.MongoDB.Models.Image;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

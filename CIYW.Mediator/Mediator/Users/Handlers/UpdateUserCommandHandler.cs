@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
 using CIYW.Elasticsearch.Models.User;
 using CIYW.Interfaces;
@@ -48,7 +49,9 @@ public class UpdateUserCommandHandler: UserEntityValidatorHelper, IRequestHandle
 
         await this.authRepository.UpdateUserLoginsAsync(user, cancellationToken);
         
-        await this.elastic.MapEntityAsync<User, UserSearchModel>(user, cancellationToken);
+        UserSearchModel temp = this.mapper.Map<User, UserSearchModel>(user);
+        temp.RoleId = InitConst.UserRoleId;    
+        await this.elastic.MapEntityAsync<User, UserSearchModel>(user, temp, cancellationToken);
 
         return this.GetMappedHelper<UserResponse, User>(user);
     }

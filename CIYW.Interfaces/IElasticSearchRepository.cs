@@ -1,6 +1,4 @@
 ﻿using System.Linq.Expressions;
-using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.User;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 using Nest;
@@ -9,7 +7,7 @@ namespace CIYW.Interfaces;
 
 public interface IElasticSearchRepository
 {
-    Task MapEntityAsync<T, TMapped>(T entity, CancellationToken cancellationToken)
+    Task MapEntityAsync<T, TMapped>(T entity, TMapped mappedEntity, CancellationToken cancellationToken)
         where T : class
         where TMapped : class;
     Task AddEntityAsync<T>(T entity, CancellationToken cancellationToken) where T : class;
@@ -20,8 +18,8 @@ public interface IElasticSearchRepository
     void DeleteById<T>(Expression<Func<T, bool>> predicate, Guid id) where T : class;
     Task<T?> GetByIdAsync<T>(Expression<Func<T, bool>> predicate, Guid id, CancellationToken cancellationToken) where T: class;
 
-    Task<ListWithIncludeHelper<TMapped>> GetPageableResponseAsync<T, TMapped>(Expression<Func<T, bool>> userIdPredicate,
-        Guid? userId,
+    Task<ListWithIncludeHelper<TMapped>> GetPageableResponseAsync<T, TMapped>(
+        QueryContainerDescriptor<T> query,
         SortDescriptor<T> sort,
         BaseFilterQuery filter,
         CancellationToken cancellationToken) where T : class;

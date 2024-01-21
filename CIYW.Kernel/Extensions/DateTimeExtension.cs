@@ -71,6 +71,11 @@ public static class DateTimeExtension
         return $"{(int)(timeAgo.TotalDays / 365)} year{((int)(timeAgo.TotalDays / 365)).GetPlural()} ago";
     }
 
+    public static double GetTotalSeconds(this DateTime date)
+    {
+        return (date - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
+    }
+
     private static string GetPlural(this int temp)
     {
         return temp != 1 ? "s" : "";

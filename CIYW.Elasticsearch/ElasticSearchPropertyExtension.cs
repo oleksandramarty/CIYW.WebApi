@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using CIYW.Models.Requests.Common;
 using Nest;
 
 namespace CIYW.Elasticsearch;
@@ -78,5 +79,56 @@ public static class ElasticSearchPropertyExtension
                 )
             )
         );
+    }
+    
+    public static QueryContainerDescriptor<T> ApplyDateRangeFilter<T, TDateTime>(this QueryContainerDescriptor<T> m, Expression<Func<T, TDateTime>> objectPath, BaseDateRangeQuery? range) where T: class
+    {
+        if (range != null && (range.DateFrom.HasValue || range.DateTo.HasValue))
+        {
+            if (range.DateFrom.HasValue && range.DateTo.HasValue)
+            {
+                m.DateRange(r => r.Field(objectPath)
+                    .GreaterThanOrEquals(range.DateFrom.Value)
+                    .LessThanOrEquals(range.DateTo.Value)
+                );
+                return m;
+            }
+            if (range.DateFrom.HasValue && !range.DateTo.HasValue)
+            {
+                m.DateRange(r => r.Field(objectPath)
+                    .GreaterThanOrEquals(range.DateFrom.Value)
+                );
+                return m;
+            }
+            if (!range.DateFrom.HasValue && range.DateTo.HasValue)
+            {
+                m.DateRange(r => r.Field(objectPath)
+                    .LessThanOrEquals(range.DateTo.Value)
+                );
+                return m;
+            }
+        }
+
+        return m;
+    }
+
+    public static QueryContainerDescriptor<T> ApplyIdsFilter<T>(this QueryContainerDescriptor<T> m,
+        Expression<Func<T, Guid>> objectPath, BaseIdsListQuery? query) where T : class
+    {
+        if (query == null)
+        {
+            return m;
+        }
+        
+        if (query.Ids.Any())
+        {
+            m.Bool(b => b
+                .Must(
+                    m.Term(t => t.Field(objectPath).Value(query.Ids.First()))
+                )
+            );
+        }
+
+        return m;
     }
 }

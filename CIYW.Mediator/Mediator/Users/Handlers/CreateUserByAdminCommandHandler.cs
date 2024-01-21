@@ -73,8 +73,10 @@ public class CreateUserByAdminCommandHandler: UserEntityValidatorHelper, IReques
         await this.authRepository.UpdateUserLoginsAsync(user.Id, logins, cancellationToken);
 
         this.ValidateExist<User, Guid?>(user, user?.Id);
-        
-        await this.elastic.MapEntityAsync<User, UserSearchModel>(user, cancellationToken);
+
+        UserSearchModel temp = this.mapper.Map<User, UserSearchModel>(user);
+        temp.RoleId = InitConst.UserRoleId;        
+        await this.elastic.MapEntityAsync<User, UserSearchModel>(user, temp, cancellationToken);
 
         UserResponse mapped = this.mapper.Map<User, UserResponse>(user);
         mapped.Role = RoleProvider.User;

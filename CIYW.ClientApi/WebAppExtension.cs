@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
-using System.Threading;
-using System.Threading.Tasks;
 using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
 using CIYW.ClientApi.Middleware;
@@ -17,26 +12,27 @@ using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.User;
 using CIYW.GraphQL;
 using CIYW.Interfaces;
+using CIYW.Interfaces.Strategies;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Kernel.Utils;
+using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Mediator.Validators.Categories;
 using CIYW.Mediator.Validators.Currencies;
 using CIYW.Mediator.Validators.Notes;
 using CIYW.Mediator.Validators.Tariffs;
+using CIYW.Models.Responses.Users;
 using CIYW.MongoDB;
 using CIYW.Repositories;
+using CIYW.Repositories.Strategies;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using GraphQL;
 using GraphQL.MicrosoftDI;
 using GraphQL.Types;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
@@ -275,6 +271,10 @@ namespace CIYW.Kernel.Extensions;
             builder.Services.AddSingleton(typeof(IMongoDbRepository<>), typeof(MongoDbRepository<>));
             
             builder.Services.AddScoped<ContextServiceLocator>();
+            
+            // Strategies
+            builder.Services.AddScoped<IPageableStrategy<UserResponse, UsersQuery>, UsersPageableStrategy>();
+            builder.Services.AddScoped<IPageableStrategyRepository<UserResponse, UsersQuery>, UsersPageableRepository>();
         }
 
         public static void AddMvcSupport(this WebApplicationBuilder builder)
