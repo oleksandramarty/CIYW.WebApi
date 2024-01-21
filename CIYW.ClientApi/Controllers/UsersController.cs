@@ -34,6 +34,14 @@ public class UsersController: BaseController
         return Ok(result.MappedEntity);
     }
     
+    [HttpGet("Active")]
+    [ProducesResponseType(typeof(ActiveUserResponse), 200)]
+    public async Task<IActionResult> V1_ActiveUserAsync(CancellationToken cancellationToken)
+    {
+        MappedHelperResponse<ActiveUserResponse, ActiveUser> result = await this.mediator.Send(new ActiveUserQuery(), cancellationToken);
+        return Ok(result.MappedEntity);
+    }
+    
     [HttpGet("Avatar")]
     [ProducesResponseType(typeof(ImageDataResponse), 200)]
     public async Task<IActionResult> V1_GetCurrentUserImageAsync(CancellationToken cancellationToken)

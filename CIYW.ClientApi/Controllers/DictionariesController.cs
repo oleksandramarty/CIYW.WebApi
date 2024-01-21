@@ -28,7 +28,7 @@ public class DictionariesController: BaseController
         return Ok(response);
     }
     
-    [HttpGet("{type}")]
+    [HttpGet("{typ}")]
     [ProducesResponseType(typeof(DictionaryResponse<Guid>), 200)]
     public async Task<IActionResult> V1_GetByTypeAsync([FromRoute] EntityTypeEnum type, CancellationToken cancellationToken)
     {
@@ -36,7 +36,7 @@ public class DictionariesController: BaseController
         return Ok(response);
     }
     
-    [HttpGet("enum/{type}")]
+    [HttpGet("enum/{typ}")]
     [ProducesResponseType(typeof(DictionaryResponse<string>), 200)]
     public async Task<IActionResult> V1_GetByEnumTypeAsync([FromRoute] EntityTypeEnum type, CancellationToken cancellationToken)
     {

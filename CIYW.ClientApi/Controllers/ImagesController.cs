@@ -12,11 +12,11 @@ namespace CIYW.ClientApi.Controllers;
 
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]
-public class ImageController: BaseController
+public class ImagesController: BaseController
 {
     private readonly IMediator mediator;
     
-    public ImageController(IMediator mediator)
+    public ImagesController(IMediator mediator)
     {
         this.mediator = mediator;
     }

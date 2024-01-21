@@ -30,7 +30,7 @@ public class CurrentUserQueryHandler: UserEntityValidatorHelper, IRequestHandler
         IMediator mediator,
         IReadGenericRepository<User> userRepository, 
         IReadGenericRepository<IdentityUserRole<Guid>> userRoleRepository, 
-        IReadGenericRepository<Role> roleRepository, 
+        IReadGenericRepository<Role> roleRepository,
         ICurrentUserProvider currentUserProvider, 
         IEntityValidator entityValidator): base(mapper, entityValidator, currentUserProvider)
     {
@@ -59,7 +59,7 @@ public class CurrentUserQueryHandler: UserEntityValidatorHelper, IRequestHandler
         Guid roleId = userRoles.FirstOrDefault().RoleId;
         Role role =
             await this.roleRepository.GetByPropertyAsync(r => r.Id == roleId, cancellationToken);
-        
+       
         UserResponse response = this.mapper.Map<User, UserResponse>(user);
         response.RoleId = role.Id;
         response.Role = role.Name;

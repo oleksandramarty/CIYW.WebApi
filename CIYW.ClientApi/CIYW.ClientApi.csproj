@@ -17,6 +17,8 @@
         <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="8.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
         <PackageReference Include="GraphQL" Version="7.7.2" />
         <PackageReference Include="GraphQL.MicrosoftDI" Version="7.7.2" />
@@ -56,6 +58,7 @@
       <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
       <ProjectReference Include="..\CIYW.MongoDB\CIYW.MongoDB.csproj" />
       <ProjectReference Include="..\CIYW.Repositories\CIYW.Repositories.csproj" />
+      <ProjectReference Include="..\CIYW.SignalR\CIYW.SignalR.csproj" />
       <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
     </ItemGroup>
 

@@ -11,6 +11,7 @@ using CIYW.Elasticsearch;
 using CIYW.Kernel.Extensions;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Mediator;
+using CIYW.SignalR;
 using CYIW.Mapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +26,13 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        
         builder.Services.AddTransient<IPasswordHasher<User>, CIYWPasswordHasher>();
-        builder.Services.AddSignalR();
+        builder.Services.AddSignalR(e => {
+            e.MaximumReceiveMessageSize = 102400000;
+            e.EnableDetailedErrors = true;  
+            e.KeepAliveInterval = TimeSpan.FromMinutes(1);  
+        }).AddMessagePackProtocol();
 
         builder.Services.AddDbContext<DataContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("CIYWConnection")));
@@ -64,12 +69,16 @@ public class Program
             .AddScheme<JwtCIYWOptions, JwtCIYWHandler>(JwtCIYWDefaults.AuthenticationScheme,
                 options => { options.Realm = "Protect JwtCIYW"; });
 
+        var allowedSpecificOriginsPolicy = "_AllowedSpecificOriginsPolicy";
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("CorsPolicy",
-                builder => builder
+            options.AddPolicy(allowedSpecificOriginsPolicy, builder =>
+            {
+                builder.WithOrigins("http://localhost:4209")
                     .AllowAnyHeader()
-                    .AllowAnyOrigin());
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
         });
 
         builder.Services.AddHealthChecks();
@@ -183,6 +192,9 @@ public class Program
         });
 
         var app = builder.Build();
+        
+        app.UseDefaultFiles();
+        app.UseStaticFiles();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -195,6 +207,8 @@ public class Program
         {
             app.UseHsts();
         }
+        
+        app.MapHub<MessageHub>("/hub");
         
         var cts = new CancellationTokenSource();
         var cancellationToken = cts.Token;
@@ -215,7 +229,7 @@ public class Program
 
         app.ConfigureApplicationLocalization();
 
-        app.UseCors("CorsPolicy");
+        app.UseCors(allowedSpecificOriginsPolicy);
 
         app.UseAuthentication();
         app.UseAuthorization();

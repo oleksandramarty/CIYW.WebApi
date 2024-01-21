@@ -1,10 +1,15 @@
 ﻿using CIYW.ClientApi.Controllers.Base;
+using CIYW.Const.Enums;
 using CIYW.Domain.Models.User;
 using CIYW.Elasticsearch.Models.User;
 using CIYW.Interfaces;
+using CIYW.Kernel.Extensions;
 using CIYW.MongoDB.Models.Image;
+using CIYW.SignalR;
+using CIYW.SignalR.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Nest;
 
 namespace CIYW.ClientApi.Controllers;
@@ -15,10 +20,12 @@ namespace CIYW.ClientApi.Controllers;
 public class ElasticSearchController: BaseController
 {
     private readonly IElasticClient _elasticClient;
+    private readonly IHubContext<MessageHub> messageHub;
 
-    public ElasticSearchController(IElasticClient elasticClient)
+    public ElasticSearchController(IElasticClient elasticClient, IHubContext <MessageHub> messageHub)
     {
        _elasticClient = elasticClient;
+       this.messageHub = messageHub;
     }
     
     [HttpGet("RemoveAll")]
@@ -69,5 +76,22 @@ public class ElasticSearchController: BaseController
                 .Size(5000));
         
         return Ok(result.Documents.ToList());
+    }
+    
+    [HttpGet("TestMessage")]
+    public async Task<IActionResult> V1_GetUsersy11IdAsync(CancellationToken cancellationToken)
+    {
+        MessageHubModel message = new MessageHubModel(SignalRMessageTypeEnum.MESSAGE_TO_ALL_ACTIVE_USERS, "Test Message");
+        await this.messageHub.Clients.All.SendAsync(message.SignalRMessageType.GetDescription(), message, cancellationToken);
+        
+        return Ok();
+    }
+    [HttpGet("TestMessage12")]
+    public async Task<IActionResult> V1_GetUsersy111IdAsync(CancellationToken cancellationToken)
+    {
+        MessageHubModel message = new MessageHubModel(SignalRMessageTypeEnum.MESSAGE_TO_ALL_ACTIVE_USERS, "Test Message");
+        await this.messageHub.Clients.All.SendAsync(message.SignalRMessageType.GetDescription(), message, cancellationToken);
+        
+        return Ok();
     }
 }

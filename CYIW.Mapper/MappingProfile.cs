@@ -34,6 +34,7 @@ public class MappingProfile: Profile
 {
     public MappingProfile()
     {
+        this.CreateMap<ActiveUser, ActiveUserResponse>();
         this.CreateMap<User, UserResponse>()
             .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.UserName));
         this.CreateMap<UserBalance, UserBalanceResponse>();
