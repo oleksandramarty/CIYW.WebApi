@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
-namespace CIYW.IntegrationTests.Mediator.User;
+namespace CIYW.IntegrationTests.Mediator.Users;
 [TestFixture]
 public class CreateUserCommandHandlerIntegrationTest: CommonIntegrationTestSetup
 {

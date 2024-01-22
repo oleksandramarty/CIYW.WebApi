@@ -14,7 +14,7 @@ public class InvoiceType: ObjectGraphType<InvoiceResponse>
         Field(x => x.Name);
         Field(x => x.Amount);
         Field(x => x.UserId);
-        // Field(x => x.User, true);
+        // Field(x => x.Users, true);
         Field(x => x.CurrencyId);
         Field<CurrencyType>("currency", resolve: context => context.Source.Currency);
         Field(x => x.CategoryId);

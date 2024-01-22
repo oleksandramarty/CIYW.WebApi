@@ -32,7 +32,7 @@ public class ElasticSearchController: BaseController
     public async Task<IActionResult> V1_GetInvoiceBy222IdAsync(CancellationToken cancellationToken)
     {
         //"Invoices": "invoices_index",
-        //"User": "users_index",
+        //"Users": "users_index",
         var deleteResponse1 = await _elasticClient.DeleteByQueryAsync<User>(d => d
             .Index("users")
             .Query(q => q.MatchAll())
@@ -45,7 +45,7 @@ public class ElasticSearchController: BaseController
     public async Task<IActionResult> V1_GetInvoiceBy22IdAsync(CancellationToken cancellationToken)
     {
         //"Invoices": "invoices_index",
-        //"User": "users_index",
+        //"Users": "users_index",
         var deleteResponse1 = await _elasticClient.Indices.DeleteAsync("users");
         return Ok();
     }   

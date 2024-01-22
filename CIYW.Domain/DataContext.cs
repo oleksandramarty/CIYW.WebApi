@@ -29,10 +29,10 @@ namespace CIYW.Domain;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Role>(entity => { entity.ToTable("Roles", "CIYW.User"); });
-      modelBuilder.Entity<User>(entity => { entity.ToTable("User", "CIYW.User"); });
-      modelBuilder.Entity<UserCategory>(entity => { entity.ToTable("UserCategories", "CIYW.User"); });
-      modelBuilder.Entity<ActiveUser>(entity => { entity.ToTable("ActiveUsers", "CIYW.User"); });
+      modelBuilder.Entity<Role>(entity => { entity.ToTable("Roles", "CIYW.Users"); });
+      modelBuilder.Entity<User>(entity => { entity.ToTable("Users", "CIYW.Users"); });
+      modelBuilder.Entity<UserCategory>(entity => { entity.ToTable("UserCategories", "CIYW.Users"); });
+      modelBuilder.Entity<ActiveUser>(entity => { entity.ToTable("ActiveUsers", "CIYW.Users"); });
       
       modelBuilder.Entity<Currency>(entity => { entity.ToTable("Currencies", "CIYW.Dictionary"); });
       

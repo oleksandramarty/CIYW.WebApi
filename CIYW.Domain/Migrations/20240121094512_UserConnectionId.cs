@@ -13,7 +13,7 @@ namespace CIYW.Domain.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "ActiveUsers",
-                schema: "CIYW.User",
+                schema: "CIYW.Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -33,7 +33,7 @@ namespace CIYW.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ActiveUsers",
-                schema: "CIYW.User");
+                schema: "CIYW.Users");
         }
     }
 }

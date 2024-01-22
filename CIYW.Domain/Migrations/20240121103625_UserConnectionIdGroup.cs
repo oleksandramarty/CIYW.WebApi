@@ -12,7 +12,7 @@ namespace CIYW.Domain.Migrations
         {
             migrationBuilder.AddColumn<string>(
                 name: "Groups",
-                schema: "CIYW.User",
+                schema: "CIYW.Users",
                 table: "ActiveUsers",
                 type: "text",
                 nullable: false,
@@ -24,7 +24,7 @@ namespace CIYW.Domain.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Groups",
-                schema: "CIYW.User",
+                schema: "CIYW.Users",
                 table: "ActiveUsers");
         }
     }

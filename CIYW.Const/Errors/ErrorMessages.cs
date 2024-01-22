@@ -2,7 +2,7 @@
 
 public class ErrorMessages
 {
-    public const string UserNotFound = "User not found";
+    public const string UserNotFound = "Users not found";
     public const string InvoiceNotFound = "Invoice not found";
     public const string RoleNotFound = "Role not found";
     public const string TariffNotFound = "Tariff not found";
@@ -10,9 +10,9 @@ public class ErrorMessages
     public const string DictionaryNotFound = "Dictionary not found";
     public const string NotFound = "Not found";
     public const string EntityWithIdNotFound = "{0} with ID {1} not found";
-    public const string UserBlocked = "User blocked";
+    public const string UserBlocked = "Users blocked";
     public const string WrongAuth = "Wrong Login or Password";
-    public const string UserWithParamExist = "User with this {0} exists";
+    public const string UserWithParamExist = "Users with this {0} exists";
     public const string ValidationError = "Validation error";
     public const string EntityAlreadyExists = "Entity already exists";
     public const string HashGenerationError = "Hash generation error";

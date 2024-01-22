@@ -51,7 +51,7 @@ public class JobService: IJobService
         
         bool isNeed = entities.Any();
         
-        var schema = this.configuration["ELKConfiguration:Indexes:User"];
+        var schema = this.configuration["ELKConfiguration:Indexes:Users"];
 
         List<UserSearchModel> mappedEntities = new List<UserSearchModel>();
         
@@ -65,7 +65,7 @@ public class JobService: IJobService
                 }
                 mappedEntities.Add(this.mapper.Map<User, UserSearchModel>(entity));
                 
-                // await this.elasticSearchRepository.MapEntityAsync<User, UserSearchModel>(entity, cancellationToken);
+                // await this.elasticSearchRepository.MapEntityAsync<Users, UserSearchModel>(entity, cancellationToken);
             }
             
             await this.elasticSearchRepository.AddEntitiesAsync<UserSearchModel>(mappedEntities, schema, cancellationToken);

@@ -197,7 +197,7 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("Tariffs", "CIYW.Tariff");
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.ActiveUser", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.ActiveUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -222,10 +222,10 @@ namespace CIYW.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActiveUsers", "CIYW.User");
+                    b.ToTable("ActiveUsers", "CIYW.Users");
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.Role", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -252,7 +252,7 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.Users", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -372,7 +372,7 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.UserBalance", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.UserBalance", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -403,7 +403,7 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("UserBalances", "CIYW.Balance");
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.UserCategory", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.UserCategory", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -415,7 +415,7 @@ namespace CIYW.Domain.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("UserCategories", "CIYW.User");
+                    b.ToTable("UserCategories", "CIYW.Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -535,7 +535,7 @@ namespace CIYW.Domain.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CIYW.Domain.Models.User.User", "User")
+                    b.HasOne("CIYW.Domain.Models.Users.Users", "Users")
                         .WithMany("Invoices")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -545,7 +545,7 @@ namespace CIYW.Domain.Migrations
 
                     b.Navigation("Currency");
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CIYW.Domain.Models.Note.Note", b =>
@@ -555,7 +555,7 @@ namespace CIYW.Domain.Migrations
                         .HasForeignKey("CIYW.Domain.Models.Note.Note", "InvoiceId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CIYW.Domain.Models.User.User", "User")
+                    b.HasOne("CIYW.Domain.Models.Users.Users", "Users")
                         .WithMany("Notes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -563,10 +563,10 @@ namespace CIYW.Domain.Migrations
 
                     b.Navigation("Invoice");
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.Users", b =>
                 {
                     b.HasOne("CIYW.Domain.Models.Currency.Currency", "Currency")
                         .WithMany("Users")
@@ -585,7 +585,7 @@ namespace CIYW.Domain.Migrations
                     b.Navigation("Tariff");
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.UserBalance", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.UserBalance", b =>
                 {
                     b.HasOne("CIYW.Domain.Models.Currency.Currency", "Currency")
                         .WithMany("UserBalances")
@@ -593,18 +593,18 @@ namespace CIYW.Domain.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CIYW.Domain.Models.User.User", "User")
+                    b.HasOne("CIYW.Domain.Models.Users.Users", "Users")
                         .WithOne("UserBalance")
-                        .HasForeignKey("CIYW.Domain.Models.User.UserBalance", "UserId")
+                        .HasForeignKey("CIYW.Domain.Models.Users.UserBalance", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Currency");
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.UserCategory", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.UserCategory", b =>
                 {
                     b.HasOne("CIYW.Domain.Models.Category.Category", "Category")
                         .WithMany("UserCategories")
@@ -612,7 +612,7 @@ namespace CIYW.Domain.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CIYW.Domain.Models.User.User", "User")
+                    b.HasOne("CIYW.Domain.Models.Users.Users", "Users")
                         .WithMany("UserCategories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -620,12 +620,12 @@ namespace CIYW.Domain.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("CIYW.Domain.Models.User.Role", null)
+                    b.HasOne("CIYW.Domain.Models.Users.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -634,7 +634,7 @@ namespace CIYW.Domain.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("CIYW.Domain.Models.User.User", null)
+                    b.HasOne("CIYW.Domain.Models.Users.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -643,7 +643,7 @@ namespace CIYW.Domain.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("CIYW.Domain.Models.User.User", null)
+                    b.HasOne("CIYW.Domain.Models.Users.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -652,13 +652,13 @@ namespace CIYW.Domain.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("CIYW.Domain.Models.User.Role", null)
+                    b.HasOne("CIYW.Domain.Models.Users.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CIYW.Domain.Models.User.User", null)
+                    b.HasOne("CIYW.Domain.Models.Users.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -667,7 +667,7 @@ namespace CIYW.Domain.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("CIYW.Domain.Models.User.User", null)
+                    b.HasOne("CIYW.Domain.Models.Users.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -701,7 +701,7 @@ namespace CIYW.Domain.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("CIYW.Domain.Models.User.User", b =>
+            modelBuilder.Entity("CIYW.Domain.Models.Users.Users", b =>
                 {
                     b.Navigation("Invoices");
 

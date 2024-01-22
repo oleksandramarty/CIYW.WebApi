@@ -31,7 +31,7 @@ namespace CIYW.Domain.Migrations
                 name: "CIYW.Balance");
 
             migrationBuilder.EnsureSchema(
-                name: "CIYW.User");
+                name: "CIYW.Users");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -327,7 +327,7 @@ namespace CIYW.Domain.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserCategories",
-                schema: "CIYW.User",
+                schema: "CIYW.Users",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -475,7 +475,7 @@ namespace CIYW.Domain.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserCategories_CategoryId",
-                schema: "CIYW.User",
+                schema: "CIYW.Users",
                 table: "UserCategories",
                 column: "CategoryId");
         }
@@ -508,7 +508,7 @@ namespace CIYW.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserCategories",
-                schema: "CIYW.User");
+                schema: "CIYW.Users");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
