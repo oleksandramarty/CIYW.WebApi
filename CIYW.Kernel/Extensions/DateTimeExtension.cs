@@ -17,7 +17,7 @@ public static class DateTimeExtension
     public static DateTime GetStartOfTheMonth()
     {
         DateTime currentDate = DateTime.Today;
-        return new DateTime(currentDate.Year, currentDate.Month, 1);
+        return (new DateTime(currentDate.Year, currentDate.Month, 1)).ToUtc();
     }
 
     public static DateTime GetLocalTime(this DateTime date, int hours, int minutes)
@@ -28,7 +28,7 @@ public static class DateTimeExtension
     public static DateTime GetEndOfTheMonth()
     {
         DateTime currentDate = DateTime.Today;
-        return new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month), 23, 59, 59);
+        return (new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month), 23, 59, 59)).ToUtc();
     }
     public static string HumanizeModified(this BaseWithDateEntity entity)
     {
@@ -74,6 +74,11 @@ public static class DateTimeExtension
     public static double GetTotalSeconds(this DateTime date)
     {
         return (date - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
+    }
+
+    public static DateTime ToUtc(this DateTime date)
+    {
+        return DateTime.SpecifyKind(date, DateTimeKind.Utc);
     }
 
     private static string GetPlural(this int temp)

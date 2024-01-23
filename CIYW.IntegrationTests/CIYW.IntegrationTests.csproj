@@ -44,4 +44,16 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Resources\Images\Test1.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Images\Test2.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Images\Test3.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

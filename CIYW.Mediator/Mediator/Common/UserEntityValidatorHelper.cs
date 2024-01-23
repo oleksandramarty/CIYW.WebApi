@@ -78,7 +78,7 @@ public class UserEntityValidatorHelper
         this.entityValidator.ValidateExist<T, TId>(entity, entityId);
     }
     
-    protected async Task HasAccess<TEntity>(TEntity entity, Guid userId, CancellationToken cancellationToken)
+    protected async Task HasAccess<TEntity>(TEntity entity, Guid userId, CancellationToken cancellationToken, string fieldName = "UserId")
     {
         bool isAdmin = await this.HasUserInRoleAsync(RoleProvider.Admin, cancellationToken);
         
@@ -87,12 +87,12 @@ public class UserEntityValidatorHelper
             return;
         }
         
-        this.entityValidator.HasAccess<TEntity>(entity, userId);
+        this.entityValidator.HasAccess<TEntity>(entity, userId, fieldName);
     }
 
-    protected MappedHelperResponse<TResponse, T> GetMappedHelper<TResponse, T>(T entity)
+    protected MappedHelperResponse<TMapped, T> GetMappedHelper<TMapped, T>(T entity)
     {
-        return new MappedHelperResponse<TResponse, T>(mapper.Map<T, TResponse>(entity), entity);
+        return new MappedHelperResponse<TMapped, T>(mapper.Map<T, TMapped>(entity), entity);
     }
 
     protected async Task CheckUserCommandAsync(Guid? userId, CreateUserCommand command, CancellationToken cancellationToken)

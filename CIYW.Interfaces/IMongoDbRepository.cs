@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using CIYW.Const.Enums;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 
@@ -12,5 +13,5 @@ public interface IMongoDbRepository<T>
     Task CreateAsync(T entity, CancellationToken cancellationToken);
     Task UpdateAsync(Guid id, T entity);
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
-    Task<ListWithIncludeHelper<TResponse>> GetPageableListAsync<TResponse>(BaseFilterQuery filter, CancellationToken cancellationToken);
+    Task<ListWithIncludeHelper<TResponse>> GetPageableListAsync<TResponse>(BaseFileFilterQuery filter, CancellationToken cancellationToken);
 }

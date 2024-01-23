@@ -1,11 +1,12 @@
 ﻿using CIYW.Const.Enums;
+using CIYW.Models.Responses.Base;
 
 namespace CIYW.Models.Responses.Images;
 
-public class ImageDataResponse
+public class ImageDataResponse: BaseEntityResponse
 {
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public Guid EntityId { get; set; }
     public FileTypeEnum Type { get; set; }
+    public string Name { get; set; }
     public byte[] Data { get; set; }
 }

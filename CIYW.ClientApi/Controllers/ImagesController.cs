@@ -1,6 +1,9 @@
 ﻿using CIYW.ClientApi.Controllers.Base;
 using CIYW.Const.Enums;
+using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Files.Requests;
+using CIYW.Models.Responses.Images;
+using CIYW.MongoDB.Models.Images;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +21,11 @@ public class ImagesController: BaseController
     }
     
     [HttpPost("{type}/{userId}")]
-    [ProducesResponseType(typeof(Guid), 200)]
+    [ProducesResponseType(typeof(ImageDataResponse), 200)]
     public async Task<IActionResult> V1_CreateImageAsync([FromRoute]FileTypeEnum type, [FromRoute]Guid? userId, IFormFile file, CancellationToken cancellationToken)
     {
-        Guid id = await this.mediator.Send(new CreateImageCommand(type, file, userId), cancellationToken);
-        return Ok(id);
+        MappedHelperResponse<ImageDataResponse, ImageData> result = await this.mediator.Send(new CreateImageCommand(type, file, userId), cancellationToken);
+        return Ok(result.MappedEntity);
     }
     
     [HttpPut("{id}")]

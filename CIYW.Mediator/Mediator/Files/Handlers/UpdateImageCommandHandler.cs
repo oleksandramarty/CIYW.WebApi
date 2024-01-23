@@ -2,12 +2,13 @@
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Files.Requests;
+using CIYW.Models.Responses.Images;
 using CIYW.MongoDB.Models.Images;
 using MediatR;
 
 namespace CIYW.Mediator.Mediator.Files.Handlers;
 
-public class UpdateImageCommandHandler: BaseFileHelper<ImageData>, IRequestHandler<UpdateImageCommand>
+public class UpdateImageCommandHandler: BaseFileHelper<ImageData>, IRequestHandler<UpdateImageCommand, MappedHelperResponse<ImageDataResponse, ImageData>>
 {
     private readonly IMongoDbRepository<ImageData> imageRepository;
     private readonly IMapper mapper;
@@ -21,7 +22,7 @@ public class UpdateImageCommandHandler: BaseFileHelper<ImageData>, IRequestHandl
         this.imageRepository = imageRepository;
     }
 
-    public async Task Handle(UpdateImageCommand command, CancellationToken cancellationToken)
+    public async Task<MappedHelperResponse<ImageDataResponse, ImageData>> Handle(UpdateImageCommand command, CancellationToken cancellationToken)
     {
         var imageData = await this.imageRepository.GetByIdAsync(command.Id, cancellationToken);
         
@@ -29,10 +30,13 @@ public class UpdateImageCommandHandler: BaseFileHelper<ImageData>, IRequestHandl
         
         Guid userId = await this.GetUserIdAsync(cancellationToken);
         
-        await this.HasAccess(imageData, userId, cancellationToken);
+        await this.HasAccess(imageData, userId, cancellationToken, nameof(ImageData.EntityId));
     
         imageData.Data = await this.ConvertIFormFileToByteArrayAsync(command.File, cancellationToken);
+        imageData.Name = command.File.Name;
         
         await this.imageRepository.UpdateAsync(imageData.Id, imageData);
+
+        return this.GetMappedHelper<ImageDataResponse, ImageData>(imageData);
     }
 }

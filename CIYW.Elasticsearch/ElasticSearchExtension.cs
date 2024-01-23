@@ -32,6 +32,7 @@ public static class ElasticSearchExtension
         services.AddSingleton<IElasticClient>(client);
         
         CreateIndex(client, usersIndex);
+        CreateIndex(client, "usersIntegrationTests");
     }
     
     private static void CreateIndex(IElasticClient client, string indexName)

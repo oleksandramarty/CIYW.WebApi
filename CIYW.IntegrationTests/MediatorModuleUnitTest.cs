@@ -40,13 +40,13 @@ public class MediatorModuleUnitTest
         if (result.Any())
         {
             Console.Error.WriteLine("---------------------------------------");
-            Console.Error.WriteLine("The following handlers have not integration tests");
+            Console.Error.WriteLine($"The following handlers have not integration tests : Count : {result.Count}");
             Console.Error.WriteLine("---------------------------------------");
             Console.Error.WriteLine(String.Join("\n", result));
             Console.Error.WriteLine("---------------------------------------");
         }
 
-        //result.Any().Should().Be(false);
+        // result.Any().Should().Be(false);
     }
 
     private static Type FindIntegrationTestType(Type handlerType)

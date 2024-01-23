@@ -1,4 +1,5 @@
-﻿using CIYW.Models.Requests.Common;
+﻿using CIYW.Const.Enums;
+using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Images;
 using CIYW.MongoDB.Models.Images;
 using MediatR;
@@ -11,6 +12,6 @@ public class UserImageQuery: BaseNullableQuery, IRequest<MappedHelperResponse<Im
     {
         Id = id;
     }
-    
+    public FileTypeEnum Type { get; set; }
     public Guid? UserId { get; set; }
 }

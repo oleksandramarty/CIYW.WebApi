@@ -7,7 +7,7 @@ public class BaseFilterQuery
     public BaseDateRangeQuery? DateRange { get; set; }
     public BaseSortableQuery? Sort { get; set; }
     
-    public Guid UserId { get; set; }
+    public Guid? UserId { get; set; }
 }
 
 public class BaseSortableQuery

@@ -17,8 +17,8 @@ public class UserImageQueryHandler: BaseFileHelper<ImageData>, IRequestHandler<U
     public UserImageQueryHandler(
         IMongoDbRepository<ImageData> imageRepository, 
         IMapper mapper,
-        IEntityValidator entityValidator,
-        ICurrentUserProvider currentUserProvider): base(imageRepository, mapper, entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider,
+        IEntityValidator entityValidator): base(imageRepository, mapper, entityValidator, currentUserProvider)
     {
         this.imageRepository = imageRepository;
         this.mapper = mapper;
@@ -28,7 +28,7 @@ public class UserImageQueryHandler: BaseFileHelper<ImageData>, IRequestHandler<U
     {
         Guid userId = await this.GetTargetUserIdAsync(query.UserId, cancellationToken);
         
-        IEnumerable<ImageData> temp = await this.imageRepository.FindAsync(i => i.UserId == userId && i.Type == FileTypeEnum.USER_IMAGE,
+        IEnumerable<ImageData> temp = await this.imageRepository.FindAsync(i => i.EntityId == userId && i.Type == query.Type,
             cancellationToken);
 
         if (!temp.Any())

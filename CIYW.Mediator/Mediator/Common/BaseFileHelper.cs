@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CIYW.Const.Enums;
 using CIYW.Interfaces;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
@@ -31,7 +32,7 @@ public class BaseFileHelper<T>: UserEntityValidatorHelper
     }
     
     protected async Task<ListWithIncludeHelper<TResponse>> GetPageableResponseAsync<TResponse>(
-        BaseFilterQuery filter,
+        BaseFileFilterQuery filter,
         CancellationToken cancellationToken)
     {
         return await this.imageRepository.GetPageableListAsync<TResponse>(filter, cancellationToken);

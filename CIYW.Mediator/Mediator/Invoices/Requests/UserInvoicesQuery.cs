@@ -13,13 +13,15 @@ public class UserInvoicesQuery: BaseFilterQuery, IRequest<ListWithIncludeHelper<
         Paginator = query.Paginator;
         DateRange = query.DateRange;
         Sort = query.Sort;
+        UserId = query.UserId;
     }
     
-    public UserInvoicesQuery(BaseIdsListQuery? ids, Paginator? paginator, BaseDateRangeQuery? dateRange, BaseSortableQuery? sort)
+    public UserInvoicesQuery(BaseIdsListQuery? ids, Paginator? paginator, BaseDateRangeQuery? dateRange, BaseSortableQuery? sort, Guid? userId)
     {
         Ids = ids;
         Paginator = paginator;
         DateRange = dateRange;
         Sort = sort;
+        UserId = userId;
     }
 }

@@ -17,8 +17,8 @@ public class CurrentUserImageQueryHandler: UserEntityValidatorHelper, IRequestHa
     public CurrentUserImageQueryHandler(
         IMongoDbRepository<ImageData> imageRepository, 
         IMapper mapper,
-        IEntityValidator entityValidator,
-        ICurrentUserProvider currentUserProvider): base(mapper, entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider,
+        IEntityValidator entityValidator): base(mapper, entityValidator, currentUserProvider)
     {
         this.imageRepository = imageRepository;
         this.mapper = mapper;
@@ -27,7 +27,7 @@ public class CurrentUserImageQueryHandler: UserEntityValidatorHelper, IRequestHa
     public async Task<MappedHelperResponse<ImageDataResponse, ImageData>> Handle(CurrentUserImageQuery request, CancellationToken cancellationToken)
     {
         Guid userId = await this.GetUserIdAsync(cancellationToken);
-        IEnumerable<ImageData> temp = await this.imageRepository.FindAsync(i => i.UserId == userId && i.Type == FileTypeEnum.USER_IMAGE,
+        IEnumerable<ImageData> temp = await this.imageRepository.FindAsync(i => i.EntityId == userId && i.Type == FileTypeEnum.USER_IMAGE,
             cancellationToken);
 
         if (!temp.Any())

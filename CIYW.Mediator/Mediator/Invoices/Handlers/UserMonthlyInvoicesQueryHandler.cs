@@ -23,9 +23,12 @@ public class UserMonthlyInvoicesQueryHandler: IRequestHandler<UserMonthlyInvoice
 
     public async Task<ListWithIncludeHelper<InvoiceResponse>> Handle(UserMonthlyInvoicesQuery query, CancellationToken cancellationToken)
     {
-        UserInvoicesQuery invoicesQuery =
-            this.mapper.Map<BaseFilterQuery, UserInvoicesQuery>(FilterExtension.CreateDefaultFilter("Date"));
-        ListWithIncludeHelper<InvoiceResponse> response = await this.mediator.Send(invoicesQuery, cancellationToken);
+        UserInvoicesQuery monthQuery = new UserInvoicesQuery(FilterExtension.CreateDefaultFilter("Date", query.Paginator))
+            {
+                UserId = query.UserId
+            };
+        
+        ListWithIncludeHelper<InvoiceResponse> response = await this.mediator.Send(monthQuery, cancellationToken);
         return response;
     }
 }

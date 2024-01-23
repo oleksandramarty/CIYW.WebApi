@@ -17,8 +17,8 @@ public class UsersImagesQueryHandler: BaseFileHelper<ImageData>, IRequestHandler
     public UsersImagesQueryHandler(
         IMongoDbRepository<ImageData> imageRepository, 
         IMapper mapper,
-        IEntityValidator entityValidator,
-        ICurrentUserProvider currentUserProvider): base(imageRepository, mapper, entityValidator, currentUserProvider)
+        ICurrentUserProvider currentUserProvider,
+        IEntityValidator entityValidator): base(imageRepository, mapper, entityValidator, currentUserProvider)
     {
         this.imageRepository = imageRepository;
         this.mapper = mapper;
@@ -26,9 +26,11 @@ public class UsersImagesQueryHandler: BaseFileHelper<ImageData>, IRequestHandler
 
     public async Task<ListWithIncludeHelper<ImageDataResponse>> Handle(UsersImagesQuery query, CancellationToken cancellationToken)
     {
+        await this.IsUserAdminAsync(cancellationToken);
+        
         IList<Guid> userIds = query.Ids.Ids;
 
-        query.Ids.Ids = (await this.imageRepository.FindAsync(i => userIds.Any(x => x == i.UserId), cancellationToken))
+        query.Ids.Ids = (await this.imageRepository.FindAsync(i => userIds.Any(x => x == i.EntityId), cancellationToken))
             .Select(x => x.Id).ToList();
         
         return await this.GetPageableResponseAsync<ImageDataResponse>(query, cancellationToken);

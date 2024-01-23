@@ -89,11 +89,15 @@ namespace CIYW.Domain.Initialization;
             RoleProvider.Admin
           );
           
-          AddTestInvoices(context, InitConst.MockUserId);
-          AddTestInvoices(context, InitConst.MockAuthUserId);
+          AddTestInvoices(context, InitConst.MockUserId, 1);
+          AddTestInvoices(context, InitConst.MockAuthUserId, 2);
+          AddTestInvoices(context, InitConst.MockAdminUserId, 3);
           
           AddTestNotes(context, InitConst.MockUserId);
           AddTestNotes(context, InitConst.MockAuthUserId);
+          AddTestNotes(context, InitConst.MockAdminUserId);
+
+          var temp = context.Invoices.ToList();
         }
         // AddTestInvoices(context, new Guid("f406bb8b-db38-47f8-a199-0191a56e93b1"));
       }
@@ -294,7 +298,7 @@ namespace CIYW.Domain.Initialization;
         context.SaveChanges();
       }
 
-      static void AddTestInvoices(DataContext context, Guid userId)
+      static void AddTestInvoices(DataContext context, Guid userId, int invoiceMulti)
       {
         if (context.Invoices.Any(i => i.UserId == userId))
         {
@@ -306,68 +310,10 @@ namespace CIYW.Domain.Initialization;
         {
           return;
         }
-        UserBalance userBalance = context.UserBalances.FirstOrDefault(_ => _.UserId == user.Id);
-        if (userBalance == null)
-        {
-          return;
-        }
-        Random random = new Random();
 
-        IList<Invoice> invoices = new List<Invoice>();
-        DateTime today = DateTime.Now;
-
-        var count = 0;
-        
-        for (var i = 0; i < 50; i++)
-        {
-          int randomDays = random.Next(0, 61);
-          DateTime randomDate = today.AddDays(-randomDays);
-          Invoice temp = new Invoice
-          {
-            Id = Guid.NewGuid(),
-            Amount = (decimal)(random.NextDouble() * (1500 - 100) + 100),
-            CurrencyId = InitConst.CurrencyUsdId,
-            Type = InvoiceTypeEnum.EXPENSE,
-            CategoryId = InitConst.CategoryOtherId,
-            Created = DateTime.UtcNow,
-            Date = randomDate.ToUniversalTime(),
-            Name = $"Invoice # {count++}",
-            UserId = user.Id
-          };
-          
-          userBalance.Amount = userBalance.Amount +
-            (temp.Type == InvoiceTypeEnum.INCOME ? temp.Amount : (-1) * temp.Amount);
-
-          invoices.Add(temp);
-        }
-        
-        for (var i = 0; i < 5; i++)
-        {
-          int randomDays = random.Next(0, 61);
-          DateTime randomDate = today.AddDays(-randomDays);
-          Invoice temp = new Invoice
-          {
-            Id = Guid.NewGuid(),
-            Amount = (decimal)(random.NextDouble() * (15000 - 100) + 100),
-            CurrencyId = InitConst.CurrencyUsdId,
-            Type = InvoiceTypeEnum.INCOME,
-            CategoryId = InitConst.CategorySalaryId,
-            Created = DateTime.UtcNow,
-            Date = randomDate.ToUniversalTime(),
-            Name = $"Invoice # {count++}",
-            UserId = user.Id
-          };
-          
-          userBalance.Amount = userBalance.Amount +
-                               (temp.Type == InvoiceTypeEnum.INCOME ? temp.Amount : (-1) * temp.Amount);
-
-          invoices.Add(temp);
-        }
-        
-        userBalance.Updated = DateTime.UtcNow;
+        IList<Invoice> invoices = CreateUserTestInvoices(userId, invoiceMulti);
         
         context.Invoices.AddRange(invoices);
-        context.UserBalances.Update(userBalance);
 
         context.SaveChanges();
       }
@@ -407,6 +353,55 @@ namespace CIYW.Domain.Initialization;
         }
 
         return new string(result);
+      }
+      
+      private static List<Invoice> CreateUserTestInvoices(Guid userId, int invoiceMulti)
+      {
+        var result = new List<Invoice>
+        {
+          AddSalaryTestInvoice(userId, 1000.0m, new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1, 0, 0, 0, DateTimeKind.Utc))
+        };
+        
+        for (var i = 1; i <= 25; i++) {
+          for (var j = 0; j < invoiceMulti; j++)
+          {
+            result.Add(AddSpendTestInvoice(userId, 100.0m, new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, i, 0, 0, 0, DateTimeKind.Utc)));            
+          }
+        }
+
+        return result;
+      }
+
+      private static Invoice AddSalaryTestInvoice(Guid userId, decimal amount, DateTime date)
+      {
+        return new Invoice
+        {
+          Id = Guid.NewGuid(),
+          Name = "Test Invoice",
+          Amount = amount,
+          CurrencyId = InitConst.CurrencyUsdId,
+          CategoryId = InitConst.CategorySalaryId,
+          Created = date,
+          Date = date,
+          UserId = userId,
+          Type = InvoiceTypeEnum.INCOME
+        };
+      }
+    
+      private static Invoice AddSpendTestInvoice(Guid userId, decimal amount, DateTime date)
+      {
+        return new Invoice
+        {
+          Id = Guid.NewGuid(),
+          Name = "Test Invoice",
+          Amount = amount,
+          CurrencyId = InitConst.CurrencyUsdId,
+          CategoryId = InitConst.CategoryOtherId,
+          Created = date,
+          Date = date,
+          UserId = userId,
+          Type = InvoiceTypeEnum.EXPENSE
+        };
       }
     }
     

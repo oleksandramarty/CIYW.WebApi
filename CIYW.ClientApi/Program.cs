@@ -216,6 +216,8 @@ public class Program
         if (app.Environment.IsEnvironment("IntegrationTests"))
         {
             app.RemoveDatabaseAsync().Wait(cancellationToken);
+            app.RemoveFileDatabaseAsync(builder).Wait(cancellationToken);
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         app.UpdateDatabaseAsync().Wait(cancellationToken);

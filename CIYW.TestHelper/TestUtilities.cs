@@ -9,7 +9,8 @@ namespace CIYW.TestHelper;
 public static class TestUtilities
 {
     public static async Task Handle_InvalidCommand<TCommand, TResult, TException>(
-        IRequestHandler<TCommand, TResult> handler, TCommand command, string errorMessage)
+        IRequestHandler<TCommand, TResult> handler, TCommand command, string errorMessage,
+        Func<Task> additionalAction = null)
         where TCommand : IRequest<TResult>
         where TException : Exception
     {
@@ -17,10 +18,16 @@ public static class TestUtilities
             () => handler.Handle(command, CancellationToken.None)
         );
         StringAssert.Contains(exception.Message, errorMessage);
+        
+        if (additionalAction != null)
+        {
+            await additionalAction.Invoke();
+        }
     }
     
     public static async Task Handle_InvalidCommand<TCommand, TException>(
-        IRequestHandler<TCommand> handler, TCommand command, string errorMessage)
+        IRequestHandler<TCommand> handler, TCommand command, string errorMessage,
+        Func<Task> additionalAction = null)
         where TCommand : IRequest
         where TException : Exception
     {
@@ -28,6 +35,11 @@ public static class TestUtilities
             () => handler.Handle(command, CancellationToken.None)
         );
         StringAssert.Contains(exception.Message, errorMessage);
+        
+        if (additionalAction != null)
+        {
+            await additionalAction.Invoke();
+        }
     }
 
     public static void Validate_Command<TCommand, TResult>(

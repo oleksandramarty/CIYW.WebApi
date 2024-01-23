@@ -35,6 +35,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Namotion.Reflection;
 using ZymLabs.NSwag.FluentValidation.AspNetCore;
@@ -54,6 +55,20 @@ namespace CIYW.Kernel.Extensions;
                 {
                     await context.Database.EnsureDeletedAsync();
                 }
+            }
+        }
+        
+        public static async Task RemoveFileDatabaseAsync(this IApplicationBuilder app, WebApplicationBuilder builder)
+        {
+            MongoDbSettings temp = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
+           
+            var client = new MongoClient(temp.ConnectionString);
+            var databaseImages = client.GetDatabase(temp.DatabaseNameImages);
+
+            foreach (var collectionName in await databaseImages.ListCollectionNames().ToListAsync())
+            {
+                var collection = databaseImages.GetCollection<BsonDocument>(collectionName);
+                await collection.DeleteManyAsync(FilterDefinition<BsonDocument>.Empty);
             }
         }
 

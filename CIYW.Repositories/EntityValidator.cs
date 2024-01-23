@@ -51,9 +51,9 @@ public class EntityValidator: IEntityValidator
         throw new LoggerException(ErrorMessages.ValidationError, 409, null, validationResult.GetInvalidFieldInfo());
     }
     
-    public void HasAccess<TEntity>(TEntity entity, Guid userId)
+    public void HasAccess<TEntity>(TEntity entity, Guid userId, string fieldName = "UserId")
     {
-        var propertyInfo = typeof(TEntity).GetProperty("UserId");
+        var propertyInfo = typeof(TEntity).GetProperty(fieldName);
 
         if (propertyInfo != null)
         {

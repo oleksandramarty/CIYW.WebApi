@@ -1,5 +1,7 @@
 using AutoMapper;
+using CIYW.Const.Enums;
 using CIYW.Const.Errors;
+using CIYW.Const.Providers;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.Categories;
 using CIYW.Interfaces;
@@ -9,12 +11,19 @@ using CIYW.Mediator.Mediator.Categories.Handlers;
 using CIYW.Mediator.Mediator.Categories.Requests;
 using CIYW.Mediator.Mediator.Currencies.Handlers;
 using CIYW.Mediator.Mediator.Currencies.Requests;
+using CIYW.Mediator.Mediator.Files.Handlers;
+using CIYW.Mediator.Mediator.Files.Requests;
 using CIYW.Mediator.Mediator.Tariffs.Handlers;
 using CIYW.Mediator.Mediator.Tariffs.Requests;
+using CIYW.Models.Helpers.Base;
+using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Categories;
 using CIYW.Models.Responses.Currencies;
+using CIYW.Models.Responses.Images;
 using CIYW.Models.Responses.Tariffs;
+using CIYW.MongoDB.Models.Images;
 using CIYW.TestHelper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -140,6 +149,160 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
 
             // Act
             await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Domain.Models.Tariffs.Tariff>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+        }
+    }
+    
+    [Test]
+    public async Task Handle_ForbiddenCreateImageCommandForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        CreateImageCommand command = new CreateImageCommand(
+            FileTypeEnum.USER_IMAGE, 
+            GetResourceTestFile(ResourceProvider.Images, "Test1.png"), 
+            InitConst.MockAuthUserId);
+            
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {
+            var handler = new CreateImageCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMongoDbRepository<ImageData>>(),
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+
+            // Act
+            await TestUtilities.Handle_InvalidCommand<CreateImageCommand, MappedHelperResponse<ImageDataResponse, ImageData>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+        }
+    }
+    
+    [Test]
+    public async Task Handle_ForbiddenDeleteImageCommandForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        ImageData image = await this.CreateFileAsync<ImageData>(
+            FileTypeEnum.USER_IMAGE, 
+            InitConst.MockAuthUserId, 
+            GetResourceTestFile(ResourceProvider.Images, "Test1.png"),
+            CancellationToken.None);
+        
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {            
+            var handler = new DeleteImageCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMongoDbRepository<ImageData>>(),
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+            
+            // Act
+            await TestUtilities.Handle_InvalidCommand<DeleteImageCommand, LoggerException>(
+                handler, 
+                new DeleteImageCommand(image.Id), 
+                ErrorMessages.Forbidden,
+                async () =>
+                {
+                    await this.DeleteFileAsync<ImageData>(m => m.Id == image.Id, CancellationToken.None);
+                });
+        }
+    }
+    
+    [Test]
+    public async Task Handle_ForbiddenUpdateImageCommandForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        IFormFile file = GetResourceTestFile(ResourceProvider.Images, "Test2.png");
+
+        ImageData oldImage = await this.CreateFileAsync<ImageData>(
+            FileTypeEnum.USER_IMAGE, 
+            InitConst.MockAuthUserId, 
+            GetResourceTestFile(ResourceProvider.Images, "Test1.png"),
+            CancellationToken.None);
+        
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {            
+            var handler = new UpdateImageCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMongoDbRepository<ImageData>>(),
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+            
+            // Act
+            await TestUtilities.Handle_InvalidCommand<UpdateImageCommand, MappedHelperResponse<ImageDataResponse, ImageData>, LoggerException>(
+                handler, 
+                new UpdateImageCommand(oldImage.Id, file), 
+                ErrorMessages.Forbidden,
+                async () =>
+                {
+                    await this.DeleteFileAsync<ImageData>(m => m.Id == oldImage.Id, CancellationToken.None);
+                });
+        }
+    }
+    
+    [Test]
+    public async Task Handle_ForbiddenUserImageQueryForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        ImageData image = await this.CreateFileAsync<ImageData>(
+            FileTypeEnum.USER_IMAGE, 
+            InitConst.MockAuthUserId, 
+            GetResourceTestFile(ResourceProvider.Images, "Test1.png"),
+            CancellationToken.None);
+
+        UserImageQuery query = new UserImageQuery(image.Id)
+        {
+            Type = FileTypeEnum.USER_IMAGE,
+            UserId = InitConst.MockAuthUserId
+        };
+
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {            
+            var handler = new UserImageQueryHandler(
+                scope.ServiceProvider.GetRequiredService<IMongoDbRepository<ImageData>>(),
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+            
+            // Act
+            await TestUtilities.Handle_InvalidCommand<UserImageQuery, MappedHelperResponse<ImageDataResponse, ImageData>, LoggerException>(
+                handler, 
+                query, 
+                ErrorMessages.Forbidden,
+                async () =>
+                {
+                    await this.DeleteFileAsync<ImageData>(m => m.Id == image.Id, CancellationToken.None);
+                });
+        }
+    }
+    
+    [Test]
+    public async Task Handle_ForbiddenUsersImagesQueryForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        UsersImagesQuery query = new UsersImagesQuery
+        {
+            Ids = new BaseIdsListQuery
+            {
+                Ids = new List<Guid> { InitConst.MockAuthUserId, InitConst.MockUserId, InitConst.MockAdminUserId }
+            },
+            Type = FileTypeEnum.USER_IMAGE
+        };
+        
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {            
+            var handler = new UsersImagesQueryHandler(
+                scope.ServiceProvider.GetRequiredService<IMongoDbRepository<ImageData>>(),
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+            
+            // Act
+            await TestUtilities.Handle_InvalidCommand<UsersImagesQuery, ListWithIncludeHelper<ImageDataResponse>, LoggerException>(
+                handler, 
+                query, 
+                ErrorMessages.Forbidden);
         }
     }
 }

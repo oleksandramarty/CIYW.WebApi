@@ -29,7 +29,7 @@ public class DeleteImageCommandHandler: BaseFileHelper<ImageData>, IRequestHandl
         
         Guid userId = await this.GetUserIdAsync(cancellationToken);
         
-        await this.HasAccess(imageData, userId, cancellationToken);
+        await this.HasAccess(imageData, userId, cancellationToken, nameof(ImageData.EntityId));
         
         await this.imageRepository.DeleteAsync(imageData.Id, cancellationToken);
     }

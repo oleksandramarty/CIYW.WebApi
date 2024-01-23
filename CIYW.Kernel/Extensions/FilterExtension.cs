@@ -4,16 +4,16 @@ namespace CIYW.Kernel.Extensions;
 
 public static class FilterExtension
 {
-    public static BaseFilterQuery CreateDefaultFilter(string? dateColumn = null)
+    public static BaseFilterQuery CreateDefaultFilter(string? dateColumn = null, Paginator? paginator = null)
     {
         return new BaseFilterQuery
         {
             Ids = null,
 
-            Paginator = new Paginator
+            Paginator = paginator ?? new Paginator
             {
                 PageNumber = 1,
-                PageSize = 10,
+                PageSize = 5,
                 IsFull = false
             },
 

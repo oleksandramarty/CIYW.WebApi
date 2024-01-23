@@ -1,9 +1,11 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
+using CIYW.Const.Enums;
 using CIYW.Interfaces;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 using CIYW.MongoDB;
+using Elastic.Clients.Elasticsearch;
 using MongoDB.Driver;
 
 namespace CIYW.Repositories;
@@ -59,12 +61,12 @@ public class MongoDbRepository<T>: IMongoDbRepository<T>
         await this.imagesCollection.DeleteOneAsync(filter, cancellationToken);
     }
     
-    public async Task<ListWithIncludeHelper<TResponse>> GetPageableListAsync<TResponse>(BaseFilterQuery filter, CancellationToken cancellationToken)
+    public async Task<ListWithIncludeHelper<TResponse>> GetPageableListAsync<TResponse>(BaseFileFilterQuery filter, CancellationToken cancellationToken)
     {
         var query = filter.Ids != null && filter.Ids.Ids.Any() ?
-            this.imagesCollection.Find(Builders<T>.Filter.In("_id", filter.Ids.Ids)) : 
-            this.imagesCollection.Find(_ => true);
-
+            this.imagesCollection.Find(Builders<T>.Filter.In("_id", filter.Ids.Ids) & Builders<T>.Filter.Eq("Type", filter.Type)) : 
+            this.imagesCollection.Find(Builders<T>.Filter.Eq("Type", filter.Type));
+        
         long total = await query.CountDocumentsAsync(cancellationToken);
         
         IList<T> entities = await this.filterProvider.Apply(query, filter).ToListAsync(cancellationToken);
