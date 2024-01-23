@@ -1,18 +1,19 @@
 using AutoMapper;
 using CIYW.Const.Errors;
 using CIYW.Domain.Initialization;
+using CIYW.Domain.Models.Categories;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Category.Handlers;
-using CIYW.Mediator.Mediator.Category.Requests;
-using CIYW.Mediator.Mediator.Currency.Handlers;
-using CIYW.Mediator.Mediator.Currency.Requests;
-using CIYW.Mediator.Mediator.Tariff.Handlers;
-using CIYW.Mediator.Mediator.Tariff.Requests;
-using CIYW.Models.Responses.Category;
-using CIYW.Models.Responses.Currency;
-using CIYW.Models.Responses.Tariff;
+using CIYW.Mediator.Mediator.Categories.Handlers;
+using CIYW.Mediator.Mediator.Categories.Requests;
+using CIYW.Mediator.Mediator.Currencies.Handlers;
+using CIYW.Mediator.Mediator.Currencies.Requests;
+using CIYW.Mediator.Mediator.Tariffs.Handlers;
+using CIYW.Mediator.Mediator.Tariffs.Requests;
+using CIYW.Models.Responses.Categories;
+using CIYW.Models.Responses.Currencies;
+using CIYW.Models.Responses.Tariffs;
 using CIYW.TestHelper;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -32,13 +33,13 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
         {
             var handler = new CreateCategoryCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Category.Category>>(),
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Category>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Category>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -52,13 +53,13 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
         {
             var handler = new UpdateCategoryCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Category.Category>>(),
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Category>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Domain.Models.Category.Category>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCategoryCommand, MappedHelperResponse<CategoryResponse, Category>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -72,13 +73,13 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
         {
             var handler = new CreateCurrencyCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Currency.Currency>>(),
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Currencies.Currency>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, MappedHelperResponse<CurrencyResponse, Domain.Models.Currencies.Currency>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -92,13 +93,13 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
         {
             var handler = new UpdateCurrencyCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Currency.Currency>>(),
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Currencies.Currency>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, MappedHelperResponse<CurrencyResponse, Domain.Models.Currency.Currency>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateCurrencyCommand, MappedHelperResponse<CurrencyResponse, Domain.Models.Currencies.Currency>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -112,13 +113,13 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
         {
             var handler = new CreateTariffCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Tariff.Tariff>>(),
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Tariffs.Tariff>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Domain.Models.Tariff.Tariff>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Domain.Models.Tariffs.Tariff>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
     
@@ -132,13 +133,13 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
         {
             var handler = new UpdateTariffCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Tariff.Tariff>>(),
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<Domain.Models.Tariffs.Tariff>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Domain.Models.Tariff.Tariff>, LoggerException>(handler, command, ErrorMessages.Forbidden);
+            await TestUtilities.Handle_InvalidCommand<CreateOrUpdateTariffCommand, MappedHelperResponse<TariffResponse, Domain.Models.Tariffs.Tariff>, LoggerException>(handler, command, ErrorMessages.Forbidden);
         }
     }
 }

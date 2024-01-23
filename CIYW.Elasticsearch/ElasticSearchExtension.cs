@@ -1,5 +1,5 @@
-﻿using CIYW.Elasticsearch.Models.Currency;
-using CIYW.Elasticsearch.Models.User;
+﻿using CIYW.Elasticsearch.Models.Currencies;
+using CIYW.Elasticsearch.Models.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nest;

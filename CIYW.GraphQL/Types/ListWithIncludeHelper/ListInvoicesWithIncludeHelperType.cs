@@ -1,6 +1,5 @@
-﻿using CIYW.Domain.Models.Invoice;
-using CIYW.Models.Helpers.Base;
-using CIYW.Models.Responses.Invoice;
+﻿using CIYW.Models.Helpers.Base;
+using CIYW.Models.Responses.Invoices;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types.ListWithIncludeHelper;

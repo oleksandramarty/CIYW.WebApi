@@ -1,5 +1,5 @@
-﻿using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.Note;
+﻿using CIYW.Domain.Models.Invoices;
+using CIYW.Domain.Models.Notes;
 
 namespace CIYW.Interfaces;
 

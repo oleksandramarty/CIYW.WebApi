@@ -1,10 +1,10 @@
 using CIYW.Const.Errors;
-using CIYW.Domain.Models.Category;
+using CIYW.Domain.Models.Categories;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Category.Requests;
+using CIYW.Mediator.Mediator.Categories.Requests;
 using CIYW.Mediator.Validators.Categories;
-using CIYW.Models.Responses.Category;
+using CIYW.Models.Responses.Categories;
 using CIYW.TestHelper;
 using NUnit.Framework;
 

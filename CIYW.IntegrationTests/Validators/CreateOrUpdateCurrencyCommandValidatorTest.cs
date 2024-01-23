@@ -1,10 +1,10 @@
 using CIYW.Const.Errors;
-using CIYW.Domain.Models.Currency;
+using CIYW.Domain.Models.Currencies;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Currency.Requests;
+using CIYW.Mediator.Mediator.Currencies.Requests;
 using CIYW.Mediator.Validators.Currencies;
-using CIYW.Models.Responses.Currency;
+using CIYW.Models.Responses.Currencies;
 using CIYW.TestHelper;
 using NUnit.Framework;
 

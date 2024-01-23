@@ -1,10 +1,10 @@
 using CIYW.Const.Errors;
-using CIYW.Domain.Models.Note;
+using CIYW.Domain.Models.Notes;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Mediator.Notes.Request;
 using CIYW.Mediator.Validators.Notes;
-using CIYW.Models.Responses.Note;
+using CIYW.Models.Responses.Notes;
 using CIYW.TestHelper;
 using NUnit.Framework;
 

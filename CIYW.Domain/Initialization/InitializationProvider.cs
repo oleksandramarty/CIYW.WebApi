@@ -1,9 +1,9 @@
 ﻿using CIYW.Const.Enums;
 using CIYW.Const.Providers;
-using CIYW.Domain.Models.Category;
-using CIYW.Domain.Models.Currency;
-using CIYW.Domain.Models.Tariff;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Categories;
+using CIYW.Domain.Models.Currencies;
+using CIYW.Domain.Models.Tariffs;
+using CIYW.Domain.Models.Users;
 
 namespace CIYW.Domain.Initialization;
 

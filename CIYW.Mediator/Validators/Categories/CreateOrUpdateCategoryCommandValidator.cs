@@ -1,5 +1,5 @@
 using CIYW.Const.Errors;
-using CIYW.Mediator.Mediator.Category.Requests;
+using CIYW.Mediator.Mediator.Categories.Requests;
 using FluentValidation;
 
 namespace CIYW.Mediator.Validators.Categories;

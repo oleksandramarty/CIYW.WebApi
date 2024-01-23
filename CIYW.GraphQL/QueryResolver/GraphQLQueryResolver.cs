@@ -1,17 +1,17 @@
 using AutoMapper;
-using CIYW.Domain.Models.Category;
-using CIYW.Domain.Models.Currency;
-using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Categories;
+using CIYW.Domain.Models.Currencies;
+using CIYW.Domain.Models.Invoices;
+using CIYW.Domain.Models.Users;
 using CIYW.GraphQL.Types;
 using CIYW.GraphQL.Types.ListWithIncludeHelper;
 using CIYW.Interfaces;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Mediator.Mediator.Invoices.Requests;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
-using CIYW.Models.Responses.Invoice;
+using CIYW.Models.Responses.Invoices;
 using CIYW.Models.Responses.Users;
 using GraphQL;
 using GraphQL.Types;
@@ -31,7 +31,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             .ResolveAsync(async context =>
             {
                 Guid entityId = context.GetArgument<Guid>("id", default);
-                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.Currency.Currency>>();
+                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Currency>>();
                 
                 var cancellationToken = context.CancellationToken;
 
@@ -62,7 +62,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             .ResolveAsync(async context =>
             {
                 Guid entityId = context.GetArgument<Guid>("id", default);
-                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.Category.Category>>();
+                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Category>>();
                 
                 var cancellationToken = context.CancellationToken;
 
@@ -112,7 +112,7 @@ public class GraphQLQueryResolver: ObjectGraphType, IGraphQLQueryResolver
             .ResolveAsync(async context =>
             {
                 Guid userId = context.GetArgument<Guid>("userId", default);
-                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<Domain.Models.User.UserBalance>>();
+                var repository = context.RequestServices.GetRequiredService<IReadGenericRepository<UserBalance>>();
                 var mapper = context.RequestServices.GetRequiredService<IMapper>();
                 
                 // Assuming cancellationToken is available in your GraphQL context

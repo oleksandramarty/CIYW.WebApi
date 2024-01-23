@@ -1,7 +1,5 @@
-using CIYW.Domain.Models.Invoice;
 using CIYW.Kernel.Extensions;
-using CIYW.Mediator;
-using CIYW.Models.Responses.Invoice;
+using CIYW.Models.Responses.Invoices;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;

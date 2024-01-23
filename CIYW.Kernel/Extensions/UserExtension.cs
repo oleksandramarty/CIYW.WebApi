@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using CIYW.Const.Providers;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Models.Responses.Users;
 using Microsoft.AspNetCore.Identity;
 

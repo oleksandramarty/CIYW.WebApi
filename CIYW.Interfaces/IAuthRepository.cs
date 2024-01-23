@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Interfaces;

@@ -1,5 +1,5 @@
 ﻿using CIYW.Domain;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.SignalR.Models;

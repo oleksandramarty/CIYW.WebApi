@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using CIYW.ClientApi.Controllers.Base;
-using CIYW.Mediator.Mediator.Balance.Requests;
+using CIYW.Mediator.Mediator.Balances.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

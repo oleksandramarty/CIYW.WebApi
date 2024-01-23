@@ -1,7 +1,7 @@
 ﻿using CIYW.ClientApi.Controllers.Base;
 using CIYW.Const.Enums;
-using CIYW.Mediator.Mediator.Dictionary.Requests;
-using CIYW.Models.Responses.Dictionary;
+using CIYW.Mediator.Mediator.Dictionaries.Requests;
+using CIYW.Models.Responses.Dictionaries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Users.Requests;

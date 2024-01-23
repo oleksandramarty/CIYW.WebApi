@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using CIYW.Auth.Schemes;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Kernel.Extensions;
 using CIYW.Models.Responses.Auth;
 using Microsoft.Extensions.Options;

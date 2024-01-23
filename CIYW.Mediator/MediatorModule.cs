@@ -1,14 +1,14 @@
 ﻿using System.Reflection;
 using Autofac;
 using CIYW.Mediator.Mediator.Auth.Handlers;
-using CIYW.Mediator.Mediator.Balance.Requests;
-using CIYW.Mediator.Mediator.Category.Handlers;
-using CIYW.Mediator.Mediator.Currency.Handlers;
-using CIYW.Mediator.Mediator.Dictionary.Handlers;
-using CIYW.Mediator.Mediator.FIle.Handlers;
-using CIYW.Mediator.Mediator.Invoice.Handlers;
-using CIYW.Mediator.Mediator.Note.Handlers;
-using CIYW.Mediator.Mediator.Tariff.Handlers;
+using CIYW.Mediator.Mediator.Balances.Requests;
+using CIYW.Mediator.Mediator.Categories.Handlers;
+using CIYW.Mediator.Mediator.Currencies.Handlers;
+using CIYW.Mediator.Mediator.Dictionaries.Handlers;
+using CIYW.Mediator.Mediator.Files.Handlers;
+using CIYW.Mediator.Mediator.Invoices.Handlers;
+using CIYW.Mediator.Mediator.Notes.Handlers;
+using CIYW.Mediator.Mediator.Tariffs.Handlers;
 using CIYW.Mediator.Mediator.Users.Handlers;
 using MediatR;
 

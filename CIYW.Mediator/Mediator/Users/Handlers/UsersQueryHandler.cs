@@ -1,5 +1,5 @@
-﻿using CIYW.Domain.Models.User;
-using CIYW.Elasticsearch.Models.User;
+﻿using CIYW.Domain.Models.Users;
+using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Interfaces.Strategies;
 using CIYW.Kernel.Extensions;

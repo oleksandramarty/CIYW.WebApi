@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using CIYW.Models.Responses.Dictionary;
+using CIYW.Models.Responses.Dictionaries;
 
 namespace CIYW.Kernel.Extensions;
 

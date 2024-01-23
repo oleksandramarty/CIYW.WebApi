@@ -1,12 +1,12 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using CIYW.Auth;
 using CIYW.Domain;
-using CIYW.Domain.Models.User;
 using CIYW.Mediator;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CIYW.Domain.Models.Users;
 using CIYW.Elasticsearch;
 using CIYW.Interfaces;
 using CIYW.Jobs.Jobs;

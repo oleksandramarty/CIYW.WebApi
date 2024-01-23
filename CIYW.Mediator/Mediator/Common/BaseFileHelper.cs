@@ -2,7 +2,6 @@
 using CIYW.Interfaces;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
-using CIYW.MongoDB.Models.Image;
 using Microsoft.AspNetCore.Http;
 
 namespace CIYW.Mediator.Mediator.Common;

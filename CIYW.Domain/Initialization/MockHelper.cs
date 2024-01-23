@@ -1,12 +1,12 @@
 ﻿using CIYW.Const.Enums;
 using CIYW.Const.Providers;
 using CIYW.Domain.Initialization;
-using CIYW.Domain.Models.Category;
-using CIYW.Domain.Models.Currency;
-using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.Note;
-using CIYW.Domain.Models.Tariff;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Categories;
+using CIYW.Domain.Models.Currencies;
+using CIYW.Domain.Models.Invoices;
+using CIYW.Domain.Models.Notes;
+using CIYW.Domain.Models.Tariffs;
+using CIYW.Domain.Models.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.UnitTests;

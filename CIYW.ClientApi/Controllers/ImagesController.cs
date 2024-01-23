@@ -1,6 +1,6 @@
 ﻿using CIYW.ClientApi.Controllers.Base;
 using CIYW.Const.Enums;
-using CIYW.Mediator.Mediator.FIle.Requests;
+using CIYW.Mediator.Mediator.Files.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

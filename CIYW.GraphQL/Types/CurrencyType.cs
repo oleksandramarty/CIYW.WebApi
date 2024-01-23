@@ -1,6 +1,4 @@
-using CIYW.Domain.Models.Currency;
-using CIYW.Mediator;
-using CIYW.Models.Responses.Currency;
+using CIYW.Models.Responses.Currencies;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
 using CIYW.Elasticsearch;
-using CIYW.Elasticsearch.Models.User;
+using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces.Strategies;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Mediator.Users.Requests;

@@ -1,14 +1,14 @@
-﻿using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.Note;
-using CIYW.Domain.Models.User;
+﻿using CIYW.Domain.Models.Invoices;
+using CIYW.Domain.Models.Notes;
+using CIYW.Domain.Models.Users;
 using CIYW.GraphQL.Types;
 using CIYW.GraphQL.Types.InputTypes;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Invoice.Requests;
-using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Mediator.Invoices.Requests;
+using CIYW.Mediator.Mediator.Notes.Request;
 using CIYW.Mediator.Mediator.Users.Requests;
-using CIYW.Models.Responses.Invoice;
-using CIYW.Models.Responses.Note;
+using CIYW.Models.Responses.Invoices;
+using CIYW.Models.Responses.Notes;
 using CIYW.Models.Responses.Users;
 using GraphQL.Types;
 

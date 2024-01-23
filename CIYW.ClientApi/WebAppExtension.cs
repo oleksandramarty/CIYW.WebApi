@@ -9,7 +9,7 @@ using CIYW.Auth.Tokens;
 using CIYW.ClientApi.Middleware;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.GraphQL;
 using CIYW.Interfaces;
 using CIYW.Interfaces.Strategies;

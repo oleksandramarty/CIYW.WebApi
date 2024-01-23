@@ -1,11 +1,9 @@
-﻿using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.Note;
-using CIYW.GraphQL.Types;
+﻿using CIYW.GraphQL.Types;
 using CIYW.GraphQL.Types.InputTypes;
 using CIYW.Kernel.Utils;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Invoice.Requests;
-using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Mediator.Invoices.Requests;
+using CIYW.Mediator.Mediator.Notes.Request;
 using GraphQL;
 using GraphQL.Types;
 using MediatR;

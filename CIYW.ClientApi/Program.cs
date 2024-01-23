@@ -6,7 +6,7 @@ using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
 using CIYW.ClientApi.Filters;
 using CIYW.Domain;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Elasticsearch;
 using CIYW.Kernel.Extensions;
 using CIYW.Kernel.Extensions.ActionFilters;

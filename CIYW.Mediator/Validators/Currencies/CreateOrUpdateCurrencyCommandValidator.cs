@@ -1,5 +1,5 @@
 using CIYW.Const.Errors;
-using CIYW.Mediator.Mediator.Currency.Requests;
+using CIYW.Mediator.Mediator.Currencies.Requests;
 using FluentValidation;
 
 namespace CIYW.Mediator.Validators.Currencies;

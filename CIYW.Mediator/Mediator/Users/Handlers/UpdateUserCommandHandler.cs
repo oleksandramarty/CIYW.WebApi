@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CIYW.Domain.Initialization;
-using CIYW.Domain.Models.User;
-using CIYW.Elasticsearch.Models.User;
+using CIYW.Domain.Models.Users;
+using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Users.Requests;

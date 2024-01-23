@@ -1,11 +1,11 @@
 using CIYW.Const.Errors;
-using CIYW.Domain.Models.Tariff;
+using CIYW.Domain.Models.Tariffs;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Category.Requests;
-using CIYW.Mediator.Mediator.Tariff.Requests;
+using CIYW.Mediator.Mediator.Categories.Requests;
+using CIYW.Mediator.Mediator.Tariffs.Requests;
 using CIYW.Mediator.Validators.Tariffs;
-using CIYW.Models.Responses.Tariff;
+using CIYW.Models.Responses.Tariffs;
 using CIYW.TestHelper;
 using NUnit.Framework;
 

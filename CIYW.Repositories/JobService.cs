@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CIYW.Domain;
-using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.User;
-using CIYW.Elasticsearch.Models.User;
+using CIYW.Domain.Models.Invoices;
+using CIYW.Domain.Models.Users;
+using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

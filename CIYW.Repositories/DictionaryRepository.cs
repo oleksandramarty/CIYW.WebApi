@@ -1,6 +1,6 @@
 ﻿using CIYW.Domain;
 using CIYW.Interfaces;
-using CIYW.Models.Responses.Dictionary;
+using CIYW.Models.Responses.Dictionaries;
 using Microsoft.EntityFrameworkCore;
 
 namespace CIYW.Repositories;

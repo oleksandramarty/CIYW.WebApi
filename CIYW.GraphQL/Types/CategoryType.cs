@@ -1,7 +1,6 @@
-using CIYW.Domain.Models.Category;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
-using CIYW.Models.Responses.Category;
+using CIYW.Models.Responses.Categories;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;

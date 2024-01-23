@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using CIYW.Const.Errors;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
 using Microsoft.AspNetCore.Identity;

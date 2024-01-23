@@ -1,11 +1,11 @@
 using AutoMapper;
 using CIYW.Const.Errors;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Mediator.Mediator.Common;
-using CIYW.Mediator.Mediator.Currency.Requests;
-using CIYW.Mediator.Mediator.Tariff.Requests;
+using CIYW.Mediator.Mediator.Currencies.Requests;
+using CIYW.Mediator.Mediator.Tariffs.Requests;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
 using MediatR;

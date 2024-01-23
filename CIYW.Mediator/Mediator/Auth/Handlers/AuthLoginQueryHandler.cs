@@ -5,7 +5,7 @@ using CIYW.Auth.Schemes;
 using CIYW.Auth.Tokens;
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;

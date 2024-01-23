@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CIYW.ClientApi.Controllers.Base;
-using CIYW.Domain.Models.Invoice;
+using CIYW.Domain.Models.Invoices;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Invoice.Requests;
+using CIYW.Mediator.Mediator.Invoices.Requests;
 using CIYW.Models.Helpers.Base;
-using CIYW.Models.Responses.Invoice;
+using CIYW.Models.Responses.Invoices;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,7 @@ public class InvoicesController: BaseController
     [ProducesResponseType(typeof(InvoiceResponse), 200)]
     public async Task<IActionResult> V1_GetInvoiceByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice> response = await this.mediator.Send(new GetInvoiceByIdQuery(id), cancellationToken);
+        MappedHelperResponse<InvoiceResponse, Invoice> response = await this.mediator.Send(new GetInvoiceByIdQuery(id), cancellationToken);
         return Ok(response.MappedEntity);
     }
     

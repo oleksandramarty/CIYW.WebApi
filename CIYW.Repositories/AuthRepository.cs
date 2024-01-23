@@ -2,7 +2,7 @@
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
 using CIYW.Domain;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;

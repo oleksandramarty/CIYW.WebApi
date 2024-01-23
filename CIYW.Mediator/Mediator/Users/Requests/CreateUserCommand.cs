@@ -1,4 +1,4 @@
-﻿using CIYW.Domain.Models.User;
+﻿using CIYW.Domain.Models.Users;
 using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Users;
 using MediatR;

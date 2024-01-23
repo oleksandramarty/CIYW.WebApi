@@ -1,6 +1,6 @@
 ﻿using CIYW.Const.Enums;
 using CIYW.Const.Providers;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using Microsoft.AspNetCore.Authorization;

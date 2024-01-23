@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using CIYW.ClientApi.Controllers.Base;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.FIle.Requests;
+using CIYW.Mediator.Mediator.Files.Requests;
 using CIYW.Mediator.Mediator.Users.Requests;
-using CIYW.Models.Responses.Image;
+using CIYW.Models.Responses.Images;
 using CIYW.Models.Responses.Users;
-using CIYW.MongoDB.Models.Image;
+using CIYW.MongoDB.Models.Images;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

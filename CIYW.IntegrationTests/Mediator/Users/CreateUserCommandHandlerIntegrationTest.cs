@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CIYW.Domain;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Users.Handlers;
@@ -27,14 +28,14 @@ public class CreateUserCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             var handler = new CreateUserCommandHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
                 scope.ServiceProvider.GetRequiredService<IAuthRepository>(),
-                scope.ServiceProvider.GetRequiredService<UserManager<Domain.Models.User.User>>(),
+                scope.ServiceProvider.GetRequiredService<UserManager<User>>(),
                 scope.ServiceProvider.GetRequiredService<IElasticSearchRepository>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
             );
 
             // Act
-            MappedHelperResponse<UserResponse, Domain.Models.User.User> result = await handler.Handle(command, CancellationToken.None);
+            MappedHelperResponse<UserResponse, User> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
             result.Should().NotBe(null);

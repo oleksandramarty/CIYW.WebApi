@@ -3,7 +3,8 @@ using AutoMapper;
 using CIYW.Const.Const;
 using CIYW.Const.Errors;
 using CIYW.Const.Providers;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
+using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;
@@ -38,6 +39,8 @@ namespace CIYW.UnitTests.Mediator.Users
             
             this.mapperMock.Setup(m => m.Map<CreateUserCommand, User>(It.IsAny<CreateUserCommand>()))
                 .Returns(new User());
+            this.mapperMock.Setup(m => m.Map<User, UserSearchModel>(It.IsAny<User>()))
+                .Returns(new UserSearchModel());
 
             this.elasticMock = new Mock<IElasticSearchRepository>();
             this.currentUserProviderMock = new Mock<ICurrentUserProvider>();

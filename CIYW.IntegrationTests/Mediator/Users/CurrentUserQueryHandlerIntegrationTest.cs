@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CIYW.Domain;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Users.Handlers;
@@ -30,7 +30,7 @@ public class CurrentUserQueryHandlerIntegrationTest: CommonIntegrationTestSetup
                 var handler = new CurrentUserQueryHandler(
                     scope.ServiceProvider.GetRequiredService<IMapper>(),
                     scope.ServiceProvider.GetRequiredService<IMediator>(),
-                    scope.ServiceProvider.GetRequiredService<IReadGenericRepository<Domain.Models.User.User>>(),
+                    scope.ServiceProvider.GetRequiredService<IReadGenericRepository<User>>(),
                     scope.ServiceProvider.GetRequiredService<IReadGenericRepository<IdentityUserRole<Guid>>>(),
                     scope.ServiceProvider.GetRequiredService<IReadGenericRepository<Role>>(),
                     scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
@@ -38,7 +38,7 @@ public class CurrentUserQueryHandlerIntegrationTest: CommonIntegrationTestSetup
                 );
 
                 // Act
-                MappedHelperResponse<UserResponse, Domain.Models.User.User> result = await handler.Handle(query, CancellationToken.None);
+                MappedHelperResponse<UserResponse, User> result = await handler.Handle(query, CancellationToken.None);
 
                 // Assert
                 result.Should().NotBe(null);

@@ -1,5 +1,3 @@
-using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.User;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
 using CIYW.Models.Responses.Users;

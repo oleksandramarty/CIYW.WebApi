@@ -1,10 +1,9 @@
 ﻿using CIYW.ClientApi.Controllers.Base;
 using CIYW.Const.Enums;
-using CIYW.Domain.Models.User;
-using CIYW.Elasticsearch.Models.User;
+using CIYW.Domain.Models.Users;
+using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
-using CIYW.MongoDB.Models.Image;
 using CIYW.SignalR;
 using CIYW.SignalR.Models;
 using Microsoft.AspNetCore.Authorization;

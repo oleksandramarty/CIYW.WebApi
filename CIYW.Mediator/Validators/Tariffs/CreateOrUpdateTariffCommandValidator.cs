@@ -1,6 +1,6 @@
 using CIYW.Const.Errors;
-using CIYW.Mediator.Mediator.Category.Requests;
-using CIYW.Mediator.Mediator.Tariff.Requests;
+using CIYW.Mediator.Mediator.Categories.Requests;
+using CIYW.Mediator.Mediator.Tariffs.Requests;
 using FluentValidation;
 
 namespace CIYW.Mediator.Validators.Tariffs;

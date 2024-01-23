@@ -5,9 +5,9 @@ using CIYW.Domain.Initialization;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Invoice.Handlers;
-using CIYW.Mediator.Mediator.Invoice.Requests;
-using CIYW.Models.Responses.Invoice;
+using CIYW.Mediator.Mediator.Invoices.Handlers;
+using CIYW.Mediator.Mediator.Invoices.Requests;
+using CIYW.Models.Responses.Invoices;
 using CIYW.TestHelper;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,11 +37,11 @@ public class AccessGrantedForAdminHandlerIntegrationTest(): CommonIntegrationTes
         {
             DataContext dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 
-            Domain.Models.Invoice.Invoice invoice = dbContext.Invoices.FirstOrDefault(ub => ub.UserId == userId);
+            Domain.Models.Invoices.Invoice invoice = dbContext.Invoices.FirstOrDefault(ub => ub.UserId == userId);
 
             var handler = new GetInvoiceByIdQueryHandler(
                 scope.ServiceProvider.GetRequiredService<IMapper>(),
-                scope.ServiceProvider.GetRequiredService<IReadGenericRepository<Domain.Models.Invoice.Invoice>>(),
+                scope.ServiceProvider.GetRequiredService<IReadGenericRepository<Domain.Models.Invoices.Invoice>>(),
                 scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
                 scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
                 );
@@ -49,7 +49,7 @@ public class AccessGrantedForAdminHandlerIntegrationTest(): CommonIntegrationTes
             GetInvoiceByIdQuery query = new GetInvoiceByIdQuery(invoice.Id);
             
             // Act
-            MappedHelperResponse<InvoiceResponse, Domain.Models.Invoice.Invoice> result = await handler.Handle(query, CancellationToken.None);
+            MappedHelperResponse<InvoiceResponse, Domain.Models.Invoices.Invoice> result = await handler.Handle(query, CancellationToken.None);
             
             // Assert
             dbContext.Invoices.Count(i => i.Id == invoice.Id).Should().Be(1);

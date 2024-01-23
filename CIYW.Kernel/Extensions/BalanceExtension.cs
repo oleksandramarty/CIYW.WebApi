@@ -1,5 +1,5 @@
 ﻿using CIYW.Const.Enums;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Users;
 
 namespace CIYW.Kernel.Extensions;
 

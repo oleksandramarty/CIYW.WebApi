@@ -2,10 +2,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CIYW.ClientApi.Controllers.Base;
-using CIYW.Domain.Models.Note;
+using CIYW.Domain.Models.Notes;
 using CIYW.Mediator;
-using CIYW.Mediator.Mediator.Note.Request;
-using CIYW.Models.Responses.Note;
+using CIYW.Mediator.Mediator.Notes.Request;
+using CIYW.Models.Responses.Notes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

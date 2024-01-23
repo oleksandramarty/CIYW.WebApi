@@ -40,7 +40,7 @@ public class MediatorModuleUnitTest
         if (result.Any())
         {
             Console.Error.WriteLine("---------------------------------------");
-            Console.Error.WriteLine("The following handlers nave not integration tests");
+            Console.Error.WriteLine("The following handlers have not integration tests");
             Console.Error.WriteLine("---------------------------------------");
             Console.Error.WriteLine(String.Join("\n", result));
             Console.Error.WriteLine("---------------------------------------");
@@ -53,10 +53,6 @@ public class MediatorModuleUnitTest
     {
         // Assuming your integration tests follow the naming convention
         var integrationTestTypeName = $"{handlerType.Namespace}.{handlerType.Name}IntegrationTest".Replace("CIYW.Mediator", "CIYW.IntegrationTests").Replace(".Handlers", "");
-        if (integrationTestTypeName.Contains("CreateUserCommand"))
-        {
-            var t = 0;
-        }
         var integrationTestType = Assembly.GetExecutingAssembly().GetType(integrationTestTypeName);
 
         return integrationTestType;

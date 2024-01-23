@@ -1,8 +1,8 @@
 ﻿using CIYW.Const.Errors;
 using CIYW.Domain;
-using CIYW.Domain.Models.Invoice;
-using CIYW.Domain.Models.Note;
-using CIYW.Domain.Models.User;
+using CIYW.Domain.Models.Invoices;
+using CIYW.Domain.Models.Notes;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Kernel.Extensions;

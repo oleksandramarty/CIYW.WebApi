@@ -1,6 +1,5 @@
-﻿using CIYW.Domain.Models.Note;
-using CIYW.Mediator;
-using CIYW.Models.Responses.Note;
+﻿using CIYW.Mediator;
+using CIYW.Models.Responses.Notes;
 using GraphQL.Types;
 
 namespace CIYW.GraphQL.Types;

@@ -1,5 +1,5 @@
 using CIYW.Const.Errors;
-using CIYW.Mediator.Mediator.Note.Request;
+using CIYW.Mediator.Mediator.Notes.Request;
 using FluentValidation;
 
 namespace CIYW.Mediator.Validators.Notes;
