@@ -46,7 +46,7 @@ public class MediatorModuleUnitTest
             Console.Error.WriteLine("---------------------------------------");
         }
 
-        // result.Any().Should().Be(false);
+        //result.Any().Should().Be(false);
     }
 
     private static Type FindIntegrationTestType(Type handlerType)

@@ -71,17 +71,8 @@ public class AuthController: BaseController
         await this.mediator.Send(query, cancellationToken);
         return Ok();
     }
-    
-    [HttpGet("Restore/{url}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> V1_ResetPasswordCheckAccessAsync([FromRoute] string url,
-        CancellationToken cancellationToken)
-    {
-        await this.mediator.Send(new ResetPasswordCheckAccessQuery(url), cancellationToken);
-        return Ok();
-    }
 
-    [HttpPost("restore")]
+    [HttpPost("restore/{url}")]
     [AllowAnonymous]
     public async Task<IActionResult> V1_RestorePasswordAsync([FromBody] RestorePasswordCommand command, CancellationToken cancellationToken)
     {

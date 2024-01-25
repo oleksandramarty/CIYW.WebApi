@@ -38,8 +38,8 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
       string provider = userHelper.Item2;
       
       HttpContext httpContext = this.httpContextAccessor.HttpContext;
-      HttpRequest httpRequest = httpContext.Request;
-      ClaimsPrincipal principal = httpContext.User;
+      HttpRequest httpRequest = httpContext?.Request;
+      ClaimsPrincipal principal = httpContext?.User;
 
       if (principal != null && principal.Identity != null && principal.Identity.IsAuthenticated)
       {
@@ -82,27 +82,35 @@ public class AuthLoginQueryHandler: IRequestHandler<AuthLoginQuery, TokenRespons
   private async Task<Tuple<User, string>> GetUserAsync(AuthLoginQuery query)
   {
     User user = null;
-    string provider = null;
+    
     if (query.Login.NotNullOrEmpty())
     {
       user = await this.authRepository.FindUserByLoginAsync(LoginProvider.CIYWLogin, query.Login);
-      provider = LoginProvider.CIYWLogin;
+      if (user != null)
+      {
+        return new Tuple<User, string>(user, LoginProvider.CIYWLogin);
+      }
     }
+    
     if (query.Phone.NotNullOrEmpty())
     {
       user = await this.authRepository.FindUserByLoginAsync(LoginProvider.CIYWPhone, query.Phone);
-      provider = LoginProvider.CIYWPhone;
+      if (user != null)
+      {
+        return new Tuple<User, string>(user, LoginProvider.CIYWPhone);
+      }
     }
+    
     if (query.Email.NotNullOrEmpty())
     {
       user = await this.authRepository.FindUserByLoginAsync(LoginProvider.CIYWEmail, query.Email);
-      provider = LoginProvider.CIYWEmail;
+      if (user != null)
+      {
+        return new Tuple<User, string>(user, LoginProvider.CIYWEmail);
+      }
     }
-    if (user == null)
-    {
-      throw new AuthenticationException(ErrorMessages.UserNotFound, 404,
-        null);
-    }
-    return new Tuple<User, string>(user, provider);
+    
+    throw new AuthenticationException(ErrorMessages.UserNotFound, 404,
+      null);
   }
 }

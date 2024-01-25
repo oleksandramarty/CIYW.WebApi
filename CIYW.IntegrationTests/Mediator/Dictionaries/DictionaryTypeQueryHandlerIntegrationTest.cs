@@ -14,11 +14,11 @@ namespace CIYW.IntegrationTests.Mediator.Dictionaries;
 [TestFixture]
 public class DictionaryTypeQueryHandlerIntegrationTest: CommonIntegrationTestSetup
 {
-    [TestCase(EntityTypeEnum.TARIFF)]
-    [TestCase(EntityTypeEnum.CATEGORY)]
-    [TestCase(EntityTypeEnum.CURRENCY)]
-    [TestCase(EntityTypeEnum.ROLE)]
-    public async Task Handle_ValidDictionaryTypeQuery_ReturnsDictionaries(EntityTypeEnum entityType)
+    [TestCase(DictionaryTypeEnum.TARIFF)]
+    [TestCase(DictionaryTypeEnum.CATEGORY)]
+    [TestCase(DictionaryTypeEnum.CURRENCY)]
+    [TestCase(DictionaryTypeEnum.ROLE)]
+    public async Task Handle_ValidDictionaryTypeQuery_ReturnsDictionaries(DictionaryTypeEnum entityType)
     {
         // Arrange
         DictionaryTypeQuery query = new DictionaryTypeQuery(entityType);
@@ -38,16 +38,16 @@ public class DictionaryTypeQueryHandlerIntegrationTest: CommonIntegrationTestSet
             result.Should().NotBeNull();
             switch (entityType)
             {
-                case EntityTypeEnum.CURRENCY:
+                case DictionaryTypeEnum.CURRENCY:
                     dbContext.Currencies.Count().Should().Be(result.Items.Count);
                     return;
-                case EntityTypeEnum.CATEGORY:
+                case DictionaryTypeEnum.CATEGORY:
                     dbContext.Categories.Count().Should().Be(result.Items.Count);
                     return;
-                case EntityTypeEnum.TARIFF:
+                case DictionaryTypeEnum.TARIFF:
                     dbContext.Tariffs.Count().Should().Be(result.Items.Count);
                     return;
-                case EntityTypeEnum.ROLE:
+                case DictionaryTypeEnum.ROLE:
                     dbContext.Roles.Count().Should().Be(result.Items.Count);
                     return;
             }

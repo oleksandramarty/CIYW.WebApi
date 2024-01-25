@@ -1,10 +1,13 @@
 ﻿using CIYW.Domain.Models;
 using CIYW.Domain.Models.Categories;
+using CIYW.Domain.Models.Common;
 using CIYW.Domain.Models.Currencies;
 using CIYW.Domain.Models.Invoices;
 using CIYW.Domain.Models.Notes;
+using CIYW.Domain.Models.Notifications;
 using CIYW.Domain.Models.Tariffs;
 using CIYW.Domain.Models.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +23,8 @@ namespace CIYW.Domain;
     public DbSet<Note> Notes { get; set; }
     public DbSet<UserBalance> UserBalances { get; set; }
     public DbSet<ActiveUser> ActiveUsers { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
+    public DbSet<RestorePassword> RestorePasswords { get; set; }
     
     public DataContext(DbContextOptions<DataContext> options)
         : base(options)
@@ -29,10 +34,15 @@ namespace CIYW.Domain;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Role>(entity => { entity.ToTable("Roles", "CIYW.Users"); });
-      modelBuilder.Entity<User>(entity => { entity.ToTable("Users", "CIYW.Users"); });
-      modelBuilder.Entity<UserCategory>(entity => { entity.ToTable("UserCategories", "CIYW.Users"); });
-      modelBuilder.Entity<ActiveUser>(entity => { entity.ToTable("ActiveUsers", "CIYW.Users"); });
+      modelBuilder.Entity<IdentityUserRole<Guid>>(entity => { entity.ToTable("RoleUsers", "CIYW.User"); });
+      modelBuilder.Entity<IdentityUserClaim<Guid>>(entity => { entity.ToTable("ClaimUsers", "CIYW.User"); });
+      modelBuilder.Entity<IdentityUserLogin<Guid>>(entity => { entity.ToTable("LoginUsers", "CIYW.User"); });
+      modelBuilder.Entity<IdentityRoleClaim<Guid>>(entity => { entity.ToTable("RoleClaims", "CIYW.User"); });
+      modelBuilder.Entity<IdentityUserToken<Guid>>(entity => { entity.ToTable("UserTokens", "CIYW.User"); });
+      modelBuilder.Entity<Role>(entity => { entity.ToTable("Roles", "CIYW.User"); });
+      modelBuilder.Entity<User>(entity => { entity.ToTable("Users", "CIYW.User"); });
+      modelBuilder.Entity<UserCategory>(entity => { entity.ToTable("UserCategories", "CIYW.User"); });
+      modelBuilder.Entity<ActiveUser>(entity => { entity.ToTable("ActiveUsers", "CIYW.User"); });
       
       modelBuilder.Entity<Currency>(entity => { entity.ToTable("Currencies", "CIYW.Dictionary"); });
       
@@ -45,6 +55,10 @@ namespace CIYW.Domain;
       modelBuilder.Entity<Tariff>(entity => { entity.ToTable("Tariffs", "CIYW.Tariff"); });
       
       modelBuilder.Entity<Category>(entity => { entity.ToTable("Categories", "CIYW.Category"); });
+      
+      modelBuilder.Entity<Notification>(entity => { entity.ToTable("Notifications", "CIYW.Notification"); });
+      
+      modelBuilder.Entity<RestorePassword>(entity => { entity.ToTable("RestorePasswords", "CIYW.Common"); });
 
       var cascadeFKs = modelBuilder.Model.GetEntityTypes()
         .SelectMany(t => t.GetForeignKeys())

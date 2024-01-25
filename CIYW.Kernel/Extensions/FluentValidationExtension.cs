@@ -8,7 +8,7 @@ public static class FluentValidationExtension
     public static IReadOnlyCollection<InvalidFieldInfo> GetInvalidFieldInfo(this ValidationResult validationResult)
     {
         return validationResult.Errors
-            .Select(e => new InvalidFieldInfo(e.PropertyName, e.ErrorMessage))
+            .Select(e => new InvalidFieldInfo(e.PropertyName, e.ErrorCode, e.ErrorMessage))
             .ToList();
     }
 

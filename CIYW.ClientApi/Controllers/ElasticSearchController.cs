@@ -2,7 +2,6 @@
 using CIYW.Const.Enums;
 using CIYW.Domain.Models.Users;
 using CIYW.Elasticsearch.Models.Users;
-using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.SignalR;
 using CIYW.SignalR.Models;

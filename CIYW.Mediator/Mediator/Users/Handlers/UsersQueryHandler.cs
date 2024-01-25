@@ -1,16 +1,11 @@
 ﻿using CIYW.Domain.Models.Users;
-using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Interfaces.Strategies;
-using CIYW.Kernel.Extensions;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Helpers.Base;
-using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Users;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Nest;
 
 namespace CIYW.Mediator.Mediator.Users.Handlers;
 

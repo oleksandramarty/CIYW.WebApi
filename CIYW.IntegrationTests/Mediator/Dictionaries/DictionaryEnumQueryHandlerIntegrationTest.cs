@@ -11,8 +11,8 @@ namespace CIYW.IntegrationTests.Mediator.Dictionaries;
 [TestFixture]
 public class DictionaryEnumQueryHandlerIntegrationTest: CommonIntegrationTestSetup
 {
-    [TestCase(EntityTypeEnum.INVOICE_TYPE)]
-    public async Task Handle_ValidDictionaryEnumQuery_ReturnsDictionaries(EntityTypeEnum entityType)
+    [TestCase(DictionaryTypeEnum.INVOICE_TYPE)]
+    public async Task Handle_ValidDictionaryEnumQuery_ReturnsDictionaries(DictionaryTypeEnum entityType)
     {
         // Arrange
         DictionaryEnumQuery query = new DictionaryEnumQuery(entityType);
@@ -25,7 +25,7 @@ public class DictionaryEnumQueryHandlerIntegrationTest: CommonIntegrationTestSet
         result.Should().NotBeNull();
         switch (entityType)
         {
-            case EntityTypeEnum.INVOICE_TYPE:
+            case DictionaryTypeEnum.INVOICE_TYPE:
                 result.Items.Count.Should()
                     .Be(EnumExtension.ConvertEnumToDictionary<InvoiceTypeEnum>().Items.Count);
                 return;

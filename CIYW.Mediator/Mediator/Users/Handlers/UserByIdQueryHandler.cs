@@ -16,7 +16,6 @@ namespace CIYW.Mediator.Mediator.Users.Handlers;
 
 public class UserByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<UserByIdQuery, MappedHelperResponse<UserResponse, User>>
 {
-    private ICurrentUserProvider currentUserProvider;
     private IReadGenericRepository<User> userRepository;
     private readonly IReadGenericRepository<IdentityUserRole<Guid>> userRoleRepository;
     private readonly IReadGenericRepository<Role> roleRepository;
@@ -33,7 +32,6 @@ public class UserByIdQueryHandler: UserEntityValidatorHelper, IRequestHandler<Us
         IEntityValidator entityValidator
         ): base(mapper, entityValidator, currentUserProvider)
     {
-        this.currentUserProvider = currentUserProvider;
         this.roleRepository = roleRepository;
         this.userRoleRepository = userRoleRepository;
         this.mediator = mediator;

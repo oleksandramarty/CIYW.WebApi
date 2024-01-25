@@ -75,6 +75,11 @@ public class MockReadGenericRepository<T> : IReadGenericRepository<T> where T : 
         return Task.FromResult<IList<T>>(result);
     }
 
+    public IEnumerable<T> GetEnumerableByProperty(Expression<Func<T, bool>> predicate)
+    {
+        return _data.AsQueryable().Where(predicate.Compile()).AsEnumerable();
+    }
+
     private Guid GetIdFromEntity(T entity)
     {
         var idProperty = typeof(T).GetProperty("Id");

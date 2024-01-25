@@ -2,13 +2,15 @@
 
 public class ErrorMessages
 {
-    public const string UserNotFound = "Users not found";
+    public const string UserNotFound = "User not found";
     public const string InvoiceNotFound = "Invoice not found";
     public const string RoleNotFound = "Role not found";
     public const string TariffNotFound = "Tariff not found";
     public const string CurrencyNotFound = "Currency not found";
     public const string DictionaryNotFound = "Dictionary not found";
     public const string NotFound = "Not found";
+    public const string AlreadyUsed = "Already used";
+    public const string AuthError = "Auth error";
     public const string EntityWithIdNotFound = "{0} with ID {1} not found";
     public const string UserBlocked = "Users blocked";
     public const string WrongAuth = "Wrong Login or Password";
@@ -18,6 +20,7 @@ public class ErrorMessages
     public const string HashGenerationError = "Hash generation error";
     public const string InternalServerError = "Internal server error";
     public const string ValidationFailed = "Validation failed";
+    public const string TryRestoreALittleLater = "Try recovering your password a little later";
     public const string EmailsDoesntMatch = "Emails do not match";
     public const string PasswordsDoesntMatch = "Passwords do not match";
     public const string AgreeBeforeSignIn = "You have to agree with terms";

@@ -4,6 +4,7 @@ using CIYW.Const.Errors;
 using CIYW.Const.Providers;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.Categories;
+using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Exceptions;
 using CIYW.Mediator;
@@ -15,15 +16,20 @@ using CIYW.Mediator.Mediator.Files.Handlers;
 using CIYW.Mediator.Mediator.Files.Requests;
 using CIYW.Mediator.Mediator.Tariffs.Handlers;
 using CIYW.Mediator.Mediator.Tariffs.Requests;
+using CIYW.Mediator.Mediator.Users.Handlers;
+using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Helpers.Base;
 using CIYW.Models.Requests.Common;
 using CIYW.Models.Responses.Categories;
 using CIYW.Models.Responses.Currencies;
 using CIYW.Models.Responses.Images;
 using CIYW.Models.Responses.Tariffs;
+using CIYW.Models.Responses.Users;
 using CIYW.MongoDB.Models.Images;
 using CIYW.TestHelper;
+using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
@@ -300,6 +306,32 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
             
             // Act
             await TestUtilities.Handle_InvalidCommand<UsersImagesQuery, ListWithIncludeHelper<ImageDataResponse>, LoggerException>(
+                handler, 
+                query, 
+                ErrorMessages.Forbidden);
+        }
+    }
+    
+    [Test]
+    public async Task Handle_ForbiddenUserByIdQueryForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        UserByIdQuery query = new UserByIdQuery(InitConst.MockAuthUserId);
+        
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {            
+            var handler = new UserByIdQueryHandler(
+                scope.ServiceProvider.GetRequiredService<IMediator>(),
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<IReadGenericRepository<User>>(),
+                scope.ServiceProvider.GetRequiredService<IReadGenericRepository<Role>>(),
+                scope.ServiceProvider.GetRequiredService<IReadGenericRepository<IdentityUserRole<Guid>>>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>()
+            );
+            
+            // Act
+            await TestUtilities.Handle_InvalidCommand<UserByIdQuery, MappedHelperResponse<UserResponse, User>, LoggerException>(
                 handler, 
                 query, 
                 ErrorMessages.Forbidden);

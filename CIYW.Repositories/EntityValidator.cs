@@ -40,15 +40,12 @@ public class EntityValidator: IEntityValidator
 
     public void ValidateRequest<TCommand, TResult>(TCommand command, Func<IValidator<TCommand>> validatorFactory) where TCommand : IRequest<TResult>
     {
-        IValidator<TCommand> validator = validatorFactory.Invoke();
-        ValidationResult validationResult = validator.Validate(command);
-        
-        if (validationResult.IsValid)
-        {
-           return;
-        }
-        
-        throw new LoggerException(ErrorMessages.ValidationError, 409, null, validationResult.GetInvalidFieldInfo());
+        this.FluentValidation<TCommand>(validatorFactory.Invoke(), command);
+    }
+    
+    public void ValidateRequest<TCommand>(TCommand command, Func<IValidator<TCommand>> validatorFactory) where TCommand : IRequest
+    {
+        this.FluentValidation<TCommand>(validatorFactory.Invoke(), command);
     }
     
     public void HasAccess<TEntity>(TEntity entity, Guid userId, string fieldName = "UserId")
@@ -68,5 +65,17 @@ public class EntityValidator: IEntityValidator
         }
 
         throw new InvalidOperationException($"Type {typeof(TEntity).Name} does not have a UserId property.");
+    }
+    
+    private void FluentValidation<TCommand>(IValidator<TCommand> validator, TCommand command)
+    {
+        ValidationResult validationResult = validator.Validate(command);
+        
+        if (validationResult.IsValid)
+        {
+            return;
+        }
+        
+        throw new LoggerException(ErrorMessages.ValidationError, 409, null, validationResult.GetInvalidFieldInfo());
     }
 }

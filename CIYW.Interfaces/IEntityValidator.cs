@@ -13,6 +13,9 @@ public interface IEntityValidator
     void ValidateRequest<TCommand, TResult>(
         TCommand command, Func<IValidator<TCommand>> validatorFactory)
         where TCommand : IRequest<TResult>;
+    void ValidateRequest<TCommand>(
+        TCommand command, Func<IValidator<TCommand>> validatorFactory)
+        where TCommand : IRequest;
 
     void HasAccess<TEntity>(TEntity entity, Guid userId, string fieldName = "UserId");
 }

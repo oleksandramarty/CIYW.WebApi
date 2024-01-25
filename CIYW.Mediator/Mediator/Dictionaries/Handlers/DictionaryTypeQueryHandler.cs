@@ -35,13 +35,13 @@ public class DictionaryTypeQueryHandler: IRequestHandler<DictionaryTypeQuery, Di
     {
         switch (query.Type)
         {
-            case EntityTypeEnum.CURRENCY:
+            case DictionaryTypeEnum.CURRENCY:
                 return await this.GetCurrencies(cancellationToken);
-            case EntityTypeEnum.ROLE:
+            case DictionaryTypeEnum.ROLE:
                 return await this.GetRoles(cancellationToken);
-            case EntityTypeEnum.TARIFF:
+            case DictionaryTypeEnum.TARIFF:
                 return await this.GetTariffs(cancellationToken);
-            case EntityTypeEnum.CATEGORY:
+            case DictionaryTypeEnum.CATEGORY:
                 return await this.GetCategories(cancellationToken);
             default:
                 throw new LoggerException(ErrorMessages.DictionaryNotFound, 404);

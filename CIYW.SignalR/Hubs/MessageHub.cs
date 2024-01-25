@@ -15,16 +15,16 @@ public class MessageHub: CommonHub
     {
     }
 
-    public async Task SendMessageToAllActiveUsersAsync(string message, CancellationToken cancellationToken)
+    public async Task SendMessageToAllActiveUsersAsync(string message)
     {
         MessageHubModel model = MessageHubModel.ToAllUsers(message);
-        await Clients.All.SendAsync(model.SignalRMessageType.GetDescription(), model, cancellationToken);
+        await Clients.All.SendAsync(model.SignalRMessageType.GetDescription(), model);
     }
     
-    public async Task SendMessageUserAsync(string connectionId, string message, CancellationToken cancellationToken)
+    public async Task SendMessageUserAsync(string connectionId, string message)
     {
         MessageHubModel model = MessageHubModel.ToUser(message);
-        await Clients.Client(connectionId).SendAsync(model.SignalRMessageType.GetDescription(), model, cancellationToken);
+        await Clients.Client(connectionId).SendAsync(model.SignalRMessageType.GetDescription(), model);
     }
 
 

@@ -16,6 +16,7 @@ using CIYW.Interfaces.Strategies;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Kernel.Utils;
 using CIYW.Mediator.Mediator.Users.Requests;
+using CIYW.Mediator.Validators.Auth;
 using CIYW.Mediator.Validators.Categories;
 using CIYW.Mediator.Validators.Currencies;
 using CIYW.Mediator.Validators.Notes;
@@ -86,7 +87,8 @@ namespace CIYW.Kernel.Extensions;
         }
         
         public static void InitDatabase(
-            this IApplicationBuilder app, 
+            this IApplicationBuilder app,
+            WebApplicationBuilder builder,
             bool isProd,
             bool isIntegrationTests)
         {
@@ -97,7 +99,11 @@ namespace CIYW.Kernel.Extensions;
                 using (var context = serviceScope.ServiceProvider.GetService<DataContext>())
                 {
                     var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
-                    DbInitializer.Initialize(context, userManager, isProd, isIntegrationTests);
+                    
+                    string jwtKey = isIntegrationTests ? builder.Configuration.GetSection("JwtKey").Get<string>() : string.Empty;
+                    string jwtIssuer = isIntegrationTests ? builder.Configuration.GetSection("JwtIssuer").Get<string>() : string.Empty;
+                    
+                    DbInitializer.Initialize(context, userManager, jwtKey, jwtIssuer, isProd, isIntegrationTests);
                 }
             }
             return;
@@ -323,16 +329,18 @@ namespace CIYW.Kernel.Extensions;
                 .AddXmlDataContractSerializerFormatters();
         }
 
-        public static void DbMigrationWorker(this WebApplication app)
-        {
-            var cts = new CancellationTokenSource();
-            var cancellationToken = cts.Token;
-            app.UpdateDatabaseAsync().Wait(cancellationToken);
-            app.InitDatabase(app.Environment.IsProduction(), app.Environment.IsEnvironment("IntegrationTests"));
-        }
+        // public static void DbMigrationWorker(this WebApplication app)
+        // {
+        //     var cts = new CancellationTokenSource();
+        //     var cancellationToken = cts.Token;
+        //     app.UpdateDatabaseAsync().Wait(cancellationToken);
+        //     app.InitDatabase(app.Environment.IsProduction(), app.Environment.IsEnvironment("IntegrationTests"));
+        // }
 
         public static void AddFluentValidations(this WebApplicationBuilder builder)
         {
+            builder.Services.AddValidatorsFromAssemblyContaining<RestorePasswordCommandValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<ForgotPasswordQueryValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateNoteCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateCategoryCommandValidator>();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateOrUpdateTariffCommandValidator>();

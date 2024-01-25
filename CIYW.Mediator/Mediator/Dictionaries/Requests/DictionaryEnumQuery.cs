@@ -6,10 +6,10 @@ namespace CIYW.Mediator.Mediator.Dictionaries.Requests;
 
 public class DictionaryEnumQuery: IRequest<DictionaryResponse<string>>
 {
-    public DictionaryEnumQuery(EntityTypeEnum type)
+    public DictionaryEnumQuery(DictionaryTypeEnum type)
     {
         Type = type;
     }
 
-    public EntityTypeEnum Type { get; set; }
+    public DictionaryTypeEnum Type { get; set; }
 }

@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace CIYW.IntegrationTests.Validators;
 
+[TestFixture]
 public class CreateOrUpdateCurrencyCommandValidatorTest
 {
     private static IEnumerable<TestCaseData> CreateTestCases()

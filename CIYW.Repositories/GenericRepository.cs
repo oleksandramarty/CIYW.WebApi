@@ -104,6 +104,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return await dbSet.Where(predicate).ToListAsync(cancellationToken);
     }
+    public IEnumerable<T> GetEnumerableByProperty(Expression<Func<T, bool>> predicate)
+    {
+        return dbSet.Where(predicate).AsEnumerable();
+    }
 
     public async Task AddAsync(T entity, CancellationToken cancellationToken)
     {

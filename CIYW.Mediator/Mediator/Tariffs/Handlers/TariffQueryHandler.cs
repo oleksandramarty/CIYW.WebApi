@@ -29,7 +29,7 @@ public class TariffQueryHandler: UserEntityValidatorHelper, IRequestHandler<Tari
     {
         Tariff tariff = await this.tariffRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        this.entityValidator.ValidateExist<Tariff, Guid?>(tariff, request.Id);
+        this.entityValidator.ValidateExist<Tariff, Guid?>(tariff, tariff?.Id);
 
         var response = this.GetMappedHelper<TariffResponse, Tariff>(tariff);
 

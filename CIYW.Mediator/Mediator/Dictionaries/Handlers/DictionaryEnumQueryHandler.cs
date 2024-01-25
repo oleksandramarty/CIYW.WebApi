@@ -14,7 +14,7 @@ public class DictionaryEnumQueryHandler: IRequestHandler<DictionaryEnumQuery, Di
     {
         switch (query.Type)
         {
-            case EntityTypeEnum.INVOICE_TYPE:
+            case DictionaryTypeEnum.INVOICE_TYPE:
                 return EnumExtension.ConvertEnumToDictionary<InvoiceTypeEnum>();
             default:
                 throw new LoggerException(ErrorMessages.DictionaryNotFound, 404);

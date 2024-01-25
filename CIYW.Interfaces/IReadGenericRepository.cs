@@ -18,4 +18,5 @@ public interface IReadGenericRepository<T> where T : class
         params Func<IQueryable<T>, IQueryable<T>>[] includeFuncs);
     Task<T> GetByPropertyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);
     Task<IList<T>> GetListByPropertyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);
+    IEnumerable<T> GetEnumerableByProperty(Expression<Func<T, bool>> predicate);
 }

@@ -4,11 +4,15 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Autofac;
+using CIYW.Auth.Schemes;
 using CIYW.ClientApi;
 using CIYW.Const.Providers;
+using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Xunit.Abstractions;
 
 namespace CIYW.IntegrationTests;
 
@@ -23,22 +27,15 @@ public class IntegrationTestBase: WebApplicationFactory<Program>
     
     protected override IHost CreateHost(IHostBuilder builder)
     {
-        var claims = this.claimUserId.HasValue
-            ? new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, this.claimUserId.ToString()),
-                new Claim(ClaimTypes.Role, this.GetRoleClaim(this.claimUserId)),
-            }
-            : null;
-
-        var identity = new ClaimsIdentity(claims, "IntegrationTestAuthentication");
-        var claimsPrincipal = new ClaimsPrincipal(identity);
-        var httpContextAccessorForTesting = new HttpContextAccessorForTesting();
-        httpContextAccessorForTesting.HttpContext = new DefaultHttpContext
-        {
-            User = this.claimUserId.HasValue ? claimsPrincipal : null
-        };
-        
+        // var claims = this.claimUserId.HasValue ? DbInitializer.GetTestClaims(this.claimUserId.Value) : null;
+        //
+        // var identity = new ClaimsIdentity(claims, "IntegrationTestAuthentication");
+        // var claimsPrincipal = new ClaimsPrincipal(identity);
+        // var httpContextAccessorForTesting = new HttpContextAccessorForTesting();
+        // httpContextAccessorForTesting.HttpContext = new DefaultHttpContext
+        // {
+        //     User = this.claimUserId.HasValue ? claimsPrincipal : null
+        // };
         builder.ConfigureWebHost(webHostBuilder =>
         {
             webHostBuilder
@@ -46,14 +43,16 @@ public class IntegrationTestBase: WebApplicationFactory<Program>
                 .UseTestServer()
                 .ConfigureTestServices(services =>
                 {
-                    services.AddSingleton<IHttpContextAccessor>(httpContextAccessorForTesting);
+                    // services.AddSingleton<IHttpContextAccessor>(httpContextAccessorForTesting);
                 })
                 .ConfigureAppConfiguration(config =>
                 {
-                }).ConfigureTestContainer<ContainerBuilder>(opt =>
+                })
+                .ConfigureTestContainer<ContainerBuilder>(opt =>
                 {
                 });
         });
+        
         return base.CreateHost(builder);
     }
 

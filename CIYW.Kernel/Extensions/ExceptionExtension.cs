@@ -4,6 +4,7 @@ using CIYW.Kernel.Errors;
 using CIYW.Kernel.Exceptions;
 using FluentValidation;
 using System.Text.Json;
+using Microsoft.AspNetCore.Identity;
 
 namespace CIYW.Kernel.Extensions;
 
@@ -103,10 +104,25 @@ public static class ExceptionExtension
         {
             var invalidFields = validationException
                 .Errors
-                .Select(x => new InvalidFieldInfo(x.PropertyName, x.ErrorMessage))
+                .Select(x => new InvalidFieldInfo(x.PropertyName, string.Empty, x.ErrorMessage))
                 .ToList()
                 .AsReadOnly();
 
             return new ErrorMessage(ErrorMessages.ValidationFailed, 400, invalidFields);
+        }
+        
+        public static string GetIdentityErrors(this IdentityResult result)
+        {
+            string res = "";
+            result.Errors.Aggregate(res, (r, n) => r += n + Environment.NewLine);
+            return res;
+        }
+
+        public static IReadOnlyCollection<InvalidFieldInfo> CreateFields(this IdentityResult result)
+        {
+            return result.Errors.Select(x =>
+            {
+                return new InvalidFieldInfo(string.Empty, x.Code, x.Description);
+            }).ToList();
         }
 }

@@ -24,13 +24,14 @@ namespace CIYW.Auth.Tokens;
           string roleName,
           bool remember,
           string provider,
+          Guid? jtiId = null,
           int duration = 1)
         {
             var claims = new List<Claim>
             {
                 new Claim(AuthParams.Strings.JwtRegisteredClaimNames.Sub, phone),
                 new Claim(AuthParams.Strings.JwtRegisteredClaimNames.Provider, provider),
-                new Claim(AuthParams.Strings.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(AuthParams.Strings.JwtRegisteredClaimNames.Jti, (jtiId ?? Guid.NewGuid()).ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, roleName )
             };

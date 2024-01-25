@@ -38,7 +38,7 @@ public class CreateUserCommandHandlerIntegrationTest: CommonIntegrationTestSetup
             MappedHelperResponse<UserResponse, User> result = await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            result.Should().NotBe(null);
+            result.Should().NotBeNull();
                 
             dbContext.Users.Count(u => u.Id == result.Entity.Id).Should().Be(1);
             dbContext.UserLogins.Count(ul => ul.UserId == result.Entity.Id).Should().Be(3);

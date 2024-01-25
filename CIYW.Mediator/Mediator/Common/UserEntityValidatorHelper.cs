@@ -37,6 +37,10 @@ public class UserEntityValidatorHelper
     {
         this.entityValidator.ValidateRequest<TCommand, TResult>(command, validatorFactory); 
     }
+    protected void ValidateRequest<TCommand>(TCommand command, Func<IValidator<TCommand>> validatorFactory) where TCommand : IRequest
+    {
+        this.entityValidator.ValidateRequest<TCommand>(command, validatorFactory); 
+    }
     
     protected async Task<Guid> GetUserIdAsync(CancellationToken cancellationToken)
     {

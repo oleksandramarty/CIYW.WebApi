@@ -60,21 +60,27 @@ public class Program
 
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtCIYWDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtCIYWDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtCIYWDefaults.AuthenticationScheme;
-            })
-            .AddScheme<JwtCIYWOptions, JwtCIYWHandler>(JwtCIYWDefaults.AuthenticationScheme,
-                options => { options.Realm = "Protect JwtCIYW"; });
+        if (builder.Environment.IsEnvironment("IntegrationTests"))
+        {
+            builder.Services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtCIYWDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtCIYWDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtCIYWDefaults.AuthenticationScheme;
+                })
+                .AddScheme<JwtCIYWOptions, JwtCIYWHandler>(JwtCIYWDefaults.AuthenticationScheme,
+                    options => { options.Realm = "Protect JwtCIYW"; });    
+        }
 
         var allowedSpecificOriginsPolicy = "_AllowedSpecificOriginsPolicy";
+
+        string origin = builder.Configuration.GetValue<string>("Origin");
+        
         builder.Services.AddCors(options =>
         {
             options.AddPolicy(allowedSpecificOriginsPolicy, builder =>
             {
-                builder.WithOrigins("http://localhost:4209")
+                builder.WithOrigins(origin.Split(","))
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
@@ -208,7 +214,7 @@ public class Program
             app.UseHsts();
         }
         
-        app.MapHub<MessageHub>("/hub");
+        app.MapHub<MessageHub>("/hubs/messages");
         
         var cts = new CancellationTokenSource();
         var cancellationToken = cts.Token;
@@ -221,7 +227,7 @@ public class Program
         }
 
         app.UpdateDatabaseAsync().Wait(cancellationToken);
-        app.InitDatabase(app.Environment.IsProduction(), app.Environment.IsEnvironment("IntegrationTests"));
+        app.InitDatabase(builder, app.Environment.IsProduction(), app.Environment.IsEnvironment("IntegrationTests"));
 
         app.UseHttpsRedirection();
         app.UseResponseCompression();

@@ -48,7 +48,23 @@ public static class TestUtilities
     {
         IValidator<TCommand> validator = validatorFactory.Invoke();
         ValidationResult validationResult = validator.Validate(command);
+
+        validationResult.FluentValidation(expectedErrors);
+    }
+    
+    public static void Validate_Command<TCommand>(
+        TCommand command, Func<IValidator<TCommand>> validatorFactory, string[]? expectedErrors)
+        where TCommand : IRequest
+    {
         
+        IValidator<TCommand> validator = validatorFactory.Invoke();
+        ValidationResult validationResult = validator.Validate(command);
+
+        validationResult.FluentValidation(expectedErrors);
+    }
+
+    private static void FluentValidation(this ValidationResult validationResult, string[]? expectedErrors)
+    {
         if (expectedErrors == null)
         {
             Assert.IsTrue(validationResult.IsValid);

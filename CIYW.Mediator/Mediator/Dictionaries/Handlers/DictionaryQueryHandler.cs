@@ -18,11 +18,11 @@ public class DictionaryQueryHandler: IRequestHandler<DictionaryQuery, Dictionari
     {
         DictionariesResponse response = new DictionariesResponse();
 
-        response.Currencies = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.CURRENCY), cancellationToken);
-        response.Categories = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.CATEGORY), cancellationToken);
-        response.Roles = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.ROLE), cancellationToken);
-        response.Tariffs = await this.mediator.Send(new DictionaryTypeQuery(EntityTypeEnum.TARIFF), cancellationToken);
-        response.InvoiceTypes = await this.mediator.Send(new DictionaryEnumQuery(EntityTypeEnum.INVOICE_TYPE), cancellationToken);
+        response.Currencies = await this.mediator.Send(new DictionaryTypeQuery(DictionaryTypeEnum.CURRENCY), cancellationToken);
+        response.Categories = await this.mediator.Send(new DictionaryTypeQuery(DictionaryTypeEnum.CATEGORY), cancellationToken);
+        response.Roles = await this.mediator.Send(new DictionaryTypeQuery(DictionaryTypeEnum.ROLE), cancellationToken);
+        response.Tariffs = await this.mediator.Send(new DictionaryTypeQuery(DictionaryTypeEnum.TARIFF), cancellationToken);
+        response.InvoiceTypes = await this.mediator.Send(new DictionaryEnumQuery(DictionaryTypeEnum.INVOICE_TYPE), cancellationToken);
 
         return response;
     }
