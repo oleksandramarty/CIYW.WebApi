@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using CIYW.Const.Errors;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.Users;
 using CIYW.Elasticsearch.Models.Users;
 using CIYW.Interfaces;
+using CIYW.Kernel.Exceptions;
 using CIYW.Mediator.Mediator.Common;
 using CIYW.Mediator.Mediator.Users.Requests;
 using CIYW.Models.Responses.Users;
@@ -44,6 +46,13 @@ public class UpdateUserCommandHandler: UserEntityValidatorHelper, IRequestHandle
         User user = await this.userRepository.GetByIdAsync(userId, cancellationToken);
         
         this.ValidateExist<User, Guid?>(user, userId);
+        
+        var passwordCorrect = await authRepository.CheckPasswordAsync(user, command.Password);
+
+        if (!passwordCorrect)
+        {
+            throw new LoggerException(ErrorMessages.WrongAuth, 409, null);
+        }
         
         user = this.mapper.Map<UpdateUserCommand, User>(command, user);
 

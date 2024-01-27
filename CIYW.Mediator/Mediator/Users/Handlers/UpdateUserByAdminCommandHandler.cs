@@ -38,6 +38,8 @@ public class UpdateUserByAdminCommandHandler: UserEntityValidatorHelper, IReques
     
     public async Task<MappedHelperResponse<UserResponse, User>> Handle(UpdateUserByAdminCommand command, CancellationToken cancellationToken)
     {
+        await this.IsUserAdminAsync(cancellationToken);
+        
         await this.CheckUserCommandAsync(command.Id, command, cancellationToken);
 
         User user = await this.userRepository.GetByIdAsync(command.Id, cancellationToken);

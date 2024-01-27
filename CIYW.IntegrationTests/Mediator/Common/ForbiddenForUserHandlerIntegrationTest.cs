@@ -337,4 +337,88 @@ public class ForbiddenForUserHandlerIntegrationTest() : CommonIntegrationTestSet
                 ErrorMessages.Forbidden);
         }
     }
+    
+    [Test]
+    public async Task Handle_ForbiddenCreateUserByAdminCommandForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        CreateUserByAdminCommand command = new CreateUserByAdminCommand(
+            "lastName",
+            "firstName",
+            "patronymic",
+            "login",
+            "email2345677@mail.com",
+            "phone",
+            "email2345677@mail.com",
+            true,
+            "password123",
+            "password123",
+            true,
+            true,
+            false,
+            Guid.NewGuid(),
+            Guid.NewGuid());
+        
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {            
+            var handler = new CreateUserByAdminCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<IAuthRepository>(),
+                scope.ServiceProvider.GetRequiredService<UserManager<User>>(),
+                scope.ServiceProvider.GetRequiredService<IElasticSearchRepository>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
+            );
+            
+            // Act
+            await TestUtilities.Handle_InvalidCommand<CreateUserByAdminCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(
+                handler, 
+                command, 
+                ErrorMessages.Forbidden);
+        }
+    }
+    
+    [Test]
+    public async Task Handle_ForbiddenUpdateUserByAdminCommandForNonAdminWithDifferentUserId_ReturnsException()
+    {
+        // Arrange
+        UpdateUserByAdminCommand command = new UpdateUserByAdminCommand(
+            "lastName",
+            "firstName",
+            "patronymic",
+            "login",
+            "email2345677@mail.com",
+            "phone",
+            "email2345677@mail.com",
+            true,
+            "password123",
+            "password123",
+            true,
+            true,
+            false,
+            Guid.NewGuid(),
+            Guid.NewGuid())
+        {
+            Id = InitConst.MockAuthUserId
+        };
+        
+        using (var scope = this.testApplicationFactory.Services.CreateScope())
+        {            
+            var handler = new UpdateUserByAdminCommandHandler(
+                scope.ServiceProvider.GetRequiredService<IMapper>(),
+                scope.ServiceProvider.GetRequiredService<IAuthRepository>(),
+                scope.ServiceProvider.GetRequiredService<UserManager<User>>(),
+                scope.ServiceProvider.GetRequiredService<IGenericRepository<User>>(),
+                scope.ServiceProvider.GetRequiredService<IElasticSearchRepository>(),
+                scope.ServiceProvider.GetRequiredService<IEntityValidator>(),
+                scope.ServiceProvider.GetRequiredService<ICurrentUserProvider>()
+            );
+            
+            // Act
+            await TestUtilities.Handle_InvalidCommand<UpdateUserByAdminCommand, MappedHelperResponse<UserResponse, User>, LoggerException>(
+                handler, 
+                command, 
+                ErrorMessages.Forbidden);
+        }
+    }
 }

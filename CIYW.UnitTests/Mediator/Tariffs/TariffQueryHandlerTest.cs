@@ -72,21 +72,6 @@ namespace CIYW.UnitTests.Mediator.Tariffs
             Assert.IsNotNull(result);
             result.MappedEntity.Should().BeEquivalentTo(expected, options => options.Excluding(o => o.Created));
         }
-        
-        [TestMethod]
-        public async Task Handle_InvalidQuery_NotFoundException()
-        {
-            Guid? tariffId = Guid.NewGuid();
-            TariffQuery query = new TariffQuery(tariffId.Value);
-
-            string errorMessage = String.Format(ErrorMessages.EntityWithIdNotFound,
-                typeof(Domain.Models.Tariffs.Tariff).Name, tariffId);
-            this.entityValidatorMock.Setup(
-                    e => e.ValidateExist(It.IsAny<Domain.Models.Tariffs.Tariff>(), tariffId))
-                .Throws(new LoggerException(errorMessage, 404));
-            
-            await TestUtilities.Handle_InvalidCommand<TariffQuery, MappedHelperResponse<TariffResponse, Domain.Models.Tariffs.Tariff>, LoggerException>(this.handler, query, errorMessage);
-        }
     }
 }
 

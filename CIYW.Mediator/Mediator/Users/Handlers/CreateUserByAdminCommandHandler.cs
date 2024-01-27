@@ -39,6 +39,8 @@ public class CreateUserByAdminCommandHandler: UserEntityValidatorHelper, IReques
     
     public async Task<MappedHelperResponse<UserResponse, User>> Handle(CreateUserByAdminCommand command, CancellationToken cancellationToken)
     {
+        await this.IsUserAdminAsync(cancellationToken);
+        
         await this.CheckUserCommandAsync(null, command, cancellationToken);
         
         User user = this.mapper.Map<CreateUserByAdminCommand, User>(command);

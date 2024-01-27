@@ -30,60 +30,21 @@ namespace CIYW.Domain.Initialization;
 
         if (isIntegrationTests || !isProd)
         {
-          User mockUserId = AddUserIfNotExist(
-            context,
-            userManager,
-            InitConst.MockUserId,
-            "john.doe",
-            "Doe",
-            "John",
-            "Ivanovich",
-            "myemail@mail.com",
-            "12124567890",
-            InitConst.FreeTariffId,
-            InitConst.CurrencyUsdId,
-            "zcbm13579",
-            RoleProvider.User
-          );
+          AddUserIfNotExist(context, userManager, InitConst.MockUserId,
+            "john.doe", "Doe", "John", "Ivanovich",
+            "myemail@mail.com", "12124567890",
+            InitConst.FreeTariffId, InitConst.CurrencyUsdId, "zcbm13579", RoleProvider.User);
           
-          User mockAuthUserId = AddUserIfNotExist(
-            context,
-            userManager,
-            InitConst.MockAuthUserId,
-            "anime.kit",
-            "Anime",
-            "Kit",
-            "Kitovich",
-            "animekit@mail.com",
-            "22334433221",
-            InitConst.FreeTariffId,
-            InitConst.CurrencyUsdId,
-            "zcbm13579",
-            RoleProvider.User
-          );
+          AddUserIfNotExist(context, userManager, InitConst.MockAuthUserId,
+            "anime.kit", "Anime", "Kit", "Kitovich",
+            "animekit@mail.com", "22334433221",
+            InitConst.FreeTariffId, InitConst.CurrencyUsdId, "zcbm13579", RoleProvider.User);
           
-          User mockAdminUserId = AddUserIfNotExist(
-            context,
-            userManager,
-            InitConst.MockAdminUserId,
-            "admin.test",
-            "Admin",
-            "Test",
-            "Adminovich",
-            "admintest@mail.com",
-            "44332255332",
-            InitConst.FreeTariffId,
-            InitConst.CurrencyUsdId,
-            "zcbm13579",
-            RoleProvider.Admin
+          AddUserIfNotExist(context, userManager, InitConst.MockAdminUserId,
+            "admin.test", "Admin", "Test", "Adminovich",
+            "admintest@mail.com", "44332255332",
+            InitConst.FreeTariffId, InitConst.CurrencyUsdId, "zcbm13579",  RoleProvider.Admin
           );
-
-          if (isIntegrationTests)
-          {
-            //AddTestToken(userManager, mockUserId, LoginProvider.CIYWLogin, jwtKey, jwtIssuer).Wait();
-            //AddTestToken(userManager, mockAuthUserId, LoginProvider.CIYWLogin, jwtKey, jwtIssuer).Wait();
-           //AddTestToken(userManager, mockAdminUserId, LoginProvider.CIYWLogin, jwtKey, jwtIssuer).Wait();
-          }
           
           AddUserIfNotExist(
             context,
@@ -193,7 +154,7 @@ namespace CIYW.Domain.Initialization;
             context.SaveChanges();
       }
 
-      static User AddUserIfNotExist(
+      static void AddUserIfNotExist(
         DataContext context,
         UserManager<User> userManager,
         Guid userId,
@@ -263,7 +224,7 @@ namespace CIYW.Domain.Initialization;
                                    u.Email == email ||
                                    u.Login == login))
         {
-          return user;
+          return;
         }
 
         var result = Task.Run(() => userManager.CreateAsync(user, password)).Result;
@@ -273,7 +234,7 @@ namespace CIYW.Domain.Initialization;
         context.UserLogins.AddRange(logins);
         context.SaveChanges();
 
-        return user;
+        return;
       }
 
       static void AddTestNotes(DataContext context, Guid userId)
@@ -414,56 +375,6 @@ namespace CIYW.Domain.Initialization;
           UserId = userId,
           Type = InvoiceTypeEnum.EXPENSE
         };
-      }
-
-      public static List<Claim> GetTestClaims(Guid userId)
-      {
-        List<Claim> claims = new List<Claim>
-        {
-          new Claim("provider", LoginProvider.CIYWLogin),
-          new Claim("jti", InitConst.MockJtiId.ToString()),
-          new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-        };
-        
-        if (userId == InitConst.MockUserId)
-        {
-          claims.Add(new Claim("sub", "john.doe"));
-          claims.Add(new Claim(ClaimTypes.Role, RoleProvider.User));
-        }
-        
-        if (userId == InitConst.MockAuthUserId)
-        {
-          claims.Add(new Claim("sub", "anime.kit"));
-          claims.Add(new Claim(ClaimTypes.Role, RoleProvider.User));
-        }
-        
-        if (userId == InitConst.MockAdminUserId)
-        {
-          claims.Add(new Claim("admin", "anime.test"));
-          claims.Add(new Claim(ClaimTypes.Role, RoleProvider.Admin));
-        }
-
-        return claims;
-      }
-
-      private static async Task AddTestToken(UserManager<User> userManager, User user, string provider, string jwtKey, string jwtIssuer)
-      {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expires = DateTime.UtcNow.AddDays(1);
-
-        var token = new JwtSecurityToken(
-          jwtIssuer,
-          jwtIssuer,
-          GetTestClaims(user.Id),
-
-          expires: expires,
-          signingCredentials: creds
-        );
-        var gen = new JwtSecurityTokenHandler().WriteToken(token);
-
-        await userManager.SetAuthenticationTokenAsync(user, provider, "CIYW_Autherization",
-          gen);
       }
     }
     

@@ -40,7 +40,7 @@ public class CheckTemporaryPasswordQueryHandlerIntegrationTest: CommonIntegratio
             dbContext.Users.Update(user);
             await dbContext.SaveChangesAsync(CancellationToken.None);
             
-            this.SetClaims(scope, userId);
+            this.options.UpdateClaims(scope, userId);
             
             var handler = new CheckTemporaryPasswordQueryHandler(
                 scope.ServiceProvider.GetRequiredService<IGenericRepository<User>>(),

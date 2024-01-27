@@ -16,11 +16,8 @@ public class User:IdentityUser<Guid>
     [Required]
     [StringLength(50)]
     public string LastName { get; set; }
-    [Required]
-    [StringLength(50)]
     public string FirstName { get; set; }
-    [StringLength(50)]
-    public string Patronymic { get; set; }
+    public string? Patronymic { get; set; }
 
     public string Salt { get; set; }
     public bool IsTemporaryPassword { get; set; }

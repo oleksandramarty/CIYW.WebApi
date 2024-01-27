@@ -18,24 +18,15 @@ namespace CIYW.IntegrationTests;
 
 public class IntegrationTestBase: WebApplicationFactory<Program>
 {
-    private Guid? claimUserId { get;}
-    
-    public IntegrationTestBase(Guid? claimUserId)
+    private IntegrationTestOptions options { get;}
+
+    public IntegrationTestBase(IntegrationTestOptions options)
     {
-        this.claimUserId = claimUserId;
+        this.options = options;
     }
     
     protected override IHost CreateHost(IHostBuilder builder)
     {
-        // var claims = this.claimUserId.HasValue ? DbInitializer.GetTestClaims(this.claimUserId.Value) : null;
-        //
-        // var identity = new ClaimsIdentity(claims, "IntegrationTestAuthentication");
-        // var claimsPrincipal = new ClaimsPrincipal(identity);
-        // var httpContextAccessorForTesting = new HttpContextAccessorForTesting();
-        // httpContextAccessorForTesting.HttpContext = new DefaultHttpContext
-        // {
-        //     User = this.claimUserId.HasValue ? claimsPrincipal : null
-        // };
         builder.ConfigureWebHost(webHostBuilder =>
         {
             webHostBuilder
@@ -43,7 +34,10 @@ public class IntegrationTestBase: WebApplicationFactory<Program>
                 .UseTestServer()
                 .ConfigureTestServices(services =>
                 {
-                    // services.AddSingleton<IHttpContextAccessor>(httpContextAccessorForTesting);
+                    if (options.WithHttpContextAccessorForTesting)
+                    {
+                        services.AddSingleton<IHttpContextAccessor>(options.GenerateClaims());                        
+                    }
                 })
                 .ConfigureAppConfiguration(config =>
                 {

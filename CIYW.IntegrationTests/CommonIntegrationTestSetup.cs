@@ -1,27 +1,14 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Security.Claims;
-using System.Text;
-using Castle.Core.Configuration;
-using CIYW.Auth;
-using CIYW.Auth.Tokens;
 using CIYW.Const.Enums;
-using CIYW.Const.Providers;
 using CIYW.Domain;
 using CIYW.Domain.Initialization;
 using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Utils;
-using CIYW.Mediator.Mediator.Auth.Queries;
-using CIYW.Models.Responses.Auth;
 using CIYW.MongoDB.Models.Images;
-using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using NUnit.Framework;
 
 namespace CIYW.IntegrationTests;
@@ -30,21 +17,28 @@ public class CommonIntegrationTestSetup: IDisposable
 {
     protected HttpClient Client { get; set; }
     protected IntegrationTestBase testApplicationFactory;
-    protected HubConnection MessagesHub { get; set; }
-    private Guid? claimUserId { get; }
-    private bool IsNeedHub { get; }
-    private string Token { get; set; }
-
-    public CommonIntegrationTestSetup(bool isNeedHub = false)
+    protected IntegrationTestOptions options { get;}
+    
+    public CommonIntegrationTestSetup()
     {
-        this.claimUserId = InitConst.MockUserId;
-        this.IsNeedHub = isNeedHub;
+        this.options = new IntegrationTestOptions
+        {
+            ClaimUserId = InitConst.MockUserId,
+            WithHub = false,
+            WithHttpContextAccessorForTesting = true
+        };
     }
 
-    public CommonIntegrationTestSetup(Guid? claimUserId, bool isNeedHub = false)
+    public CommonIntegrationTestSetup(
+        Guid? claimUserId, 
+        bool withHub = false)
     {
-        this.claimUserId = claimUserId;
-        this.IsNeedHub = isNeedHub;
+        this.options = new IntegrationTestOptions
+        {
+            ClaimUserId = claimUserId,
+            WithHub = withHub,
+            WithHttpContextAccessorForTesting = !withHub
+        };
     }
     
     protected static IFormFile GetResourceTestFile(string folder, string fileName)
@@ -122,98 +116,26 @@ public class CommonIntegrationTestSetup: IDisposable
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
-        this.testApplicationFactory = new IntegrationTestBase(this.claimUserId);
+        this.testApplicationFactory = new IntegrationTestBase(this.options);
         this.Client = this.testApplicationFactory.CreateClient();
-        this.SetUserToken().Wait();
-        this.StarHubs().Wait();
+
+        if (this.options.WithHub)
+        {
+            this.options.SetUserToken(this.testApplicationFactory).Wait();
+            this.options.StarHubs(this.testApplicationFactory, this.Client.BaseAddress.AbsoluteUri).Wait();            
+        }
     }
     
     [OneTimeTearDown]
     public void OneTimeTearDown()
     {
-        this.StopHubs().Wait();
+        this.options.StopHubs().Wait();
         this.Dispose();
     }
     
     public void Dispose()
     {
         Client.Dispose();
-    }
-
-    public void SetClaims(IServiceScope? scope, Guid? userId = null)
-    {
-        if (!userId.HasValue && !this.claimUserId.HasValue)
-        {
-            return;
-        }
-        var serviceProvider = scope.ServiceProvider;
-        var updatedHttpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-            
-        var claims = DbInitializer.GetTestClaims(userId ?? this.claimUserId ?? Guid.Empty);
-
-        var identity = new ClaimsIdentity(claims, "IntegrationTestAuthentication");
-        var claimsPrincipal = new ClaimsPrincipal(identity);
-        updatedHttpContextAccessor.HttpContext = new DefaultHttpContext
-        {
-            User = claimsPrincipal
-        };
-    }
-
-    private async Task SetUserToken()
-    {
-        if (!this.claimUserId.HasValue)
-        {
-            return;
-        }
-        
-        using (var scope = this.testApplicationFactory.Services.CreateScope())
-        {
-            DataContext dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-            IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-
-            User user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == this.claimUserId.Value,
-                CancellationToken.None);
-
-            TokenResponse token = await mediator.Send(new AuthLoginQuery(
-                    user.Login, 
-                    user.Email, 
-                    user.PhoneNumber, 
-                    "zcbm13579", 
-                    false),
-                CancellationToken.None);
-            
-            this.Token = $"{token?.Scheme} {token?.Value}";
-        }
-    } 
-
-    private async Task StarHubs()
-    {
-        if (!this.claimUserId.HasValue || !this.IsNeedHub)
-        {
-            return;
-        }
-        
-        this.MessagesHub = new HubConnectionBuilder()
-            .WithUrl($"{this.Client.BaseAddress}hubs/messages", o =>
-            {
-                o.HttpMessageHandlerFactory = _ => testApplicationFactory.Server.CreateHandler();
-                o.Headers.Add("Authorization", this.Token);
-            })
-            .Build();
-
-        await this.MessagesHub.StartAsync();
-        
-        await this.MessagesHub.InvokeAsync("SendMessageToAllActiveUsersAsync", "Integration Tests SignalR connection started.");
-    }
-    
-    private async Task StopHubs()
-    {
-        if (!this.claimUserId.HasValue || !this.IsNeedHub)
-        {
-            return;
-        }
-        
-        this.MessagesHub.StopAsync();
     }
     
     private async Task<byte[]> ConvertIFormFileToByteArrayAsync(IFormFile avatarFile,

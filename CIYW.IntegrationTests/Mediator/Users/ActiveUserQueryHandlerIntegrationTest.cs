@@ -26,7 +26,7 @@ public class ActiveUserQueryHandlerIntegrationTest(): CommonIntegrationTestSetup
             
 		using (var scope = this.testApplicationFactory.Services.CreateScope())
 		{
-			this.SetClaims(scope);
+			this.options.UpdateClaims(scope, InitConst.MockUserId);
 			
 			var handler = new ActiveUserQueryHandler(
 				scope.ServiceProvider.GetRequiredService<IReadGenericRepository<ActiveUser>>(),
@@ -52,7 +52,7 @@ public class ActiveUserQueryHandlerIntegrationTest(): CommonIntegrationTestSetup
             
 		using (var scope = this.testApplicationFactory.Services.CreateScope())
 		{
-			this.SetClaims(scope, InitConst.MockAuthUserId);
+			this.options.UpdateClaims(scope, InitConst.MockAuthUserId);
 			
 			var handler = new ActiveUserQueryHandler(
 				scope.ServiceProvider.GetRequiredService<IReadGenericRepository<ActiveUser>>(),

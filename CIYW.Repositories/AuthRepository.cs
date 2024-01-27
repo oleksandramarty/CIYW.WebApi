@@ -76,6 +76,11 @@ public class AuthRepository: IAuthRepository
                 await this.UpdateLoginAsync(user.Id, LoginProvider.CIYWPhone, user.PhoneNumber, cancellationToken);
                 await this.UpdateLoginAsync(user.Id, LoginProvider.CIYWEmail, user.Email, cancellationToken);
 
+                List<IdentityUserLogin<Guid>> logins = user.CreateUserLogins();
+
+                await this.context.UserLogins.AddRangeAsync(logins);
+                await this.context.SaveChangesAsync(cancellationToken);
+                
                 transaction.Commit();
                 return;
             }
@@ -103,9 +108,7 @@ public class AuthRepository: IAuthRepository
                 throw new LoggerException($"{provider} {ErrorMessages.NotFound}", 404, userId);
             }
 
-            login.ProviderKey = value;
-            login.ProviderDisplayName = value;
-            this.context.UserLogins.Update(login);
+            this.context.UserLogins.Remove(login);
             await this.context.SaveChangesAsync(cancellationToken);
         }
     } 
