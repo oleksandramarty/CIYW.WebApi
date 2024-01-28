@@ -1,0 +1,12 @@
+{
+  "type": "AUTH_LOGIN",
+  "modelName": "AuthLoginQuery",
+  "controls": [
+    {
+      "name": "login",
+      "valueType": "String",
+      "inputType": "Text",
+      
+    }
+  ]
+}
