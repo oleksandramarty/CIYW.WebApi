@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CIYW.ClientApi.Controllers;
+namespace CIYW.ClientApi.Controllers.Resources;
 
 [Route("api-ciyw/[controller]/v1")]
 [ApiController]

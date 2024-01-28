@@ -103,8 +103,14 @@ public class UsersPageableStrategy: IPageableStrategy<UserResponse, UsersQuery>
                 
                 if (filter.Login.NotNullOrEmpty())
                 {
-                    m.Match(mq =>
-                        mq.Field(f => f.Login).Query($"*{filter.Login}*").Fuzziness(Fuzziness.Auto));
+                    m.Match(mq => mq
+                        .Field(f => f.Login)
+                        .Query(filter.Login)
+                        .Fuzziness(Fuzziness.Auto)
+                    ); 
+                    
+                    //m.Match(mq =>
+                     //   mq.Field(f => f.Login).Query($"*{filter.Login}*").Fuzziness(Fuzziness.Auto));
                 }
                 
                 if (filter.Name.NotNullOrEmpty())

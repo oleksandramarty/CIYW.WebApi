@@ -5,27 +5,27 @@
 namespace CIYW.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class UserConnectionIdGroup : Migration
+    public partial class TariffAmountOrder : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Groups",
-                schema: "CIYW.Users",
-                table: "ActiveUsers",
-                type: "text",
+            migrationBuilder.AddColumn<int>(
+                name: "Order",
+                schema: "CIYW.Tariff",
+                table: "Tariffs",
+                type: "integer",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Groups",
-                schema: "CIYW.Users",
-                table: "ActiveUsers");
+                name: "Order",
+                schema: "CIYW.Tariff",
+                table: "Tariffs");
         }
     }
 }

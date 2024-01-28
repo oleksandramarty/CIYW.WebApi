@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace CIYW.Resources.Forms.Enum;
 
-[Newtonsoft.Json.JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum FormItemInputDateTypeEnum
 {
     [Description("String")]String = 1,

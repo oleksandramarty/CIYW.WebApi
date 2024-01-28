@@ -25,6 +25,7 @@ namespace CIYW.Domain;
     public DbSet<ActiveUser> ActiveUsers { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<RestorePassword> RestorePasswords { get; set; }
+    public DbSet<CurrencyEntity> CurrencyEntities { get; set; }
     
     public DataContext(DbContextOptions<DataContext> options)
         : base(options)
@@ -44,7 +45,8 @@ namespace CIYW.Domain;
       modelBuilder.Entity<UserCategory>(entity => { entity.ToTable("UserCategories", "CIYW.User"); });
       modelBuilder.Entity<ActiveUser>(entity => { entity.ToTable("ActiveUsers", "CIYW.User"); });
       
-      modelBuilder.Entity<Currency>(entity => { entity.ToTable("Currencies", "CIYW.Dictionary"); });
+      modelBuilder.Entity<Currency>(entity => { entity.ToTable("Currencies", "CIYW.Currency"); });
+      modelBuilder.Entity<CurrencyEntity>(entity => { entity.ToTable("CurrencyEntities", "CIYW.Currency"); });
       
       modelBuilder.Entity<Note>(entity => { entity.ToTable("Notes", "CIYW.Note"); });
       

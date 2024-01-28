@@ -40,7 +40,7 @@ public class JobService: IJobService
         List<User> entities = await this.context.Users
             .Include(u => u.UserBalance)
             .ThenInclude(u => u.Currency)
-            .Where(r => r.Mapped < targetDate || !r.Mapped.HasValue)
+            //.Where(r => r.Mapped < targetDate || !r.Mapped.HasValue)
             .Take(500)
             .ToListAsync(cancellationToken);
 

@@ -67,12 +67,12 @@ public class IntegrationTestOptions
             User user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == this.ClaimUserId.Value,
                 CancellationToken.None);
 
-            TokenResponse token = await mediator.Send(new AuthLoginQuery(
-                    user.Login, 
-                    user.Email, 
-                    user.PhoneNumber, 
-                    "zcbm13579", 
-                    false),
+            TokenResponse token = await mediator.Send(new AuthLoginQuery {
+                    Login = user.Login, 
+                    Email = user.Email, 
+                    Phone = user.PhoneNumber, 
+                    Password = "zcbm13579", 
+                    RememberMe = false },
                 CancellationToken.None);
             
             this.Token = $"{token?.Scheme} {token?.Value}";

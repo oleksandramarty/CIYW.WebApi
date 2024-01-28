@@ -37,13 +37,32 @@ public class InitializationProvider
         return new List<Tariff>
         {
             GetFreeTariff(),
+            GetBasicTariff(),
+            GetStandardTariff(),
+            GetPremiumTariff(),
+            GetPremiumPlusTariff(),
         };
     }
 
     public static Tariff GetFreeTariff()
     {
-        return new Tariff()
-            { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow, IsActive = true };
+        return new Tariff { Id = InitConst.FreeTariffId, Name = "Free", Description = "Base tariff", Created = DateTime.UtcNow, IsActive = true, Order = 1 };
+    }
+    public static Tariff GetBasicTariff()
+    {
+        return new Tariff { Id = InitConst.BasicTariffId, Name = "Basic", Description = "Basic tariff", Created = DateTime.UtcNow, IsActive = true, Order = 2 };
+    }
+    public static Tariff GetStandardTariff()
+    {
+        return new Tariff { Id = InitConst.StandardTariffId, Name = "Standard", Description = "Standard tariff", Created = DateTime.UtcNow, IsActive = true, Order = 3 };
+    }
+    public static Tariff GetPremiumTariff()
+    {
+        return new Tariff { Id = InitConst.PremiumTariffId, Name = "Premium", Description = "Premium tariff", Created = DateTime.UtcNow, IsActive = true, Order = 4 };
+    }
+    public static Tariff GetPremiumPlusTariff()
+    {
+        return new Tariff { Id = InitConst.PremiumPlusTariffId, Name = "Premium+", Description = "Premium+ tariff", Created = DateTime.UtcNow, IsActive = true, Order = 5 };
     }
     
     public static UserBalance GetUserBalance(Guid userId, Guid currencyId, decimal amount)
@@ -90,12 +109,17 @@ public class InitializationProvider
         return new List<Currency>
         {
             GetUSDCurrency(),
+            GetEURCurrency(),
         };
     }
 
     public static Currency GetUSDCurrency()
     {
         return new Currency() { Id = InitConst.CurrencyUsdId, Name = "US Dollar", Symbol = "$", IsoCode = "USD", IsActive = true};
+    }
+    public static Currency GetEURCurrency()
+    {
+        return new Currency() { Id = InitConst.CurrencyEurId, Name = "Euro", Symbol = "€", IsoCode = "EUR", IsActive = true};
     }
 
     public static List<string> GenerateRandomFullNames(List<string> names, List<string> surnames, List<string> patronymics, int count)

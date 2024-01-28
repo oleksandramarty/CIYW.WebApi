@@ -5,19 +5,20 @@ public class InitConst
     public static readonly Guid UserRoleId = new Guid("C5B2F100-1711-44F2-8338-83822D22EB06");
     public static readonly Guid AdminUserId = new Guid("851A3339-BEDA-4313-A5FA-A03266B85253");
     public static readonly Guid FreeTariffId = new Guid("F76B2192-D512-4E7D-9013-70EEB0BE5518");
+    public static readonly Guid BasicTariffId = new Guid("3382C218-11E4-485F-839F-632D2CC341A5");
+    public static readonly Guid StandardTariffId = new Guid("F1603A58-6EE7-4A57-8212-1E510B83D918");
+    public static readonly Guid PremiumTariffId = new Guid("253ACEA9-F14E-447B-897B-57F462FBA5F2");
+    public static readonly Guid PremiumPlusTariffId = new Guid("5EB92887-F403-4491-9E7D-5D52E14A0AD9");
     public static readonly Guid CategoryOtherId = new Guid("45E1247B-7DA9-4A53-ACD8-455312A4554E");
     public static readonly Guid CategorySalaryId = new Guid("8A80FD76-88AC-4BA1-966C-FFC3821A9390");
     public static readonly Guid CurrencyUsdId = new Guid("3FFBC6D3-D209-4040-858E-B1035247AE0C");
+    public static readonly Guid CurrencyEurId = new Guid("BAE01382-6E02-4639-A7A1-765A377DB0FE");
     public static readonly Guid MockUserId = new Guid("5A896D8F-58DA-4693-80C1-FCB08C9344E6");
     public static readonly Guid MockAuthUserId = new Guid("15623EE2-F707-4315-B303-09CB4343A1C4");
     public static readonly Guid MockAdminUserId = new Guid("E5FFED17-8127-4FF5-9DC9-9344FF66B92A");
     public static readonly Guid MockJtiId = new Guid("CAE37D29-4B74-4D9F-8A59-517BC70762BB");
-    
-    // 3382C218-11E4-485F-839F-632D2CC341A5
-    // F1603A58-6EE7-4A57-8212-1E510B83D918
-    // 253ACEA9-F14E-447B-897B-57F462FBA5F2
-    // 5EB92887-F403-4491-9E7D-5D52E14A0AD9
-    // BAE01382-6E02-4639-A7A1-765A377DB0FE
+
+    // 
     // 5A209956-2A05-43D7-881D-3573E18F9714
     // 094BFE61-C17B-4B38-8FD6-7B1BE3598C78
     // 9A333A63-55EE-4D6F-86D8-6EFC4A1F095F

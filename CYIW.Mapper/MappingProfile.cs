@@ -89,6 +89,7 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Note, opt => opt.Ignore());
 
         this.CreateMap<Tariff, TariffResponse>();
+        this.CreateMap<CurrencyEntity, CurrencyEntityResponse>();
         this.CreateMap<Currency, CurrencyResponse>();
         this.CreateMap<Category, CategoryResponse>();
         this.CreateMap<BaseFilterQuery, UserInvoicesQuery>();

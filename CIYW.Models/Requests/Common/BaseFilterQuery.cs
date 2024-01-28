@@ -12,7 +12,7 @@ public class BaseFilterQuery
 
 public class BaseSortableQuery
 {
-    public string ParentClass { get; set; }
+    public string? ParentClass { get; set; }
     public string Column { get; set; }
     public string Direction { get; set; }
 }

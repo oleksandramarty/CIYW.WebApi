@@ -90,7 +90,14 @@ public class RestorePasswordCommandHandlerIntegrationTest() : CommonIntegrationT
             // Act
             await handler.Handle(command, CancellationToken.None);
             await loginHandler.Handle(
-                new AuthLoginQuery(login, email, phone, pass, false), 
+                new AuthLoginQuery
+                {
+                    Login = login, 
+                    Email = email, 
+                    Phone = phone, 
+                    Password = pass, 
+                    RememberMe = false
+                }, 
                 CancellationToken.None);
 
             // Assert

@@ -7,4 +7,5 @@ namespace CIYW.Const.Enums;
 public enum EntityTypeEnum
 {
     [Description("User")]USER = 1,
+    [Description("Tariff")]TARIFF = 1,
 }

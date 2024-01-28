@@ -78,7 +78,13 @@ public class ChangePasswordCommandHandlerIntegrationTest: CommonIntegrationTestS
             this.options.UpdateClaims(scope, null);
             
             await loginHandler.Handle(
-                new AuthLoginQuery(user.Login, user.Email, user.PhoneNumber, newPass, false), 
+                new AuthLoginQuery {
+                    Login = user.Login, 
+                    Email = user.Email, 
+                    Phone = user.PhoneNumber, 
+                    Password = newPass, 
+                    RememberMe = false
+                }, 
                 CancellationToken.None);
 
             // Assert
@@ -142,7 +148,14 @@ public class ChangePasswordCommandHandlerIntegrationTest: CommonIntegrationTestS
             
             await TestUtilities.Handle_InvalidCommand<AuthLoginQuery, TokenResponse, AuthenticationException>(
                 loginHandler, 
-                new AuthLoginQuery(user.Login, user.Email, user.PhoneNumber, StringExtension.GenerateRandomPassword(12, 15), false), 
+                new AuthLoginQuery
+                {
+                    Login = user.Login, 
+                    Email = user.Email, 
+                    Phone = user.PhoneNumber, 
+                    Password = StringExtension.GenerateRandomPassword(12, 15), 
+                    RememberMe = false
+                }, 
                 errorMessage);
         }
     }

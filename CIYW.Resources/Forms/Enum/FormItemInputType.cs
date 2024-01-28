@@ -6,10 +6,11 @@ namespace CIYW.Resources.Forms.Enum;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum FormItemInputType
 {
-    [Description("Select")]Select = 1,
-    [Description("Date")]Date = 2,
-    [Description("Daterange")]Daterange = 3,
-    [Description("Checkbox")]Checkbox = 4,
-    [Description("Radio")]Radio = 5,
-    [Description("Text")]Text = 6
+    [Description("select")]Select = 1,
+    [Description("date")]Date = 2,
+    [Description("daterange")]Daterange = 3,
+    [Description("checkbox")]Checkbox = 4,
+    [Description("radio")]Radio = 5,
+    [Description("text")]Text = 6,
+    [Description("password")]Password = 7,
 }

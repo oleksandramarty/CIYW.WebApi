@@ -104,7 +104,40 @@ namespace CIYW.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies", "CIYW.Dictionary");
+                    b.ToTable("Currencies", "CIYW.Currency");
+                });
+
+            modelBuilder.Entity("CIYW.Domain.Models.Currencies.CurrencyEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("CurrencyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("EntityType")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("TariffId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("TariffId");
+
+                    b.ToTable("CurrencyEntities", "CIYW.Currency");
                 });
 
             modelBuilder.Entity("CIYW.Domain.Models.Invoices.Invoice", b =>
@@ -249,6 +282,9 @@ namespace CIYW.Domain.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("timestamp with time zone");
@@ -582,6 +618,23 @@ namespace CIYW.Domain.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CIYW.Domain.Models.Currencies.CurrencyEntity", b =>
+                {
+                    b.HasOne("CIYW.Domain.Models.Currencies.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CIYW.Domain.Models.Tariffs.Tariff", "Tariff")
+                        .WithMany("CurrencyEntities")
+                        .HasForeignKey("TariffId");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("Tariff");
+                });
+
             modelBuilder.Entity("CIYW.Domain.Models.Invoices.Invoice", b =>
                 {
                     b.HasOne("CIYW.Domain.Models.Categories.Category", "Category")
@@ -768,6 +821,8 @@ namespace CIYW.Domain.Migrations
 
             modelBuilder.Entity("CIYW.Domain.Models.Tariffs.Tariff", b =>
                 {
+                    b.Navigation("CurrencyEntities");
+
                     b.Navigation("Users");
                 });
 

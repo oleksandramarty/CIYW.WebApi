@@ -36,7 +36,13 @@ public static class MockCommandQueryHelper
 
     public static AuthLoginQuery CreateAuthLoginQuery()
     {
-        return new AuthLoginQuery("anime.kit", "animekit@mail.com", "22334433221", "zcbm13579", false);
+        return new AuthLoginQuery {
+            Login = "anime.kit",
+            Email = "animekit@mail.com", 
+            Phone = "22334433221", 
+            Password = "zcbm13579", 
+            RememberMe = false
+        };
     }
 
     public static CreateInvoiceCommand CreateCreateInvoiceCommand(

@@ -60,17 +60,14 @@ public class Program
 
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-        if (builder.Environment.IsEnvironment("IntegrationTests"))
-        {
-            builder.Services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtCIYWDefaults.AuthenticationScheme;
-                    options.DefaultScheme = JwtCIYWDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtCIYWDefaults.AuthenticationScheme;
-                })
-                .AddScheme<JwtCIYWOptions, JwtCIYWHandler>(JwtCIYWDefaults.AuthenticationScheme,
-                    options => { options.Realm = "Protect JwtCIYW"; });    
-        }
+        builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtCIYWDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtCIYWDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtCIYWDefaults.AuthenticationScheme;
+            })
+            .AddScheme<JwtCIYWOptions, JwtCIYWHandler>(JwtCIYWDefaults.AuthenticationScheme,
+                options => { options.Realm = "Protect JwtCIYW"; });    
 
         var allowedSpecificOriginsPolicy = "_AllowedSpecificOriginsPolicy";
 

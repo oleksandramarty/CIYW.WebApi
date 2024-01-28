@@ -1,12 +1,38 @@
 {
   "type": "AUTH_LOGIN",
   "modelName": "AuthLoginQuery",
+  "title": "Login to Finance Control",
+  "submitButton": {
+    "title": "Login"
+  },
   "controls": [
     {
       "name": "login",
+      "placeholder": "login",
       "valueType": "String",
       "inputType": "Text",
-      
+      "wrapperType": "Full"
+    },
+    {
+      "name": "email",
+      "placeholder": "Email",
+      "valueType": "String",
+      "inputType": "Text",
+      "wrapperType": "Full"
+    },
+    {
+      "name": "phone",
+      "placeholder": "Phone",
+      "valueType": "String",
+      "inputType": "Text",
+      "wrapperType": "Full"
+    },
+    {
+      "name": "password",
+      "placeholder": "Password",
+      "valueType": "String",
+      "inputType": "password",
+      "wrapperType": "Full"
     }
   ]
 }

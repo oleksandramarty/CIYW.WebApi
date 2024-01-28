@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using CIYW.ClientApi.Controllers.Base;
+﻿using CIYW.ClientApi.Controllers.Base;
 using CIYW.Domain.Models.Users;
 using CIYW.Mediator;
 using CIYW.Mediator.Mediator.Files.Requests;
@@ -47,6 +45,6 @@ public class UsersController: BaseController
     public async Task<IActionResult> V1_GetCurrentUserImageAsync(CancellationToken cancellationToken)
     {
         MappedHelperResponse<ImageDataResponse, ImageData> result = await this.mediator.Send(new CurrentUserImageQuery(), cancellationToken);
-        return Ok(result.MappedEntity);
+        return Ok(result?.MappedEntity);
     }
 }

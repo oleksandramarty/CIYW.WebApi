@@ -13,6 +13,9 @@ namespace CIYW.Domain.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
+                name: "CIYW.User");
+
+            migrationBuilder.EnsureSchema(
                 name: "CIYW.Category");
 
             migrationBuilder.EnsureSchema(
@@ -25,13 +28,33 @@ namespace CIYW.Domain.Migrations
                 name: "CIYW.Note");
 
             migrationBuilder.EnsureSchema(
+                name: "CIYW.Notification");
+
+            migrationBuilder.EnsureSchema(
+                name: "CIYW.Common");
+
+            migrationBuilder.EnsureSchema(
                 name: "CIYW.Tariff");
 
             migrationBuilder.EnsureSchema(
                 name: "CIYW.Balance");
 
-            migrationBuilder.EnsureSchema(
-                name: "CIYW.Users");
+            migrationBuilder.CreateTable(
+                name: "ActiveUsers",
+                schema: "CIYW.User",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ConnectionId = table.Column<string>(type: "text", nullable: false),
+                    Groups = table.Column<string>(type: "text", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActiveUsers", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -56,6 +79,7 @@ namespace CIYW.Domain.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Ico = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -72,11 +96,29 @@ namespace CIYW.Domain.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     IsoCode = table.Column<string>(type: "text", nullable: false),
                     Symbol = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Currencies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RestorePasswords",
+                schema: "CIYW.Common",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Url = table.Column<string>(type: "text", nullable: false),
+                    Used = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RestorePasswords", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,6 +129,7 @@ namespace CIYW.Domain.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -123,14 +166,16 @@ namespace CIYW.Domain.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Login = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Patronymic = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(type: "text", nullable: false),
+                    Patronymic = table.Column<string>(type: "text", nullable: true),
                     Salt = table.Column<string>(type: "text", nullable: false),
                     IsTemporaryPassword = table.Column<bool>(type: "boolean", nullable: false),
                     IsBlocked = table.Column<bool>(type: "boolean", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastForgot = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Mapped = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Restored = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     TariffId = table.Column<Guid>(type: "uuid", nullable: false),
                     CurrencyId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserBalanceId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -264,6 +309,7 @@ namespace CIYW.Domain.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
                     CurrencyId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Mapped = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     NoteId = table.Column<Guid>(type: "uuid", nullable: true),
                     Type = table.Column<int>(type: "integer", nullable: false),
@@ -291,6 +337,31 @@ namespace CIYW.Domain.Migrations
                         column: x => x.CurrencyId,
                         principalSchema: "CIYW.Dictionary",
                         principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                schema: "CIYW.Notification",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Read = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    EntityType = table.Column<int>(type: "integer", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -327,7 +398,7 @@ namespace CIYW.Domain.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserCategories",
-                schema: "CIYW.Users",
+                schema: "CIYW.User",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -461,6 +532,12 @@ namespace CIYW.Domain.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Notifications_UserId",
+                schema: "CIYW.Notification",
+                table: "Notifications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserBalances_CurrencyId",
                 schema: "CIYW.Balance",
                 table: "UserBalances",
@@ -475,7 +552,7 @@ namespace CIYW.Domain.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserCategories_CategoryId",
-                schema: "CIYW.Users",
+                schema: "CIYW.User",
                 table: "UserCategories",
                 column: "CategoryId");
         }
@@ -483,6 +560,10 @@ namespace CIYW.Domain.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ActiveUsers",
+                schema: "CIYW.User");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -503,12 +584,20 @@ namespace CIYW.Domain.Migrations
                 schema: "CIYW.Note");
 
             migrationBuilder.DropTable(
+                name: "Notifications",
+                schema: "CIYW.Notification");
+
+            migrationBuilder.DropTable(
+                name: "RestorePasswords",
+                schema: "CIYW.Common");
+
+            migrationBuilder.DropTable(
                 name: "UserBalances",
                 schema: "CIYW.Balance");
 
             migrationBuilder.DropTable(
                 name: "UserCategories",
-                schema: "CIYW.Users");
+                schema: "CIYW.User");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

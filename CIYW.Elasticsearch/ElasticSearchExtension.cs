@@ -41,20 +41,39 @@ public static class ElasticSearchExtension
             .Settings(s => s
                 .NumberOfShards(1)
                 .NumberOfReplicas(1)
+                .Analysis(an => an
+                    .Analyzers(a => a
+                        .Custom("partial_match_analyzer", ca => ca
+                            .Tokenizer("partial_match_tokenizer")
+                            .Filters("lowercase")
+                        )
+                    )
+                    .Tokenizers(t => t
+                        .NGram("partial_match_tokenizer", ts => ts
+                            .MinGram(2)
+                            .MaxGram(20)  // Adjust max gram based on your requirements
+                            .TokenChars(TokenChar.Letter, TokenChar.Digit)
+                        )
+                    )
+                )
             )
             .Map<UserSearchModel>(x => x
                 .AutoMap()
                 .Properties(p => p
+                    .Text(t => t
+                        .Name(u => u.Login)
+                        .Analyzer("partial_match_analyzer")
+                    )
                     .Date(k => k
-                            .Name("Created")
+                        .Name("Created")
                     )
                     .Object<UserBalanceSearchModel>(ob => ob
                         .Name("UserBalance")
                         .AutoMap()
                         .Properties(pb => pb
                             .Number(n => n
-                                    .Name("Amount")
-                                    .Type(NumberType.Double)
+                                .Name("Amount")
+                                .Type(NumberType.Double)
                             )
                         )
                     )

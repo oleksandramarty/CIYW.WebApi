@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace CIYW.Resources.Forms.Enum;
 
-[Newtonsoft.Json.JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum FormItemValidatorTypeEnum
 {
     [Description("MinLen")]MinLen = 1,
@@ -11,4 +11,7 @@ public enum FormItemValidatorTypeEnum
     [Description("Required")]Required = 3,
     [Description("Min")]Min = 4,
     [Description("Max")]Max = 5,
+    [Description("Email")]Email = 6,
+    [Description("AtLeastOne")]AtLeastOne = 7,
+    [Description("Pattern")]Pattern = 8,
 }
