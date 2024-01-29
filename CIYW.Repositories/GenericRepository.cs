@@ -85,7 +85,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         
         queryResult = this.filterProvider.Apply(queryResult, filter);
 
-5        List<T> entities = await queryResult.ToListAsync(cancellationToken);
+        List<T> entities = await queryResult.ToListAsync(cancellationToken);
 
         return new ListWithIncludeHelper<TResponse>
         {

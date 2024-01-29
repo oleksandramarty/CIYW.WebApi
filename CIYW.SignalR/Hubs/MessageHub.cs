@@ -1,5 +1,4 @@
-﻿using CIYW.Domain;
-using CIYW.Domain.Models.Users;
+﻿using CIYW.Domain.Models.Users;
 using CIYW.Interfaces;
 using CIYW.Kernel.Extensions;
 using CIYW.SignalR.Models;
@@ -26,7 +25,21 @@ public class MessageHub: CommonHub
         MessageHubModel model = MessageHubModel.ToUser(message);
         await Clients.Client(connectionId).SendAsync(model.SignalRMessageType.GetDescription(), model);
     }
+    
+    public async Task SendToChatAsync(string message)
+    {
+        await Clients.Group("chat-hub").SendAsync(nameof(SendToChatAsync), message);
+    }
+    
+    public async Task AddToChatAsync()
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, "chat-hub");
+        await Clients.Group("chat-hub").SendAsync(nameof(SendToChatAsync), $"{Context.ConnectionId} has joined the group chat.");
+    }
 
-
-
+    public async Task RemoveFromChatAsync()
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, "chat-hub");
+        await Clients.Group("chat-hub").SendAsync(nameof(SendToChatAsync), $"{Context.ConnectionId} has left the chat.");
+    }
 }
