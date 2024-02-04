@@ -52,7 +52,6 @@
 	      <ProjectReference Include="..\CIYW.ClientApi\CIYW.ClientApi.csproj" />
 	      <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />
 	      <ProjectReference Include="..\CIYW.Elasticsearch\CIYW.Elasticsearch.csproj" />
-	      <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
 	    </ItemGroup>
 	
 	    <ItemGroup>

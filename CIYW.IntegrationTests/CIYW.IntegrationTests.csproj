@@ -35,7 +35,6 @@
       <ProjectReference Include="..\CIYW.Repositories\CIYW.Repositories.csproj" />
       <ProjectReference Include="..\CIYW.TestHelper\CIYW.TestHelper.csproj" />
       <ProjectReference Include="..\CIYW.UnitTests\CIYW.UnitTests.csproj" />
-      <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
     </ItemGroup>
 
     <ItemGroup>

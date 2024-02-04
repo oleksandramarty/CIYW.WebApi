@@ -28,7 +28,7 @@ using CIYW.Models.Responses.Tariffs;
 using CIYW.Models.Responses.Users;
 using CIYW.MongoDB.Models.Images;
 
-namespace CYIW.Mapper;
+namespace CIYW.Mapper;
 
 public class MappingProfile: Profile
 {

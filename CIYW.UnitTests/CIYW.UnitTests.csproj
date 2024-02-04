@@ -18,7 +18,6 @@
       <ProjectReference Include="..\CIYW.Models\CIYW.Models.csproj" />
       <ProjectReference Include="..\CIYW.Repositories\CIYW.Repositories.csproj" />
       <ProjectReference Include="..\CIYW.TestHelper\CIYW.TestHelper.csproj" />
-      <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
     </ItemGroup>
 
     <ItemGroup>

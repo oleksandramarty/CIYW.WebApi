@@ -13,7 +13,7 @@ using CIYW.Jobs.Jobs;
 using CIYW.Kernel.Extensions;
 using CIYW.Kernel.Extensions.ActionFilters;
 using CIYW.Repositories;
-using CYIW.Mapper;
+using CIYW.Mapper;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
