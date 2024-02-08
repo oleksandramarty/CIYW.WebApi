@@ -1,38 +1,104 @@
 {
   "type": "AUTH_LOGIN",
-  "modelName": "AuthLoginQuery",
-  "title": "Login to Finance Control",
-  "submitButton": {
-    "title": "Login"
-  },
   "controls": [
     {
       "name": "login",
-      "placeholder": "login",
+      "defaultValue": null,
       "valueType": "String",
       "inputType": "Text",
+      "inputTypeStr": "text",
+      "selectDataType": null,
+      "validators": [
+        {
+          "validatorType": "AtLeastOne",
+          "value": "1:login-email-phone"
+        }
+      ],
+      "label": null,
+      "placeholder": "Login",
+      "inline": null,
+      "okHint": null,
       "wrapperType": "Full"
     },
     {
       "name": "email",
-      "placeholder": "Email",
+      "defaultValue": null,
       "valueType": "String",
       "inputType": "Text",
+      "inputTypeStr": "text",
+      "selectDataType": null,
+      "validators": [
+        {
+          "validatorType": "AtLeastOne",
+          "value": "1:login-email-phone"
+        }
+      ],
+      "label": null,
+      "placeholder": "Email",
+      "inline": null,
+      "okHint": null,
       "wrapperType": "Full"
     },
     {
       "name": "phone",
-      "placeholder": "Phone",
+      "defaultValue": null,
       "valueType": "String",
       "inputType": "Text",
+      "inputTypeStr": "text",
+      "selectDataType": null,
+      "validators": [
+        {
+          "validatorType": "Pattern",
+          "value": "/^\\d{10}$/"
+        },
+        {
+          "validatorType": "AtLeastOne",
+          "value": "1:login-email-phone"
+        }
+      ],
+      "label": null,
+      "placeholder": "Phone",
+      "inline": null,
+      "okHint": null,
       "wrapperType": "Full"
     },
     {
       "name": "password",
-      "placeholder": "Password",
+      "defaultValue": null,
       "valueType": "String",
-      "inputType": "password",
+      "inputType": "Password",
+      "inputTypeStr": "password",
+      "selectDataType": null,
+      "validators": [
+        {
+          "validatorType": "Required",
+          "value": null
+        }
+      ],
+      "label": null,
+      "placeholder": "Password",
+      "inline": null,
+      "okHint": null,
+      "wrapperType": "Full"
+    },
+    {
+      "name": "rememberMe",
+      "defaultValue": true,
+      "valueType": "String",
+      "inputType": "Checkbox",
+      "inputTypeStr": "checkbox",
+      "selectDataType": null,
+      "validators": [],
+      "label": "Remember me",
+      "placeholder": null,
+      "inline": null,
+      "okHint": null,
       "wrapperType": "Full"
     }
-  ]
+  ],
+  "title": "Login to Finance Control",
+  "submitButton": {
+    "title": "Login"
+  },
+  "cancelButton": null
 }

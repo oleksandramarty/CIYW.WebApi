@@ -19,3 +19,9 @@
 
 # NSWAG CMD
 > nswag run
+
+
+# Docker
+> docker build -t ciyw-image .
+> 
+> docker run -p 8080:80 ciyw-image

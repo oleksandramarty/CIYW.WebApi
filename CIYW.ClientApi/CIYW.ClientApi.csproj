@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -52,6 +53,7 @@
       <ProjectReference Include="..\CIYW.Auth\CIYW.Auth.csproj" />
       <ProjectReference Include="..\CIYW.Elasticsearch\CIYW.Elasticsearch.csproj" />
       <ProjectReference Include="..\CIYW.GraphQL\CIYW.GraphQL.csproj" />
+      <ProjectReference Include="..\CIYW.Mapper\CIYW.Mapper.csproj" />
       <ProjectReference Include="..\CIYW.Mediator\CIYW.Mediator.csproj" />
       <ProjectReference Include="..\CIYW.Domain\CIYW.Domain.csproj" />
       <ProjectReference Include="..\CIYW.Kernel\CIYW.Kernel.csproj" />
@@ -60,7 +62,6 @@
       <ProjectReference Include="..\CIYW.Repositories\CIYW.Repositories.csproj" />
       <ProjectReference Include="..\CIYW.Resources\CIYW.Resources.csproj" />
       <ProjectReference Include="..\CIYW.SignalR\CIYW.SignalR.csproj" />
-      <ProjectReference Include="..\CYIW.Mapper\CYIW.Mapper.csproj" />
     </ItemGroup>
 
     <ItemGroup>
